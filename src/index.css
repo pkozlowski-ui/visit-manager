@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Light Mode Colors */
+  --color-background: #F8F9FD;
+  --color-surface: #FFFFFF;
+  --color-primary: #6C5DD3;
+  --color-secondary: #C6F066;
+  --color-tertiary: #FFAB7B;
+
+  /* Text Colors */
+  --color-text-main: #1A1C1E;
+  --color-text-muted: #64748B;
+
+  /* Fonts */
+  --font-sans: "Plus Jakarta Sans",
+    "DM Sans",
+    sans-serif;
+
+  /* Border Radius */
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+
+  /* Sophisticated Shadows */
+  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05),
+    0 10px 15px -3px rgba(0, 0, 0, 0.01);
+  --shadow-float: 0 10px 40px -10px rgba(108, 93, 211, 0.15),
+    0 20px 25px -5px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05),
+    0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --shadow-active: 0 0 0 4px rgba(108, 93, 211, 0.1),
+    0 10px 15px -3px rgba(108, 93, 211, 0.2);
+
+  /* Typography Rhythm */
+  --tracking-tightest: -0.05em;
+
+  /* Animation Durations */
+  --animate-fade-in: fade-in 0.3s ease-out forwards;
+  --animate-slide-up: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-scale-in: scale-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-blob: blob 7s infinite;
+  --animate-bounce-subtle: bounce-subtle 2s infinite;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes blob {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  @keyframes bounce-subtle {
+
+    0%,
+    100% {
+      transform: translateY(-5%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+
+    50% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+}
+
+/* Custom Utilities */
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility styled-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748B' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.25rem;
+}
+
+@utility force-show-lg {
+  display: none;
+
+  @media (min-width: 1024px) {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+@utility force-hide-lg {
+  display: flex !important;
+
+  @media (min-width: 1024px) {
+    display: none !important;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-text-main font-sans antialiased;
+    background-color: #F8F9FD;
+  }
+
+  /* Dark Mode Colors - Tinted Neutrals (no pure black) */
+  .dark {
+    --color-background: #0F0E13;
+    --color-surface: #1A1820;
+    --color-primary: #8B7EE8;
+    --color-secondary: #C6F066;
+    --color-tertiary: #FFAB7B;
+
+    /* Dark mode text with purple tint */
+    --color-text-main: #E8E6F0;
+    --color-text-muted: #9B96B5;
+
+    /* Adjusted shadows for dark mode */
+    --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.3), 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --shadow-float: 0 10px 40px -10px rgba(139, 126, 232, 0.25), 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
+    --shadow-active: 0 0 0 4px rgba(139, 126, 232, 0.2), 0 10px 15px -3px rgba(139, 126, 232, 0.3);
+  }
+}
