@@ -198,7 +198,7 @@ export default function HomePage() {
                 /* ═══════════════════════════════════════════
                    SCHEDULE VIEW — Specialist Column Layout
                    ═══════════════════════════════════════════ */
-                <div className="flex-1 overflow-hidden animate-fade-in flex flex-col bg-white rounded-[32px] shadow-sm mx-4 mb-4">
+                <div className="flex-1 overflow-hidden animate-fade-in flex flex-col bg-bg-card rounded-[32px] shadow-sm mx-4 mb-4">
                     {/* Specialist columns */}
                     <div
                         className="flex-1 overflow-x-auto overflow-y-hidden custom-scrollbar"
@@ -206,7 +206,7 @@ export default function HomePage() {
                     >
                         {specialistColumns.every(col => col.totalVisits === 0) ? (
                             <div className="flex-1 flex items-center justify-center p-8">
-                                <div className="text-center py-20 px-12 bg-gray-50 rounded-3xl border border-dashed border-border-subtle">
+                                <div className="text-center py-20 px-12 bg-bg-surface rounded-3xl border border-dashed border-border-subtle">
                                     <p className="font-display uppercase text-xl text-text-secondary">
                                         {debouncedQuery ? `No results for "${debouncedQuery}"` : 'No visits found'}
                                     </p>
@@ -227,15 +227,15 @@ export default function HomePage() {
                                         variants={listItem}
                                         initial="hidden"
                                         animate="show"
-                                        className={`flex flex-col border-r border-gray-100 last:border-r-0 ${isSingle ? 'flex-1 max-w-2xl mx-auto' : 'flex-1 min-w-[300px]'
+                                        className={`flex flex-col border-r border-border-subtle last:border-r-0 ${isSingle ? 'flex-1 max-w-2xl mx-auto' : 'flex-1 min-w-[300px]'
                                             }`}
                                     >
                                         {/* Specialist Column Header — Sticky */}
                                         <div
-                                            className="sticky top-0 z-20 px-4 py-4 flex items-center gap-3 border-b border-gray-100 bg-white"
+                                            className="sticky top-0 z-20 px-4 py-4 flex items-center gap-3 border-b border-border-subtle bg-bg-card"
                                         >
                                             <div
-                                                className="w-10 h-10 rounded-full flex items-center justify-center font-display text-base text-white shadow-sm ring-4 ring-white/50"
+                                                className="w-10 h-10 rounded-full flex items-center justify-center font-display text-base text-white shadow-sm ring-4 ring-bg-card/50"
                                                 style={{ backgroundColor: specColor }}
                                             >
                                                 {spec.name.charAt(0)}
@@ -273,7 +273,7 @@ export default function HomePage() {
                                                                 <span className="font-ui text-[10px] text-text-muted uppercase font-bold tracking-widest">
                                                                     / {format(dayGroup.date, 'MMM d')}
                                                                 </span>
-                                                                <div className="flex-1 h-px bg-gray-100" />
+                                                                <div className="flex-1 h-px bg-border-subtle" />
                                                             </div>
 
                                                             {/* Visit cards for this day */}
@@ -284,7 +284,7 @@ export default function HomePage() {
                                                                         onClick={() => handleVisitClick(visit)}
                                                                         className="p-4 rounded-xl shadow-sm hover:shadow-md hover:scale-[1.01] transition-all cursor-pointer group relative overflow-hidden flex flex-col"
                                                                         style={{
-                                                                            backgroundColor: `color-mix(in srgb, ${specColor} 12%, white)`,
+                                                                            backgroundColor: `color-mix(in srgb, ${specColor} 20%, var(--bg-card))`,
                                                                         }}
                                                                     >
                                                                         <div className="flex items-center gap-3">
@@ -303,7 +303,7 @@ export default function HomePage() {
                                                                                         return service ? (
                                                                                             <span
                                                                                                 key={id}
-                                                                                                className="font-ui text-[8px] uppercase font-black tracking-widest text-text-secondary/70 bg-white/50 px-1.5 py-0.5 rounded-md border border-white/20 whitespace-nowrap"
+                                                                                                className="font-ui text-[8px] uppercase font-black tracking-widest text-text-secondary/70 bg-bg-card/50 px-1.5 py-0.5 rounded-md border border-text-primary/10 whitespace-nowrap"
                                                                                             >
                                                                                                 {service.name}
                                                                                             </span>
@@ -328,10 +328,10 @@ export default function HomePage() {
                     </div>
                     {/* Show more button */}
                     {hasMoreResults && (
-                        <div className="px-6 py-4 border-t border-gray-100 flex justify-center bg-white rounded-b-[32px]">
+                        <div className="px-6 py-4 border-t border-border-subtle flex justify-center bg-bg-card rounded-b-[32px]">
                             <button
                                 onClick={() => setShowAllResults(true)}
-                                className="font-ui font-black uppercase text-[10px] tracking-widest text-text-secondary hover:text-text-primary bg-gray-50 hover:bg-white px-8 py-3 rounded-xl border border-border-subtle hover:border-black/20 transition-all shadow-sm hover:shadow-md"
+                                className="font-ui font-black uppercase text-[10px] tracking-widest text-text-secondary hover:text-text-primary bg-bg-surface hover:bg-bg-card px-8 py-3 rounded-xl border border-border-subtle hover:border-text-primary/20 transition-all shadow-sm hover:shadow-md"
                             >
                                 Show {totalResultCount - SEARCH_RESULT_LIMIT} more results
                             </button>

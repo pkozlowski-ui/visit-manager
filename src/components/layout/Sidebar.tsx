@@ -27,14 +27,14 @@ export function ClockWidget({ size = 'normal' }: ClockWidgetProps) {
 
   if (size === 'mini') {
     return (
-      <div className="flex items-center gap-2 px-3 py-1 bg-white/50 backdrop-blur-sm rounded-full border border-gray-100 shadow-sm">
-        <div className="relative w-4 h-4 rounded-full border border-black/20">
+      <div className="flex items-center gap-2 px-3 py-1 bg-bg-card/50 backdrop-blur-sm rounded-full border border-border-subtle shadow-sm">
+        <div className="relative w-4 h-4 rounded-full border border-text-primary/20">
           <div
-            className="absolute bottom-1/2 left-1/2 w-[1px] h-[5px] bg-black origin-bottom -translate-x-1/2"
+            className="absolute bottom-1/2 left-1/2 w-[1px] h-[5px] bg-text-primary origin-bottom -translate-x-1/2"
             style={{ transform: `translateX(-50%) rotate(${hoursDegrees}deg)` }}
           />
           <div
-            className="absolute bottom-1/2 left-1/2 w-[1px] h-[7px] bg-black origin-bottom -translate-x-1/2"
+            className="absolute bottom-1/2 left-1/2 w-[1px] h-[7px] bg-text-primary origin-bottom -translate-x-1/2"
             style={{ transform: `translateX(-50%) rotate(${minutesDegrees}deg)` }}
           />
         </div>
@@ -46,13 +46,13 @@ export function ClockWidget({ size = 'normal' }: ClockWidgetProps) {
   }
 
   return (
-    <div className="bg-surface-color rounded-xl p-4 relative aspect-square flex justify-center items-center scale-75 md:scale-90 lg:scale-100">
+    <div className="bg-bg-surface rounded-xl p-4 relative aspect-square flex justify-center items-center scale-75 md:scale-90 lg:scale-100">
       <div className="relative w-full h-full max-w-[180px] max-h-[180px]">
         {/* Ticks */}
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-[1px] h-[6px] bg-black left-1/2 top-0 origin-[50%_90px]"
+            className="absolute w-[1px] h-[6px] bg-text-primary left-1/2 top-0 origin-[50%_90px]"
             style={{ transform: `rotate(${i * 30}deg) translateX(-50%)` }}
           />
         ))}
@@ -62,11 +62,11 @@ export function ClockWidget({ size = 'normal' }: ClockWidgetProps) {
 
         {/* Hands */}
         <div
-          className="absolute bottom-1/2 left-1/2 w-[3px] h-[45px] bg-black origin-bottom rounded-[4px] -translate-x-1/2"
+          className="absolute bottom-1/2 left-1/2 w-[3px] h-[45px] bg-text-primary origin-bottom rounded-[4px] -translate-x-1/2"
           style={{ transform: `translateX(-50%) rotate(${hoursDegrees}deg)` }}
         />
         <div
-          className="absolute bottom-1/2 left-1/2 w-[1.5px] h-[65px] bg-black origin-bottom rounded-[4px] -translate-x-1/2"
+          className="absolute bottom-1/2 left-1/2 w-[1.5px] h-[65px] bg-text-primary origin-bottom rounded-[4px] -translate-x-1/2"
           style={{ transform: `translateX(-50%) rotate(${minutesDegrees}deg)` }}
         />
         <div
@@ -94,7 +94,7 @@ function NavWidget({ isRail = false }: { isRail?: boolean }) {
           <NavLink
             to={item.path}
             className={({ isActive }) =>
-              `relative flex items-center ${isRail ? 'justify-center' : 'justify-between'} px-4 py-4 rounded-lg cursor-pointer transition-all no-underline text-text-primary hover:bg-card-color/50 ${isActive ? '' : ''
+              `relative flex items-center ${isRail ? 'justify-center' : 'justify-between'} px-4 py-4 rounded-lg cursor-pointer transition-all no-underline text-text-primary hover:bg-bg-card/50 ${isActive ? '' : ''
               }`
             }
           >
@@ -103,7 +103,7 @@ function NavWidget({ isRail = false }: { isRail?: boolean }) {
                 {isActive && (
                   <motion.div
                     layoutId="nav-bg"
-                    className="absolute inset-0 bg-card-color rounded-lg"
+                    className="absolute inset-0 bg-bg-card rounded-lg"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
@@ -122,7 +122,7 @@ function NavWidget({ isRail = false }: { isRail?: boolean }) {
             )}
           </NavLink>
           {!isRail && index < navItems.length - 1 && (
-            <div className="h-[4px] w-full bg-[radial-gradient(circle,#ccc_1px,transparent_1px)] bg-[length:8px_4px] my-2.5 opacity-50" />
+            <div className="h-[4px] w-full bg-[radial-gradient(circle,var(--color-border-default)_1px,transparent_1px)] bg-[length:8px_4px] my-2.5 opacity-50" />
           )}
         </div>
       ))}

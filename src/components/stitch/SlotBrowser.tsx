@@ -13,7 +13,7 @@ export default function SlotBrowser({ slots, selectedSlot, onSelect }: SlotBrows
 
     if (slots.length === 0) {
         return (
-            <div className="p-6 text-center bg-gray-50/50 rounded-2xl border border-dashed border-gray-200">
+            <div className="p-6 text-center bg-bg-surface rounded-2xl border border-dashed border-border-subtle">
                 <p className="font-ui text-xs uppercase tracking-wider text-text-secondary">
                     No slots found.<br />Try adjusting your criteria.
                 </p>

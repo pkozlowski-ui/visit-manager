@@ -50,7 +50,7 @@ interface VisitTileProps {
 const VisitTile = memo(function VisitTile({
     visit, color, specialistName, showAvatar, services, onClick, onMouseEnter, onMouseLeave
 }: VisitTileProps) {
-    const backgroundColor = `color-mix(in srgb, ${color} 12%, white)`;
+    const backgroundColor = `color-mix(in srgb, ${color} 20%, var(--bg-card))`;
 
     return (
         <motion.div
@@ -79,7 +79,7 @@ const VisitTile = memo(function VisitTile({
                 {showAvatar && specialistName && (
                     <div className="absolute bottom-0 right-0 translate-y-1 translate-x-1">
                         <div
-                            className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-display text-white shadow-sm ring-2 ring-white/50"
+                            className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-display text-white shadow-sm ring-2 ring-bg-card/50"
                             style={{ backgroundColor: color }}
                         >
                             {specialistName.charAt(0)}
@@ -194,7 +194,7 @@ export default function CalendarGrid({ selectedDate, onSlotClick, onVisitClick, 
     );
 
     return (
-        <div className="flex-1 overflow-y-auto overflow-x-hidden animate-fade-in custom-scrollbar bg-white rounded-[32px] shadow-sm">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden animate-fade-in custom-scrollbar bg-bg-card rounded-[32px] shadow-sm">
             <div className="w-full min-h-full p-4">
                 <div
                     className="grid relative w-full"
@@ -222,19 +222,19 @@ export default function CalendarGrid({ selectedDate, onSlotClick, onVisitClick, 
                         return (
                             <div key={day.toISOString()} className="relative flex flex-col">
                                 {/* Header */}
-                                <div className="h-[60px] flex items-center justify-center font-display uppercase text-sm text-text-secondary sticky top-0 z-10 bg-white">
+                                <div className="h-[60px] flex items-center justify-center font-display uppercase text-sm text-text-secondary sticky top-0 z-10 bg-bg-card">
                                     <span className={`px-4 py-2 ${isToday ? 'text-accent-red bg-accent-red/10 rounded-lg' : ''}`}>
                                         {format(day, 'EEE d')}
                                     </span>
                                 </div>
 
                                 {/* Column Content */}
-                                <div className="relative border-l border-gray-200 border-dashed flex-1" style={{ height: (END_HOUR - START_HOUR) * HOUR_HEIGHT }}>
+                                <div className="relative border-l border-border-subtle border-dashed flex-1" style={{ height: (END_HOUR - START_HOUR) * HOUR_HEIGHT }}>
                                     {/* Hour Grid Lines */}
                                     {timeSlots.map(hour => (
                                         <div
                                             key={hour}
-                                            className="absolute w-full border-b border-gray-200 border-dashed"
+                                            className="absolute w-full border-b border-border-subtle border-dashed"
                                             style={{ top: (hour - START_HOUR) * HOUR_HEIGHT }}
                                         />
                                     ))}
@@ -245,7 +245,7 @@ export default function CalendarGrid({ selectedDate, onSlotClick, onVisitClick, 
                                         return (
                                             <div
                                                 key={`slot-${hour}`}
-                                                className="absolute w-full hover:bg-black/5 transition-colors cursor-pointer z-0"
+                                                className="absolute w-full hover:bg-text-primary/5 transition-colors cursor-pointer z-0"
                                                 style={{
                                                     top: (hour - START_HOUR) * HOUR_HEIGHT,
                                                     height: HOUR_HEIGHT

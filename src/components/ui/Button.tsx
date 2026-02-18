@@ -21,8 +21,8 @@ export default function Button({
     const variants = {
         primary: 'bg-black text-white hover:bg-black/90 shadow-sm',
         secondary: 'bg-surface-color text-text-primary hover:bg-black/5 border border-transparent hover:border-black/5',
-        danger: 'bg-red-50 text-accent-red hover:bg-red-100',
-        ghost: 'bg-transparent text-text-secondary hover:text-text-primary hover:bg-black/5',
+        danger: 'bg-accent-red/10 text-accent-red hover:bg-accent-red/20 border border-accent-red/20 shadow-sm',
+        ghost: 'bg-transparent text-text-secondary hover:text-text-primary hover:bg-black/5 dark:hover:bg-white/5',
     };
 
     const sizes = {

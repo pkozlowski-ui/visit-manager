@@ -198,7 +198,7 @@ export default function VisitFormPage() {
                     <button
                         type="button"
                         onClick={() => navigate(-1)}
-                        className="w-16 h-16 rounded-full bg-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-sm group"
+                        className="w-16 h-16 rounded-full bg-bg-card flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-sm group"
                     >
                         <ArrowLeft size={32} />
                     </button>
@@ -212,7 +212,7 @@ export default function VisitFormPage() {
                 <div className="flex items-center gap-4">
                     {/* Selected Slot Summary (In Header) - Only show if Edit mode OR user explicitly selected a slot */}
                     {(isEdit || selectedSlot) && startTime && (
-                        <div className="bg-white rounded-[24px] p-4 flex items-center gap-6 shadow-sm border border-gray-100 animate-in fade-in slide-in-from-right-4 duration-300">
+                        <div className="bg-bg-card rounded-[24px] p-4 flex items-center gap-6 shadow-sm border border-border-subtle animate-in fade-in slide-in-from-right-4 duration-300">
                             <div className="flex flex-col">
                                 <span className="font-ui text-[10px] font-black uppercase text-accent-red tracking-wider">Selected Visit</span>
                                 <span className="font-display text-2xl text-text-primary uppercase leading-none mt-1">
@@ -221,7 +221,7 @@ export default function VisitFormPage() {
                             </div>
 
                             {(specialistId && specialistId !== 'any' || selectedSlot?.specialistId) && (
-                                <div className="h-10 w-px bg-gray-100" />
+                                <div className="h-10 w-px bg-border-subtle" />
                             )}
 
                             {(specialistId && specialistId !== 'any' || selectedSlot?.specialistId) && (
@@ -242,7 +242,7 @@ export default function VisitFormPage() {
                             <button
                                 type="button"
                                 onClick={() => { setStartTime(''); setSelectedSlot(null); }}
-                                className="w-10 h-10 rounded-full bg-surface-color flex items-center justify-center text-text-secondary hover:text-accent-red transition-all group hover:scale-110 active:scale-95"
+                                className="w-10 h-10 rounded-full bg-bg-surface flex items-center justify-center text-text-secondary hover:text-accent-red transition-all group hover:scale-110 active:scale-95"
                             >
                                 <X size={20} className="group-hover:rotate-90 transition-transform" />
                             </button>
@@ -271,7 +271,7 @@ export default function VisitFormPage() {
                     {/* Left Column: Client, Service, Specialist */}
                     <div className="flex-1 flex flex-col gap-4">
                         {/* Client Section */}
-                        <div className="bg-card-color rounded-[32px] p-6 flex flex-col gap-4 shadow-sm relative">
+                        <div className="bg-bg-card rounded-[32px] p-6 flex flex-col gap-4 shadow-sm relative">
                             <h3 className="font-display uppercase text-xl text-text-secondary">Client</h3>
                             <div className="relative">
                                 <input
@@ -284,25 +284,25 @@ export default function VisitFormPage() {
                                     }}
                                     onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                                     placeholder="CLIENT NAME..."
-                                    className="w-full bg-surface-color h-14 rounded-2xl px-6 font-display uppercase text-xl placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-red/20 transition-all"
+                                    className="w-full bg-bg-surface h-14 rounded-2xl px-6 font-display uppercase text-xl placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-red/20 transition-all"
                                     required
                                 />
 
                                 {/* Autocomplete Suggestions */}
                                 {showSuggestions && filteredClients.length > 0 && (
-                                    <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50">
+                                    <div className="absolute top-full left-0 right-0 mt-2 bg-bg-card rounded-2xl shadow-xl border border-border-subtle overflow-hidden z-50">
                                         {filteredClients.map((c) => (
                                             <button
                                                 key={c.id}
                                                 type="button"
                                                 onClick={() => handleClientSelect(c)}
-                                                className="w-full p-4 text-left hover:bg-surface-color transition-colors flex justify-between items-center group border-b border-gray-50 last:border-none"
+                                                className="w-full p-4 text-left hover:bg-bg-surface transition-colors flex justify-between items-center group border-b border-border-subtle last:border-none"
                                             >
                                                 <div>
                                                     <div className="font-display uppercase text-lg group-hover:text-accent-red transition-colors">{c.name}</div>
                                                     <div className="font-ui text-xs text-text-secondary">{c.phone || 'No phone'}</div>
                                                 </div>
-                                                <div className="w-8 h-8 rounded-full bg-surface-color flex items-center justify-center text-accent-red opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <div className="w-8 h-8 rounded-full bg-bg-surface flex items-center justify-center text-accent-red opacity-0 group-hover:opacity-100 transition-opacity">
                                                     +
                                                 </div>
                                             </button>
@@ -316,21 +316,21 @@ export default function VisitFormPage() {
                                 value={clientPhone}
                                 onChange={e => setClientPhone(e.target.value)}
                                 placeholder="PHONE NUMBER (OPTIONAL)..."
-                                className="w-full bg-surface-color h-12 rounded-xl px-4 font-display uppercase text-lg placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-red/20 transition-all mt-2"
+                                className="w-full bg-bg-surface h-12 rounded-xl px-4 font-display uppercase text-lg placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-red/20 transition-all mt-2"
                             />
                         </div>
 
                         {/* Service Section (Compacted) */}
-                        <div className="bg-card-color rounded-[32px] p-6 flex flex-col gap-4 shadow-sm">
+                        <div className="bg-bg-card rounded-[32px] p-6 flex flex-col gap-4 shadow-sm">
                             <h3 className="font-display uppercase text-xl text-text-secondary">Services</h3>
 
                             {/* Selected Services Tags */}
                             <div className="relative group">
-                                <div className="w-full bg-surface-color min-h-14 rounded-xl px-4 py-2 flex flex-wrap gap-2 items-center focus-within:ring-2 focus-within:ring-accent-red/20 transition-all shadow-inner">
+                                <div className="w-full bg-bg-surface min-h-14 rounded-xl px-4 py-2 flex flex-wrap gap-2 items-center focus-within:ring-2 focus-within:ring-accent-red/20 transition-all shadow-inner">
                                     {selectedServiceIds.map(sid => {
                                         const s = services.find(svc => svc.id === sid);
                                         return s ? (
-                                            <span key={sid} className="bg-black text-white px-3 py-1.5 rounded-lg font-display uppercase text-xs flex items-center gap-2 animate-in fade-in zoom-in-95 duration-200">
+                                            <span key={sid} className="bg-text-primary text-bg-card px-3 py-1.5 rounded-lg font-display uppercase text-xs flex items-center gap-2 animate-in fade-in zoom-in-95 duration-200">
                                                 {s.name}
                                                 <button type="button" onClick={() => setSelectedServiceIds(prev => prev.filter(i => i !== sid))} className="hover:text-accent-red transition-colors">
                                                     <X size={12} />
@@ -339,7 +339,7 @@ export default function VisitFormPage() {
                                         ) : null;
                                     })}
                                     {customTags.map((tag, idx) => (
-                                        <span key={idx} className="bg-white text-text-primary border border-black/10 px-3 py-1.5 rounded-lg font-display uppercase text-xs flex items-center gap-2 italic animate-in fade-in zoom-in-95 duration-200 shadow-sm">
+                                        <span key={idx} className="bg-bg-card text-text-primary border border-text-primary/10 px-3 py-1.5 rounded-lg font-display uppercase text-xs flex items-center gap-2 italic animate-in fade-in zoom-in-95 duration-200 shadow-sm">
                                             {tag}
                                             <button type="button" onClick={() => setCustomTags(prev => prev.filter((_, i) => i !== idx))} className="hover:text-accent-red transition-colors">
                                                 <X size={12} />
@@ -375,7 +375,7 @@ export default function VisitFormPage() {
                                                 setSelectedServiceIds(prev => prev.filter(id => id !== s.id));
                                             }
                                         }}
-                                        className={`px-3 py-1.5 rounded-lg border transition-colors font-ui uppercase text-[10px] font-bold tracking-wider ${selectedServiceIds.includes(s.id) ? 'bg-black text-white border-black' : 'border-black/10 hover:bg-black/5'}`}
+                                        className={`px-3 py-1.5 rounded-lg border transition-colors font-ui uppercase text-[10px] font-bold tracking-wider ${selectedServiceIds.includes(s.id) ? 'bg-text-primary text-bg-card border-text-primary' : 'border-text-primary/10 hover:bg-text-primary/5'}`}
                                     >
                                         {s.name}
                                     </button>
@@ -384,13 +384,13 @@ export default function VisitFormPage() {
                         </div>
 
                         {/* Specialist Section (Moved to Left) */}
-                        <div className="bg-card-color rounded-[32px] p-6 flex flex-col gap-4 shadow-sm min-h-[160px]">
+                        <div className="bg-bg-card rounded-[32px] p-6 flex flex-col gap-4 shadow-sm min-h-[160px]">
                             <h3 className="font-display uppercase text-xl text-text-secondary">Specialist</h3>
                             <div className="flex flex-wrap gap-2">
                                 <button
                                     type="button"
                                     onClick={() => setSpecialistId('any')}
-                                    className={`flex-1 min-w-[60px] max-w-[80px] rounded-2xl p-2 flex flex-col items-center gap-1 transition-all border-2 ${specialistId === 'any' ? 'bg-card-color border-black shadow-lg shadow-black/5' : 'bg-transparent border-dashed border-gray-300 hover:border-black/20'}`}
+                                    className={`flex-1 min-w-[60px] max-w-[80px] rounded-2xl p-2 flex flex-col items-center gap-1 transition-all border-2 ${specialistId === 'any' ? 'bg-bg-card border-text-primary shadow-lg shadow-black/5' : 'bg-transparent border-dashed border-gray-300 hover:border-text-primary/20'}`}
                                 >
                                     <div className="w-8 h-8 flex items-center justify-center">
                                         <span className="text-[18px] font-display text-text-secondary leading-none">+</span>
@@ -402,7 +402,7 @@ export default function VisitFormPage() {
                                         key={spec.id}
                                         type="button"
                                         onClick={() => setSpecialistId(spec.id)}
-                                        className={`flex-1 min-w-[60px] max-w-[80px] bg-card-color rounded-2xl p-2 flex flex-col items-center gap-1 transition-all border-2 ${specialistId === spec.id ? 'border-black shadow-lg shadow-black/5' : 'border-transparent hover:scale-[1.02] hover:bg-gray-50/50'}`}
+                                        className={`flex-1 min-w-[60px] max-w-[80px] bg-bg-card rounded-2xl p-2 flex flex-col items-center gap-1 transition-all border-2 ${specialistId === spec.id ? 'border-text-primary shadow-lg shadow-black/5' : 'border-transparent hover:scale-[1.02] hover:bg-bg-surface/50'}`}
                                     >
                                         <div
                                             className="w-8 h-8 rounded-full flex items-center justify-center font-display text-sm text-white shadow-inner ring-2 ring-white/20"
@@ -436,7 +436,7 @@ export default function VisitFormPage() {
                     {/* Right Column: When & Submit */}
                     <div className="flex-1 flex flex-col gap-6">
                         {/* Time & Date */}
-                        <div className="bg-card-color rounded-[32px] p-8 flex flex-col gap-6 shadow-sm flex-1">
+                        <div className="bg-bg-card rounded-[32px] p-8 flex flex-col gap-6 shadow-sm flex-1">
                             <h3 className="font-display uppercase text-2xl text-text-secondary">When</h3>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
@@ -445,13 +445,13 @@ export default function VisitFormPage() {
                                         type="date"
                                         value={startDate}
                                         onChange={e => setStartDate(e.target.value)}
-                                        className="w-full bg-surface-color h-14 rounded-xl px-4 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20 shadow-inner"
+                                        className="w-full bg-bg-surface h-14 rounded-xl px-4 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20 shadow-inner"
                                         required
                                     />
                                 </div>
                                 <div>
                                     <label className="font-ui text-xs uppercase tracking-wider text-text-secondary mb-2 block">Preferred Hours</label>
-                                    <div className="flex items-center gap-2 bg-surface-color rounded-xl px-3 h-14 shadow-inner">
+                                    <div className="flex items-center gap-2 bg-bg-surface rounded-xl px-3 h-14 shadow-inner">
                                         <input
                                             type="time"
                                             value={filterStartTime}
@@ -481,7 +481,7 @@ export default function VisitFormPage() {
                                             key={dur.value}
                                             type="button"
                                             onClick={() => setDurationMinutes(dur.value)}
-                                            className={`flex-1 min-w-[60px] h-12 rounded-xl flex items-center justify-center font-display text-lg transition-all ${durationMinutes === dur.value ? 'bg-accent-red text-white' : 'bg-surface-color hover:bg-black/5'}`}
+                                            className={`flex-1 min-w-[60px] h-12 rounded-xl flex items-center justify-center font-display text-lg transition-all ${durationMinutes === dur.value ? 'bg-accent-red text-white' : 'bg-bg-surface hover:bg-text-primary/5'}`}
                                         >
                                             {dur.label}
                                         </button>
@@ -496,7 +496,7 @@ export default function VisitFormPage() {
                                             const val = parseFloat(e.target.value);
                                             if (!isNaN(val)) setDurationMinutes((val * 60).toString());
                                         }}
-                                        className="w-full bg-surface-color h-12 rounded-xl px-4 font-display uppercase text-lg placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-red/20 transition-all"
+                                        className="w-full bg-bg-surface h-12 rounded-xl px-4 font-display uppercase text-lg placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-red/20 transition-all"
                                     />
                                     <div className="absolute right-4 top-1/2 -translate-y-1/2 font-display text-xs text-text-secondary uppercase">Hours</div>
                                 </div>
@@ -512,7 +512,7 @@ export default function VisitFormPage() {
 
                     </div>
                 </form>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }

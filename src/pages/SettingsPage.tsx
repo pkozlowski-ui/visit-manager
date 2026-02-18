@@ -101,7 +101,7 @@ export default function SettingsPage() {
 
     // Helper for section headers
     const SectionHeader = ({ title, subtitle, action }: { title: string, subtitle?: string, action?: React.ReactNode }) => (
-        <div className="flex justify-between items-end mb-6 mt-12 first:mt-0 border-b border-black/5 pb-4">
+        <div className="flex justify-between items-end mb-6 mt-12 first:mt-0 border-b border-border-subtle pb-4">
             <div>
                 {subtitle && <span className="font-ui uppercase tracking-[2px] text-[12px] text-text-secondary mb-1 block">{subtitle}</span>}
                 <h2 className="font-display text-[32px] uppercase text-text-primary leading-none">{title}</h2>
@@ -133,12 +133,12 @@ export default function SettingsPage() {
                     <AnimatePresence>
                         {isAddingService && (
                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden mb-6">
-                                <div className="bg-white p-6 rounded-[24px] border border-gray-100 shadow-lg space-y-4">
+                                <div className="bg-bg-card p-6 rounded-[24px] border border-border-subtle shadow-lg space-y-4">
                                     <div className="flex justify-between items-center mb-2">
                                         <h3 className="font-display uppercase text-lg text-text-secondary">{isEditingService ? t('edit_service') : t('new_service')}</h3>
                                         <Button onClick={resetServiceForm} variant="ghost" size="icon"><X size={20} /></Button>
                                     </div>
-                                    <input className="w-full bg-surface-color h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
+                                    <input className="w-full bg-bg-surface h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-border-focus/20 text-text-primary placeholder:text-text-muted"
                                         placeholder={t('service_name_placeholder')} value={serviceForm.name} onChange={e => setServiceForm({ ...serviceForm, name: e.target.value })} autoFocus />
                                     <Button onClick={handleSaveService} className="w-full" size="lg">{isEditingService ? t('update') : t('save')}</Button>
                                 </div>
@@ -148,8 +148,7 @@ export default function SettingsPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                         {services.map(service => (
-                            <motion.div key={service.id} layout className="group flex items-center justify-between p-4 hover:brightness-95 border border-gray-100/50 hover:border-black/10 rounded-2xl transition-all"
-                                style={{ backgroundColor: `color-mix(in srgb, ${service.color} 8%, white)` }}
+                            <motion.div key={service.id} layout className="group flex items-center justify-between p-4 bg-bg-card hover:bg-bg-card/80 border border-border-subtle/50 hover:border-text-primary/10 rounded-2xl transition-all shadow-sm"
                             >
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 rounded-full flex items-center justify-center font-display text-sm text-white shadow-sm" style={{ backgroundColor: service.color }}>
@@ -159,7 +158,7 @@ export default function SettingsPage() {
                                 </div>
                                 <div className="flex gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Button onClick={() => handleEditServiceClick(service)} size="icon" variant="ghost" className="w-8 h-8"><Edit2 size={14} /></Button>
-                                    <Button onClick={() => handleDelete(service.id, 'service')} size="icon" variant="ghost" className="w-8 h-8 text-accent-red hover:bg-accent-red/10"><Trash2 size={14} /></Button>
+                                    <Button onClick={() => handleDelete(service.id, 'service')} size="icon" variant="ghost" className="w-8 h-8 text-status-error hover:bg-status-error/10"><Trash2 size={14} /></Button>
                                 </div>
                             </motion.div>
                         ))}
@@ -177,7 +176,7 @@ export default function SettingsPage() {
                     <AnimatePresence>
                         {isAddingSpec && (
                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden mb-6">
-                                <div className="bg-white p-6 rounded-[24px] border border-gray-100 shadow-lg space-y-4">
+                                <div className="bg-bg-card p-6 rounded-[24px] border border-border-subtle shadow-lg space-y-4">
                                     <div className="flex justify-between items-center mb-2">
                                         <h3 className="font-display uppercase text-lg text-text-secondary">{isEditingSpec ? t('edit_member') : t('new_member')}</h3>
                                         <Button onClick={resetSpecForm} variant="ghost" size="icon"><X size={20} /></Button>
@@ -194,9 +193,9 @@ export default function SettingsPage() {
                                         </div>
 
                                         <div className="flex-1 space-y-3">
-                                            <input className="w-full bg-surface-color h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
+                                            <input className="w-full bg-bg-surface h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-border-focus/20 text-text-primary placeholder:text-text-muted"
                                                 placeholder={t('name_placeholder')} value={specForm.name} onChange={e => setSpecForm({ ...specForm, name: e.target.value })} autoFocus />
-                                            <input className="w-full bg-surface-color h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
+                                            <input className="w-full bg-bg-surface h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-border-focus/20 text-text-primary placeholder:text-text-muted"
                                                 placeholder={t('role_placeholder')} value={specForm.role} onChange={e => setSpecForm({ ...specForm, role: e.target.value })} />
                                         </div>
                                     </div>
@@ -209,7 +208,7 @@ export default function SettingsPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                         {specialists.map(spec => (
-                            <motion.div key={spec.id} layout className="group flex items-center justify-between p-4 bg-white hover:bg-white/80 border border-gray-100/50 hover:border-black/10 rounded-2xl transition-all shadow-sm">
+                            <motion.div key={spec.id} layout className="group flex items-center justify-between p-4 bg-bg-card hover:bg-bg-card/80 border border-border-subtle/50 hover:border-text-primary/10 rounded-2xl transition-all shadow-sm">
                                 <div className="flex items-center gap-4">
                                     <div
                                         className="w-10 h-10 rounded-full flex items-center justify-center font-display text-sm text-white shadow-sm"
@@ -224,7 +223,7 @@ export default function SettingsPage() {
                                 </div>
                                 <div className="flex gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Button onClick={() => handleEditSpecClick(spec)} size="icon" variant="ghost" className="w-8 h-8"><Edit2 size={14} /></Button>
-                                    <Button onClick={() => handleDelete(spec.id, 'specialist')} size="icon" variant="ghost" className="w-8 h-8 text-accent-red hover:bg-accent-red/10"><Trash2 size={14} /></Button>
+                                    <Button onClick={() => handleDelete(spec.id, 'specialist')} size="icon" variant="ghost" className="w-8 h-8 text-status-error hover:bg-status-error/10"><Trash2 size={14} /></Button>
                                 </div>
                             </motion.div>
                         ))}
@@ -235,24 +234,24 @@ export default function SettingsPage() {
                 <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div>
                         <SectionHeader title={t('opening_hours')} subtitle={t('schedule')} />
-                        <div className="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm space-y-2">
+                        <div className="bg-bg-card p-6 rounded-[32px] border border-border-subtle shadow-sm space-y-2">
                             {Object.entries(salonSchedule).map(([day, schedule]) => (
-                                <div key={day} className="flex items-center justify-between p-3 bg-surface-color/50 rounded-xl">
+                                <div key={day} className="flex items-center justify-between p-3 bg-bg-surface/50 rounded-xl">
                                     <div className="flex items-center gap-4">
                                         <input type="checkbox" checked={schedule.isOpen}
                                             onChange={(e) => updateSalonSchedule({ ...salonSchedule, [day]: { ...schedule, isOpen: e.target.checked } })}
-                                            className="w-5 h-5 rounded border-gray-300 text-black focus:ring-black accent-black" />
-                                        <span className="font-display uppercase text-lg w-20">{day}</span>
+                                            className="w-5 h-5 rounded border-border-strong text-text-primary focus:ring-text-primary accent-text-primary" />
+                                        <span className="font-display uppercase text-lg w-20 text-text-primary">{day}</span>
                                     </div>
                                     {schedule.isOpen && schedule.hours.length > 0 ? (
                                         <div className="flex items-center gap-2">
                                             <input type="time" value={schedule.hours[0].openTime}
                                                 onChange={(e) => updateSalonSchedule({ ...salonSchedule, [day]: { ...schedule, hours: [{ ...schedule.hours[0], openTime: e.target.value }] } })}
-                                                className="bg-transparent font-display text-lg outline-none w-20 text-right" />
+                                                className="bg-transparent font-display text-lg outline-none w-20 text-right text-text-primary" />
                                             <span className="text-text-secondary">-</span>
                                             <input type="time" value={schedule.hours[0].closeTime}
                                                 onChange={(e) => updateSalonSchedule({ ...salonSchedule, [day]: { ...schedule, hours: [{ ...schedule.hours[0], closeTime: e.target.value }] } })}
-                                                className="bg-transparent font-display text-lg outline-none w-20" />
+                                                className="bg-transparent font-display text-lg outline-none w-20 text-text-primary" />
                                         </div>
                                     ) : (
                                         <span className="font-display uppercase text-text-secondary/50 tracking-wider text-sm">{t('closed')}</span>
@@ -264,10 +263,10 @@ export default function SettingsPage() {
 
                     <div>
                         <SectionHeader title={t('closures')} subtitle={t('exceptions')} />
-                        <div className="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm mb-6">
+                        <div className="bg-bg-card p-6 rounded-[32px] border border-border-subtle shadow-sm mb-6">
                             <div className="flex gap-2 mb-4">
-                                <input type="date" id="new-closure-date" className="bg-surface-color px-3 py-2 rounded-xl font-display outline-none" />
-                                <input type="text" id="new-closure-reason" placeholder={t('reason_placeholder')} className="flex-1 bg-surface-color px-3 py-2 rounded-xl font-display uppercase outline-none" />
+                                <input type="date" id="new-closure-date" className="bg-bg-surface px-3 py-2 rounded-xl font-display outline-none text-text-primary" />
+                                <input type="text" id="new-closure-reason" placeholder={t('reason_placeholder')} className="flex-1 bg-bg-surface px-3 py-2 rounded-xl font-display uppercase outline-none text-text-primary placeholder:text-text-muted" />
                                 <Button onClick={() => {
                                     const d = (document.getElementById('new-closure-date') as HTMLInputElement);
                                     const r = (document.getElementById('new-closure-reason') as HTMLInputElement);
@@ -277,9 +276,9 @@ export default function SettingsPage() {
                             <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
                                 {specialClosures.length === 0 && <div className="text-center py-4 text-text-secondary font-display uppercase text-sm">{t('no_dates')}</div>}
                                 {specialClosures.map(c => (
-                                    <div key={c.date} className="flex justify-between items-center p-3 bg-surface-color/50 rounded-xl">
-                                        <div><p className="font-display">{c.date}</p><p className="text-[10px] uppercase text-text-secondary">{c.reason}</p></div>
-                                        <Button onClick={() => removeSpecialClosure(c.date)} size="icon" variant="ghost" className="h-8 w-8 text-text-secondary hover:text-accent-red"><Trash2 size={14} /></Button>
+                                    <div key={c.date} className="flex justify-between items-center p-3 bg-bg-surface/50 rounded-xl">
+                                        <div><p className="font-display text-text-primary">{c.date}</p><p className="text-[10px] uppercase text-text-secondary">{c.reason}</p></div>
+                                        <Button onClick={() => removeSpecialClosure(c.date)} size="icon" variant="ghost" className="h-8 w-8 text-text-secondary hover:text-status-error"><Trash2 size={14} /></Button>
                                     </div>
                                 ))}
                             </div>
@@ -292,12 +291,12 @@ export default function SettingsPage() {
                     <SectionHeader title={t('preferences')} subtitle={t('system')} />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Theme */}
-                        <div className="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm">
-                            <h3 className="font-display uppercase text-lg mb-4 flex items-center gap-2"><Sun size={18} /> {t('theme')}</h3>
+                        <div className="bg-bg-card p-6 rounded-[32px] border border-border-subtle shadow-sm">
+                            <h3 className="font-display uppercase text-lg mb-4 flex items-center gap-2 text-text-primary"><Sun size={18} /> {t('theme')}</h3>
                             <div className="flex gap-2">
                                 {['light', 'dark', 'device'].map((tMode) => (
                                     <button key={tMode} onClick={() => setTheme(tMode as any)}
-                                        className={`flex-1 py-3 rounded-xl font-display uppercase text-sm border transition-all ${theme === tMode ? 'bg-black text-white border-black' : 'bg-transparent border-gray-200 hover:border-black'}`}>
+                                        className={`flex-1 py-3 rounded-xl font-display uppercase text-sm border transition-all ${theme === tMode ? 'bg-text-primary text-text-inverted border-text-primary' : 'bg-transparent border-border-default hover:border-text-primary text-text-primary'}`}>
                                         {tMode}
                                     </button>
                                 ))}
@@ -305,11 +304,11 @@ export default function SettingsPage() {
                         </div>
 
                         {/* Data */}
-                        <div className="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm">
+                        <div className="bg-bg-card p-6 rounded-[32px] border border-border-subtle shadow-sm">
                             <h3 className="font-display uppercase text-lg mb-4 flex items-center gap-2"><Database size={18} /> {t('data')}</h3>
                             <div className="flex gap-2">
                                 <Button onClick={() => { try { downloadBackup(); alert(t('exported')); } catch { alert(t('export_failed')); } }} className="flex-1" variant="secondary"><Download size={16} className="mr-2" /> {t('export')}</Button>
-                                <label className="flex-1 flex items-center justify-center bg-surface-color hover:bg-gray-200 cursor-pointer rounded-xl font-display uppercase text-sm transition-colors">
+                                <label className="flex-1 flex items-center justify-center bg-bg-surface hover:bg-bg-surface-active cursor-pointer rounded-xl font-display uppercase text-sm transition-colors text-text-primary">
                                     <Upload size={16} className="mr-2" /> {t('import')}
                                     <input type="file" accept=".json" className="hidden" onChange={(e) => {
                                         const f = e.target.files?.[0]; if (!f) return;
@@ -318,8 +317,8 @@ export default function SettingsPage() {
                                     }} />
                                 </label>
                             </div>
-                            <div className="mt-4 pt-4 border-t border-gray-100">
-                                <Button onClick={() => { if (confirm(t('erase_warning'))) { clearAllData(); window.location.reload(); } }} variant="ghost" className="w-full text-accent-red hover:bg-accent-red/5"><Trash2 size={16} className="mr-2" /> {t('reset_data')}</Button>
+                            <div className="mt-4 pt-4 border-t border-border-subtle">
+                                <Button onClick={() => { if (confirm(t('erase_warning'))) { clearAllData(); window.location.reload(); } }} variant="ghost" className="w-full text-status-error hover:bg-status-error/5"><Trash2 size={16} className="mr-2" /> {t('reset_data')}</Button>
                             </div>
                         </div>
                     </div>

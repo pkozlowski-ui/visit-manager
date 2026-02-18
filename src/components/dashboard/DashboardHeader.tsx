@@ -30,7 +30,7 @@ function SearchInput({ value, onChange, resultCount, inputRef }: {
     return (
         <div className="relative group flex-1 md:flex-none">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <Search size={18} className="text-text-secondary group-focus-within:text-black transition-colors" />
+                <Search size={18} className="text-text-secondary group-focus-within:text-text-primary transition-colors" />
             </div>
             <input
                 ref={inputRef}
@@ -38,7 +38,7 @@ function SearchInput({ value, onChange, resultCount, inputRef }: {
                 placeholder="SEARCH..."
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="h-12 md:h-14 pl-12 pr-16 bg-white border border-gray-100 rounded-2xl font-display uppercase text-sm w-full md:w-64 md:focus:w-80 transition-all outline-none focus:ring-2 focus:ring-black/5 shadow-sm focus:shadow-md placeholder:text-text-secondary/50"
+                className="h-12 md:h-14 pl-12 pr-16 bg-bg-card border border-border-subtle rounded-2xl font-display uppercase text-sm w-full md:w-64 md:focus:w-80 transition-all outline-none focus:ring-2 focus:ring-text-primary/5 shadow-sm focus:shadow-md placeholder:text-text-secondary/50"
             />
             {/* Clear + result count */}
             <div className="absolute inset-y-0 right-3 flex items-center gap-1.5">
@@ -50,7 +50,7 @@ function SearchInput({ value, onChange, resultCount, inputRef }: {
                 {value && (
                     <button
                         onClick={() => onChange('')}
-                        className="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+                        className="w-7 h-7 rounded-full bg-bg-surface hover:bg-bg-surface-hover flex items-center justify-center transition-colors"
                     >
                         <X size={14} className="text-text-secondary" />
                     </button>
@@ -93,13 +93,13 @@ export default function DashboardHeader({ selectedDate, onPrev, onNext, onToday,
                         </h1>
 
                         <div className="flex items-center gap-1.5 shrink-0">
-                            <Button onClick={onPrev} size="icon" variant="secondary" className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-gray-100 bg-white">
+                            <Button onClick={onPrev} size="icon" variant="secondary" className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-border-subtle bg-bg-card">
                                 <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
                             </Button>
-                            <Button onClick={onToday} size="sm" variant="secondary" className="h-8 md:h-10 px-3 md:px-4 rounded-full border-2 border-gray-100 bg-white font-display uppercase text-[10px] md:text-[12px] tracking-wider">
+                            <Button onClick={onToday} size="sm" variant="secondary" className="h-8 md:h-10 px-3 md:px-4 rounded-full border-2 border-border-subtle bg-bg-card font-display uppercase text-[10px] md:text-[12px] tracking-wider">
                                 Today
                             </Button>
-                            <Button onClick={onNext} size="icon" variant="secondary" className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-gray-100 bg-white">
+                            <Button onClick={onNext} size="icon" variant="secondary" className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-border-subtle bg-bg-card">
                                 <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
                             </Button>
                         </div>
@@ -120,14 +120,14 @@ export default function DashboardHeader({ selectedDate, onPrev, onNext, onToday,
                                 initial={{ y: "100%" }}
                                 animate={{ y: 0 }}
                                 exit={{ y: "100%" }}
-                                className="relative bg-surface-color w-full max-w-sm rounded-t-[32px] sm:rounded-[32px] overflow-hidden shadow-2xl"
+                                className="relative bg-bg-surface w-full max-w-sm rounded-t-[32px] sm:rounded-[32px] overflow-hidden shadow-2xl"
                             >
                                 <div className="p-6 flex flex-col gap-4">
                                     <div className="flex items-center justify-between">
                                         <h2 className="font-display text-xl uppercase">Filter View</h2>
                                         <button
                                             onClick={() => setIsFilterOpen(false)}
-                                            className="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-gray-100"
+                                            className="w-10 h-10 rounded-full bg-bg-card flex items-center justify-center border border-border-subtle"
                                         >
                                             <X size={20} />
                                         </button>
@@ -137,7 +137,7 @@ export default function DashboardHeader({ selectedDate, onPrev, onNext, onToday,
                                     </div>
                                     <Button
                                         onClick={() => setIsFilterOpen(false)}
-                                        className="w-full h-14 rounded-2xl bg-black text-white font-display uppercase tracking-wider"
+                                        className="w-full h-14 rounded-2xl bg-text-primary text-bg-card font-display uppercase tracking-wider"
                                     >
                                         Done
                                     </Button>
@@ -149,12 +149,12 @@ export default function DashboardHeader({ selectedDate, onPrev, onNext, onToday,
 
                 <div className={`flex items-center justify-between md:justify-end gap-3 md:gap-4 w-full md:w-auto border-t md:border-t-0 border-black/5 pt-4 md:pt-0 ${isTablet ? '!justify-start' : ''}`}>
                     {/* View Toggle */}
-                    <div className="flex bg-white rounded-2xl p-1.5 shadow-sm border border-gray-100">
+                    <div className="flex bg-bg-card rounded-2xl p-1.5 shadow-sm border border-border-subtle">
                         <Button
                             onClick={() => onViewModeChange('calendar')}
                             size="icon"
                             variant={viewMode === 'calendar' ? 'primary' : 'ghost'}
-                            className={`rounded-xl ${viewMode === 'calendar' ? 'shadow-md' : 'hover:bg-gray-50'}`}
+                            className={`rounded-xl ${viewMode === 'calendar' ? 'shadow-md' : 'hover:bg-bg-surface'}`}
                         >
                             <CalendarIcon size={20} />
                         </Button>
@@ -162,7 +162,7 @@ export default function DashboardHeader({ selectedDate, onPrev, onNext, onToday,
                             onClick={() => onViewModeChange('schedule')}
                             size="icon"
                             variant={viewMode === 'schedule' ? 'primary' : 'ghost'}
-                            className={`rounded-xl ${viewMode === 'schedule' ? 'shadow-md' : 'hover:bg-gray-50'}`}
+                            className={`rounded-xl ${viewMode === 'schedule' ? 'shadow-md' : 'hover:bg-bg-surface'}`}
                         >
                             <List size={20} />
                         </Button>
@@ -173,9 +173,9 @@ export default function DashboardHeader({ selectedDate, onPrev, onNext, onToday,
                         onClick={() => setIsFilterOpen(true)}
                         size="icon"
                         variant="secondary"
-                        className="w-12 h-12 md:hidden rounded-full border border-gray-100 bg-white shrink-0"
+                        className="w-12 h-12 md:hidden rounded-full border border-border-subtle bg-bg-card shrink-0"
                     >
-                        <Filter className="w-5 h-5 text-black" />
+                        <Filter className="w-5 h-5 text-text-primary" />
                     </Button>
 
                     {/* Search — hide on tablet (moves to bottom bar) */}
@@ -208,7 +208,7 @@ export default function DashboardHeader({ selectedDate, onPrev, onNext, onToday,
             {/* Tablet Bottom Bar — Search + FAB sticky at bottom */}
             {isTablet && (
                 <div
-                    className="fixed bottom-3 left-[calc(16px+80px+16px+8px)] right-[24px] z-50 flex items-center gap-4 px-5 py-3 bg-surface-color/90 backdrop-blur-xl border border-border-subtle rounded-2xl shadow-lg"
+                    className="fixed bottom-3 left-[calc(16px+80px+16px+8px)] right-[24px] z-50 flex items-center gap-4 px-5 py-3 bg-bg-surface/90 backdrop-blur-xl border border-border-subtle rounded-2xl shadow-lg"
                     style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}
                 >
                     <SearchInput

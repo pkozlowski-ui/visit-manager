@@ -19,7 +19,7 @@ export default function VisitTrendChart({ data, maxCount, period }: VisitTrendCh
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="bg-card-color rounded-xl p-5 md:p-6 flex flex-col gap-6 overflow-hidden"
+            className="bg-bg-card rounded-xl p-5 md:p-6 flex flex-col gap-6 overflow-hidden"
         >
             <div className="flex items-center justify-between">
                 <h3 className="text-[13px] font-display uppercase tracking-wide text-text-secondary font-medium">
@@ -56,7 +56,7 @@ export default function VisitTrendChart({ data, maxCount, period }: VisitTrendCh
                             </div>
 
                             {/* Bar container with Track */}
-                            <div className="flex-1 w-full bg-gray-50/50 rounded-t-md relative flex flex-col justify-end overflow-hidden">
+                            <div className="flex-1 w-full bg-bg-surface rounded-t-md relative flex flex-col justify-end overflow-hidden">
                                 <motion.div
                                     initial={{ height: 0 }}
                                     animate={{ height: `${Math.max(heightPercent, 2)}%` }}
@@ -66,10 +66,10 @@ export default function VisitTrendChart({ data, maxCount, period }: VisitTrendCh
                                         ease: [0.33, 1, 0.68, 1],
                                     }}
                                     className={`w-full rounded-t-sm min-h-[4px] transition-all duration-200 relative ${entry.isCurrent
-                                            ? 'bg-accent-red shadow-[0_0_15px_rgba(255,51,102,0.4)]'
-                                            : isHovered
-                                                ? 'bg-accent-red/80'
-                                                : isMonth ? 'bg-accent-red/50' : 'bg-accent-red/60'
+                                        ? 'bg-accent-red shadow-[0_0_15px_rgba(255,51,102,0.4)]'
+                                        : isHovered
+                                            ? 'bg-accent-red/80'
+                                            : isMonth ? 'bg-accent-red/50' : 'bg-accent-red/60'
                                         }`}
                                 >
                                     {/* Highlight effect for wider bars */}

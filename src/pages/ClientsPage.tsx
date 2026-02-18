@@ -47,7 +47,7 @@ export default function ClientsPage() {
             </header>
 
             {/* Content Container */}
-            <div className="bg-card-color rounded-[32px] p-6 flex-1 flex flex-col overflow-hidden shadow-sm relative">
+            <div className="bg-bg-card rounded-[32px] p-6 flex-1 flex flex-col overflow-hidden shadow-sm relative">
 
                 {/* Search Bar */}
                 <div className="relative mb-6">
@@ -57,7 +57,7 @@ export default function ClientsPage() {
                         placeholder="SEARCH CLIENTS..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-surface-color h-14 rounded-2xl pl-14 pr-6 font-display uppercase text-lg placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-red/20 transition-all"
+                        className="w-full bg-bg-surface h-14 rounded-2xl pl-14 pr-6 font-display uppercase text-lg placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-red/20 transition-all"
                     />
                 </div>
 
@@ -66,7 +66,7 @@ export default function ClientsPage() {
                     <div className="absolute inset-x-6 top-24 z-10">
                         <form
                             onSubmit={handleAddClient}
-                            className="bg-white p-6 rounded-[24px] shadow-xl border border-gray-100 animate-scale-in flex flex-col gap-4"
+                            className="bg-bg-card p-6 rounded-[24px] shadow-xl border border-border-subtle animate-scale-in flex flex-col gap-4"
                         >
                             <h3 className="font-display uppercase text-xl text-text-secondary">New Client</h3>
                             <input
@@ -75,14 +75,14 @@ export default function ClientsPage() {
                                 placeholder="FULL NAME..."
                                 value={newClientName}
                                 onChange={e => setNewClientName(e.target.value)}
-                                className="w-full bg-surface-color h-14 rounded-xl px-4 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
+                                className="w-full bg-bg-surface h-14 rounded-xl px-4 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
                             />
                             <input
                                 type="tel"
                                 placeholder="PHONE (OPTIONAL)..."
                                 value={newClientPhone}
                                 onChange={e => setNewClientPhone(e.target.value)}
-                                className="w-full bg-surface-color h-14 rounded-xl px-4 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
+                                className="w-full bg-bg-surface h-14 rounded-xl px-4 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
                             />
                             <div className="flex gap-2 justify-end">
                                 <Button
@@ -123,12 +123,12 @@ export default function ClientsPage() {
                             <motion.div
                                 key={client.id}
                                 variants={listItem}
-                                className="group flex items-center justify-between p-5 bg-surface-color hover:bg-white border border-transparent hover:border-black/5 rounded-2xl transition-all cursor-pointer"
+                                className="group flex items-center justify-between p-5 bg-bg-surface hover:bg-bg-card border border-transparent hover:border-text-primary/5 rounded-2xl transition-all cursor-pointer"
                             >
 
                                 {/* Client Info */}
                                 <div className="flex items-center gap-5">
-                                    <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center font-display text-lg text-text-secondary border-2 border-white shadow-sm">
+                                    <div className="w-12 h-12 rounded-full bg-border-subtle flex items-center justify-center font-display text-lg text-text-secondary border-2 border-bg-card shadow-sm">
                                         {client.name.substring(0, 1).toUpperCase()}
                                     </div>
                                     <div>
@@ -140,7 +140,7 @@ export default function ClientsPage() {
                                 {/* Actions */}
                                 <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                     {client.phone && (
-                                        <a href={`tel:${client.phone}`} className="w-10 h-10 rounded-full bg-white text-text-primary hover:bg-black hover:text-white flex items-center justify-center transition-colors shadow-sm">
+                                        <a href={`tel:${client.phone}`} className="w-10 h-10 rounded-full bg-bg-card text-text-primary hover:bg-text-primary hover:text-bg-card flex items-center justify-center transition-colors shadow-sm">
                                             <Phone size={16} />
                                         </a>
                                     )}
@@ -151,7 +151,7 @@ export default function ClientsPage() {
                                         }}
                                         size="icon"
                                         variant="secondary"
-                                        className="bg-white shadow-sm hover:bg-accent-red hover:text-white"
+                                        className="bg-bg-card shadow-sm hover:bg-status-error hover:text-white"
                                     >
                                         <Trash2 size={16} />
                                     </Button>

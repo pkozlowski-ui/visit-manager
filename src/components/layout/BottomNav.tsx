@@ -12,13 +12,13 @@ export default function BottomNav() {
 
     return (
         <div className="fixed bottom-6 left-0 right-0 flex justify-center z-50 md:hidden px-6">
-            <nav className="bg-white/80 backdrop-blur-md border border-gray-100 p-1 rounded-full flex items-center shadow-lg shadow-black/5 w-full max-w-sm">
+            <nav className="bg-bg-card/80 backdrop-blur-md border border-border-subtle p-1 rounded-full flex items-center shadow-lg shadow-black/5 w-full max-w-sm">
                 {navItems.map((item) => (
                     <NavLink
                         key={item.path}
                         to={item.path}
                         className={({ isActive }) =>
-                            `flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-full transition-all relative no-underline ${isActive ? 'text-black' : 'text-text-secondary'
+                            `flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-full transition-all relative no-underline ${isActive ? 'text-text-primary' : 'text-text-secondary'
                             }`
                         }
                     >

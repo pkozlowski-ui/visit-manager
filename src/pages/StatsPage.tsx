@@ -20,13 +20,13 @@ export default function StatsPage() {
     return (
         <div className="h-full flex flex-col overflow-hidden">
             {/* Sticky Header */}
-            <div className="shrink-0 px-4 md:px-6 pt-5 pb-3 flex items-center justify-between bg-surface-color z-10">
+            <div className="shrink-0 px-4 md:px-6 pt-5 pb-3 flex items-center justify-between bg-bg-surface z-10">
                 <h1 className="font-display text-[22px] md:text-[28px] uppercase tracking-[2px] text-text-primary">
                     Stats
                 </h1>
 
                 {/* Period Selector */}
-                <div className="flex items-center bg-card-color rounded-full p-1 gap-0.5">
+                <div className="flex items-center bg-bg-card rounded-full p-1 gap-0.5">
                     {(['week', 'month', 'year'] as StatsPeriod[]).map(p => (
                         <button
                             key={p}
@@ -54,14 +54,14 @@ export default function StatsPage() {
                             value={stats.periodVisitCount}
                             trend={visitTrend}
                             trendLabel={period === 'week' ? 'vs last week' : period === 'month' ? 'vs last month' : 'vs last year'}
-                            accentColor="#3b82f6"
+                            accentColor="var(--color-accent-blue)"
                             delay={0.05}
                         />
                         <KpiCard
                             icon={XCircle}
                             label="Cancelled"
                             value={`${stats.cancelledCount} (${stats.cancelledPercent}%)`}
-                            accentColor={stats.cancelledPercent > 15 ? '#ef4444' : '#f59e0b'}
+                            accentColor={stats.cancelledPercent > 15 ? 'var(--color-status-error)' : 'var(--color-status-warning)'}
                             delay={0.1}
                         />
                     </div>
