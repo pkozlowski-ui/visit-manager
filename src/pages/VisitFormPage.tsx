@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { addMinutes, format, parse, parseISO } from 'date-fns';
-import { ArrowLeft, X } from 'lucide-react';
+import { ArrowLeft, X, Trash2 } from 'lucide-react';
 import { useVisits } from '../context/VisitContext';
 import { useServices } from '../context/ServiceContext';
 import { useSpecialists } from '../context/SpecialistContext';
@@ -10,6 +10,7 @@ import { useAvailability } from '../context/AvailabilityContext';
 import { roundToNearest15 } from '../utils/dateUtils';
 import { sanitizeName } from '../utils/sanitize';
 import SlotBrowser from '../components/stitch/SlotBrowser';
+import Button from '../components/ui/Button';
 import type { AvailableSlot } from '../context/AvailabilityContext';
 
 export default function VisitFormPage() {
@@ -179,9 +180,11 @@ export default function VisitFormPage() {
     };
 
     const handleDelete = () => {
+        if (!id) return;
         if (confirm('Delete this visit?')) {
-            if (id) removeVisit(id);
-            navigate('/');
+            removeVisit(id);
+            // Small delay to ensure state update propagates
+            setTimeout(() => navigate('/'), 50);
         }
     };
 
@@ -247,9 +250,16 @@ export default function VisitFormPage() {
                     )}
 
                     {isEdit && (
-                        <button onClick={handleDelete} className="w-16 h-16 rounded-full bg-white flex items-center justify-center text-accent-red hover:bg-accent-red hover:text-white transition-all shadow-sm">
-                            <X size={24} />
-                        </button>
+                        <Button
+                            type="button"
+                            onClick={handleDelete}
+                            variant="danger"
+                            size="lg"
+                            className="shadow-sm"
+                        >
+                            <Trash2 size={20} className="shrink-0" />
+                            Delete Visit
+                        </Button>
                     )}
                 </div>
             </header>

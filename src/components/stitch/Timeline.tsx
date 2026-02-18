@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useVisits } from '../../context/VisitContext';
 import { useSpecialists } from '../../context/SpecialistContext';
 import { useAvailability } from '../../context/AvailabilityContext';
@@ -13,7 +14,7 @@ interface TimelineProps {
 }
 
 export default function Timeline({ selectedDate, onSlotClick, onVisitClick, filterSpecialistId }: TimelineProps) {
-    const { visits } = useVisits();
+    const { getVisitsForDate } = useVisits();
     const { specialists } = useSpecialists();
     const { getSalonHours } = useAvailability();
 
@@ -31,6 +32,28 @@ export default function Timeline({ selectedDate, onSlotClick, onVisitClick, filt
 
     const schedule = getSalonHours(selectedDate);
 
+    // Pre-compute day visits and group by slot — replaces O(N) filtering in render
+    const dayVisits = useMemo(() => {
+        const all = getVisitsForDate(selectedDate);
+        if (filterSpecialistId) {
+            return all.filter(v => v.specialistId === filterSpecialistId);
+        }
+        return all;
+    }, [getVisitsForDate, selectedDate, filterSpecialistId]);
+
+    // Pre-group visits by "HH:mm" key for O(1) slot lookup
+    const visitsBySlot = useMemo(() => {
+        const map = new Map<string, Visit[]>();
+        for (const v of dayVisits) {
+            const start = new Date(v.startTime);
+            const key = `${start.getHours()}:${start.getMinutes()}`;
+            const arr = map.get(key);
+            if (arr) arr.push(v);
+            else map.set(key, [v]);
+        }
+        return map;
+    }, [dayVisits]);
+
     if (!schedule || !schedule.isOpen) {
         return (
             <div className="flex-1 flex flex-col items-center justify-center py-20 animate-fade-in">
@@ -42,7 +65,6 @@ export default function Timeline({ selectedDate, onSlotClick, onVisitClick, filt
             </div>
         );
     }
-
 
     const startH = schedule.hours.length > 0 ? parseInt(schedule.hours[0].openTime.split(':')[0]) : 8;
     const endH = schedule.hours.length > 0 ? parseInt(schedule.hours[schedule.hours.length - 1].closeTime.split(':')[0]) + 1 : 20;
@@ -59,13 +81,6 @@ export default function Timeline({ selectedDate, onSlotClick, onVisitClick, filt
         timeSlots.push(slot2);
     }
 
-    const dayVisits = visits.filter(v => {
-        const vDate = new Date(v.startTime);
-        return vDate.getDate() === selectedDate.getDate() &&
-            vDate.getMonth() === selectedDate.getMonth() &&
-            vDate.getFullYear() === selectedDate.getFullYear();
-    });
-
     const now = new Date();
     const currentHour = now.getHours();
     const currentMinute = now.getMinutes();
@@ -77,147 +92,144 @@ export default function Timeline({ selectedDate, onSlotClick, onVisitClick, filt
     const teamSpecialists = specialists; // Everyone in team mode
 
     return (
-        <div className="relative pb-24 px-4 lg:px-10 min-h-full">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden animate-fade-in custom-scrollbar bg-white rounded-[32px] shadow-sm mb-4">
+            <div className="relative pb-24 px-4 lg:px-6 min-h-full">
+                {/* Time Slots - 30 minute intervals */}
+                <div className="space-y-0 pt-4">
+                    {timeSlots.map((timeDate, idx) => {
+                        const hour = timeDate.getHours();
+                        const minute = timeDate.getMinutes();
+                        const isHourMark = minute === 0;
 
+                        // O(1) slot lookup instead of O(N) filter
+                        const slotVisits = visitsBySlot.get(`${hour}:${minute}`) || [];
 
+                        return (
+                            <div key={idx} className={`flex relative group ${isHourMark ? 'min-h-[60px]' : 'min-h-[60px]'}`}>
+                                {/* Time Column */}
+                                <div className="w-14 flex-shrink-0 text-right pr-4">
+                                    {isHourMark && (
+                                        <span className="text-xs font-bold text-text-secondary uppercase tracking-tight">
+                                            {hour}:00
+                                        </span>
+                                    )}
+                                </div>
 
-            {/* Time Slots - 30 minute intervals */}
-            <div className="space-y-0 pt-4">
-                {timeSlots.map((timeDate, idx) => {
-                    const hour = timeDate.getHours();
-                    const minute = timeDate.getMinutes();
-                    const isHourMark = minute === 0;
-
-                    const slotVisits = dayVisits.filter(v => {
-                        const start = new Date(v.startTime);
-                        const startH = start.getHours();
-                        const startM = start.getMinutes();
-
-                        if (filterSpecialistId && v.specialistId && v.specialistId !== filterSpecialistId) return false;
-                        if (filterSpecialistId && !v.specialistId) return false;
-
-                        // Show visit in the slot where it starts
-                        return startH === hour && startM === minute;
-                    });
-
-                    return (
-                        <div key={idx} className={`flex relative group ${isHourMark ? 'min-h-[60px]' : 'min-h-[60px]'}`}>
-                            {/* Time Column */}
-                            <div className="w-14 flex-shrink-0 text-right pr-4">
-                                {isHourMark && (
-                                    <span className="text-xs font-black text-text-muted/40 uppercase tracking-tighter">
-                                        {hour}:00
-                                    </span>
-                                )}
-                            </div>
-
-                            {/* Event Area */}
-                            <div
-                                className={`flex-1 ${isHourMark ? 'border-t border-gray-100' : 'border-t border-dashed border-gray-50/50'} relative cursor-pointer`}
-                            >
-                                {/* Grid Columns indicator/click targets for Team Mode */}
-                                {isTeamMode ? (
-                                    <div className="absolute inset-0 grid" style={{ gridTemplateColumns: `repeat(${teamSpecialists.length}, 1fr)` }}>
-                                        {teamSpecialists.map((spec) => (
-                                            <div
-                                                key={spec.id}
-                                                className="h-full border-r border-gray-50/50 last:border-r-0 hover:bg-primary/5 transition-colors group/cell relative"
-                                                onClick={() => onSlotClick(timeDate, spec.id)}
-                                            >
-                                                {/* Hover indication specifically for the cell */}
-                                                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/cell:opacity-100 transition-opacity rounded-lg pointer-events-none" />
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div
-                                        className="absolute inset-0 flex items-center group/slot"
-                                        onClick={() => onSlotClick(timeDate, filterSpecialistId || undefined)}
-                                    >
-                                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/slot:opacity-100 transition-opacity rounded-lg pointer-events-none" />
-                                    </div>
-                                )}
-
-                                {/* Render Visits */}
-                                {slotVisits.map(visit => {
-                                    const start = new Date(visit.startTime);
-                                    const end = new Date(visit.endTime);
-                                    const durationMins = (end.getTime() - start.getTime()) / 60000;
-
-                                    const height = Math.max(durationMins * (60 / 30), 40); // 60px per 30 min
-                                    const topOffset = 0; // Always at top of slot since we filter by start time
-
-                                    const isAssigned = !!visit.specialistId;
-                                    const specialistIndex = isTeamMode && visit.specialistId
-                                        ? teamSpecialists.findIndex(s => s.id === visit.specialistId)
-                                        : -1;
-
-                                    // Team Mode column logic
-                                    const columnLeft = isTeamMode && specialistIndex !== -1
-                                        ? `${(specialistIndex / teamSpecialists.length) * 100}%`
-                                        : '4px';
-                                    const columnWidth = isTeamMode && specialistIndex !== -1
-                                        ? `${(1 / teamSpecialists.length) * 100}%`
-                                        : 'calc(100% - 8px)';
-
-                                    return (
+                                {/* Event Area */}
+                                <div
+                                    className={`flex-1 ${isHourMark ? 'border-t border-gray-200' : 'border-t border-dashed border-gray-100'} relative cursor-pointer`}
+                                >
+                                    {/* Grid Columns indicator/click targets for Team Mode */}
+                                    {isTeamMode ? (
+                                        <div className="absolute inset-0 grid" style={{ gridTemplateColumns: `repeat(${teamSpecialists.length}, 1fr)` }}>
+                                            {teamSpecialists.map((spec) => (
+                                                <div
+                                                    key={spec.id}
+                                                    className="h-full border-r border-gray-100/50 last:border-r-0 hover:bg-black/5 transition-colors group/cell relative"
+                                                    onClick={() => onSlotClick(timeDate, spec.id)}
+                                                >
+                                                    {/* Hover indication specifically for the cell */}
+                                                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover/cell:opacity-100 transition-opacity rounded-lg pointer-events-none" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
                                         <div
-                                            key={visit.id}
-                                            className={`absolute rounded-[20px] p-3 sm:p-4 shadow-card hover:shadow-float hover:scale-[1.01] transition-all duration-300 flex flex-col justify-center border-l-[6px] cursor-pointer overflow-hidden z-10 ${visit.isConfirmed ? 'bg-white' : 'bg-gray-50/80 border-gray-300 opacity-90'}`}
-                                            style={{
-                                                top: `${topOffset}px`,
-                                                height: `${height}px`,
-                                                left: columnLeft,
-                                                width: columnWidth,
-                                                borderColor: visit.isConfirmed ? getSpecialistColor(visit.specialistId) : undefined,
-                                                backgroundColor: visit.isConfirmed ? `${getSpecialistColor(visit.specialistId)}08` : undefined,
-                                            }}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                onVisitClick?.(visit);
-                                            }}
+                                            className="absolute inset-0 flex items-center group/slot"
+                                            onClick={() => onSlotClick(timeDate, filterSpecialistId || undefined)}
                                         >
-                                            <div className="flex items-center gap-2 mb-1">
-                                                {isAssigned && (
+                                            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover/slot:opacity-100 transition-opacity rounded-lg pointer-events-none" />
+                                        </div>
+                                    )}
+
+                                    {/* Render Visits */}
+                                    {slotVisits.map(visit => {
+                                        const start = new Date(visit.startTime);
+                                        const end = new Date(visit.endTime);
+                                        const durationMins = (end.getTime() - start.getTime()) / 60000;
+
+                                        const height = Math.max(durationMins * (60 / 30), 40); // 60px per 30 min
+                                        const topOffset = 0; // Always at top of slot since we filter by start time
+
+                                        const color = getSpecialistColor(visit.specialistId);
+                                        const isAssigned = !!visit.specialistId;
+                                        const specialistIndex = isTeamMode && visit.specialistId
+                                            ? teamSpecialists.findIndex(s => s.id === visit.specialistId)
+                                            : -1;
+
+                                        // Team Mode column logic
+                                        const columnLeft = isTeamMode && specialistIndex !== -1
+                                            ? `${(specialistIndex / teamSpecialists.length) * 100}%`
+                                            : '4px';
+                                        const columnWidth = isTeamMode && specialistIndex !== -1
+                                            ? `${(1 / teamSpecialists.length) * 100}%`
+                                            : 'calc(100% - 8px)';
+
+                                        const backgroundColor = visit.isConfirmed
+                                            ? `color-mix(in srgb, ${color} 12%, white)`
+                                            : 'var(--color-gray-50)';
+
+                                        return (
+                                            <div
+                                                key={visit.id}
+                                                className={`absolute rounded-xl p-3 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 flex flex-col justify-center cursor-pointer overflow-hidden z-10 ${!visit.isConfirmed ? 'opacity-80' : ''}`}
+                                                style={{
+                                                    top: `${topOffset}px`,
+                                                    height: `calc(${height}px - 4px)`,
+                                                    left: `calc(${columnLeft} + 2px)`,
+                                                    width: `calc(${columnWidth} - 4px)`,
+                                                    backgroundColor
+                                                }}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onVisitClick?.(visit);
+                                                }}
+                                            >
+                                                <div className="flex flex-col gap-1 mb-1.5">
+                                                    <span className="font-bold text-[11px] leading-none" style={{ color }}>
+                                                        {formatTime(new Date(visit.startTime))}
+                                                    </span>
+                                                    <span className="font-black text-sm text-text-primary leading-tight truncate">
+                                                        {visit.clientName}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-[10px] text-text-secondary font-medium">
+                                                    {visit.customTags && visit.customTags.length > 0 && (
+                                                        <span className="truncate">{visit.customTags[0]}</span>
+                                                    )}
+                                                </div>
+
+                                                {isAssigned && isTeamMode && (
                                                     <div
-                                                        className="w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-black text-white shadow-sm flex-shrink-0"
-                                                        style={{ backgroundColor: getSpecialistColor(visit.specialistId) }}
+                                                        className="absolute bottom-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold text-white shadow-sm ring-2 ring-white/50"
+                                                        style={{ backgroundColor: color }}
                                                     >
                                                         {getSpecialistInitials(visit.specialistId)}
                                                     </div>
                                                 )}
-                                                <span className="font-black text-sm text-text-main leading-tight truncate">
-                                                    {visit.clientName}
-                                                </span>
                                             </div>
-                                            <div className="flex items-center gap-2 text-[11px] text-text-muted font-bold">
-                                                <Clock size={12} className="flex-shrink-0" />
-                                                <span>{formatTime(new Date(visit.startTime))}</span>
-                                                <span className="opacity-50">·</span>
-                                                <span className="truncate">{visit.customTags?.join(', ') || 'No service'}</span>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
 
-                                {/* Current Time Indicator */}
-                                {showCurrentTime && currentHour === hour && currentMinute >= minute && currentMinute < minute + 30 && (
-                                    <div
-                                        className="absolute left-0 right-0 z-20 pointer-events-none"
-                                        style={{
-                                            top: `${((currentMinute - minute) / 30) * 60}px`
-                                        }}
-                                    >
-                                        <div className="flex items-center">
-                                            <div className="w-2 h-2 rounded-full bg-red-500 -ml-1 shadow-lg shadow-red-500/50" />
-                                            <div className="flex-1 h-[2px] bg-red-500/80" />
+                                    {/* Current Time Indicator */}
+                                    {showCurrentTime && currentHour === hour && currentMinute >= minute && currentMinute < minute + 30 && (
+                                        <div
+                                            className="absolute left-0 right-0 z-20 pointer-events-none"
+                                            style={{
+                                                top: `${((currentMinute - minute) / 30) * 60}px`
+                                            }}
+                                        >
+                                            <div className="flex items-center">
+                                                <div className="w-2 h-2 rounded-full bg-accent-red -ml-1 shadow-lg shadow-accent-red/50" />
+                                                <div className="flex-1 h-[2px] bg-accent-red/80" />
+                                            </div>
                                         </div>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

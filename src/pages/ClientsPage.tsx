@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useClients } from '../context/ClientContext';
 import { Search, Phone, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { staggerContainer, listItem } from '../constants/motion';
 import FAB from '../components/ui/FAB';
 import Button from '../components/ui/Button';
+import { useDebounce } from '../hooks/useDebounce';
 
 export default function ClientsPage() {
     const { clients, addClient, deleteClient } = useClients();
@@ -12,10 +13,14 @@ export default function ClientsPage() {
     const [isAdding, setIsAdding] = useState(false);
     const [newClientName, setNewClientName] = useState('');
     const [newClientPhone, setNewClientPhone] = useState('');
+    const debouncedSearch = useDebounce(searchTerm, 200);
 
-    const filteredClients = clients.filter(c =>
-        c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.phone?.includes(searchTerm)
+    const filteredClients = useMemo(() =>
+        clients.filter(c =>
+            c.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+            c.phone?.includes(debouncedSearch)
+        ),
+        [clients, debouncedSearch]
     );
 
     const handleAddClient = (e: React.FormEvent) => {

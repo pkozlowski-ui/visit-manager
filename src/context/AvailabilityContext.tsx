@@ -37,7 +37,10 @@ const DEFAULT_SALON_SCHEDULE: WeeklySchedule = {
     sunday: { isOpen: false, hours: [] },
 };
 
+import { useToast } from './ToastContext';
+
 export function AvailabilityProvider({ children }: { children: ReactNode }) {
+    const { addToast } = useToast();
     const [salonSchedule, setSalonSchedule] = useState<WeeklySchedule>(() => {
         const saved = localStorage.getItem('salonSchedule');
         return saved ? JSON.parse(saved) : DEFAULT_SALON_SCHEDULE;
@@ -60,9 +63,20 @@ export function AvailabilityProvider({ children }: { children: ReactNode }) {
         localStorage.setItem('specialClosures', JSON.stringify(specialClosures));
     }, [specialClosures]);
 
-    const updateSalonSchedule = (schedule: WeeklySchedule) => setSalonSchedule(schedule);
-    const addSpecialClosure = (closure: SpecialClosure) => setSpecialClosures(prev => [...prev, closure]);
-    const removeSpecialClosure = (date: string) => setSpecialClosures(prev => prev.filter(c => c.date !== date));
+    const updateSalonSchedule = (schedule: WeeklySchedule) => {
+        setSalonSchedule(schedule);
+        addToast('Salon schedule updated', 'success');
+    };
+
+    const addSpecialClosure = (closure: SpecialClosure) => {
+        setSpecialClosures(prev => [...prev, closure]);
+        addToast(`Special closure added: ${closure.date}`, 'warning');
+    };
+
+    const removeSpecialClosure = (date: string) => {
+        setSpecialClosures(prev => prev.filter(c => c.date !== date));
+        addToast('Special closure removed', 'info');
+    };
 
     const getSalonHours = (date: Date): DaySchedule | null => {
         const dayName = format(date, 'eeee').toLowerCase();

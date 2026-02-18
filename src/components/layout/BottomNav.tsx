@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { Calendar, Users, Settings } from 'lucide-react';
+import { Calendar, Users, Settings, BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function BottomNav() {
     const navItems = [
         { label: 'Calendar', path: '/', icon: Calendar },
+        { label: 'Stats', path: '/stats', icon: BarChart3 },
         { label: 'Clients', path: '/clients', icon: Users },
         { label: 'Settings', path: '/settings', icon: Settings },
     ];

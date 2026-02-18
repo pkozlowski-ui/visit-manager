@@ -1,10 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addWeeks, subWeeks, addDays, subDays, isSameDay, format } from 'date-fns';
+import { addWeeks, subWeeks, addDays, subDays, isSameDay, format, startOfDay } from 'date-fns';
 import DashboardHeader from '../components/dashboard/DashboardHeader';
 import CalendarGrid from '../components/calendar/CalendarGrid';
 import { motion } from 'framer-motion';
-import { staggerContainer, listItem } from '../constants/motion';
+import { listItem } from '../constants/motion';
 import { useVisits } from '../context/VisitContext';
 import { useSpecialists } from '../context/SpecialistContext';
 import { useServices } from '../context/ServiceContext';
@@ -12,16 +12,21 @@ import type { Visit } from '../types';
 import DateScroller from '../components/stitch/DateScroller';
 import Timeline from '../components/stitch/Timeline';
 import { useWindowSize } from '../hooks/useWindowSize';
+import { useDebounce } from '../hooks/useDebounce';
 
+const SEARCH_RESULT_LIMIT = 100;
 
 export default function HomePage() {
     const navigate = useNavigate();
-    const { visits } = useVisits();
-    const { specialists } = useSpecialists();
+    const { visits, getVisitsForRange } = useVisits();
+    const { specialists, selectedSpecialistId } = useSpecialists();
     const { services } = useServices();
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [viewMode, setViewMode] = useState<'calendar' | 'schedule'>('calendar');
     const [searchQuery, setSearchQuery] = useState('');
+    const [showAllResults, setShowAllResults] = useState(false);
+    const debouncedQuery = useDebounce(searchQuery, 300);
+    const prevViewModeRef = useRef<'calendar' | 'schedule'>('calendar');
 
     const handlePrev = () => {
         if (viewMode === 'calendar') {
@@ -49,62 +54,106 @@ export default function HomePage() {
         navigate(`/visit/edit/${visit.id}`);
     };
 
-    const handleSearch = (query: string) => {
+    const handleSearch = useCallback((query: string) => {
         setSearchQuery(query);
+        setShowAllResults(false);
         if (query && viewMode !== 'schedule') {
+            prevViewModeRef.current = viewMode;
             setViewMode('schedule');
+        } else if (!query && prevViewModeRef.current === 'calendar') {
+            // Auto-restore calendar view when clearing search
+            setViewMode('calendar');
         }
-    };
+    }, [viewMode]);
 
-    // Filter Logic
+    // Pre-built search text index: Map<visitId, "clientname servicenames tags...">
+    // Rebuilt only when visits or services change — eliminates nested find() during search
+    const searchTextIndex = useMemo(() => {
+        const serviceMap = new Map(services.map(s => [s.id, s.name.toLowerCase()]));
+        const index = new Map<string, string>();
+        for (const visit of visits) {
+            const parts: string[] = [visit.clientName.toLowerCase()];
+            if (visit.serviceIds) {
+                for (const sid of visit.serviceIds) {
+                    const sName = serviceMap.get(sid);
+                    if (sName) parts.push(sName);
+                }
+            }
+            if (visit.customTags) {
+                for (const tag of visit.customTags) parts.push(tag.toLowerCase());
+            }
+            index.set(visit.id, parts.join(' '));
+        }
+        return index;
+    }, [visits, services]);
+
+    // Filter Logic — uses debounced query for search, date-range lookup for schedule
     const filteredVisits = useMemo(() => {
-        let result = visits;
+        let result: Visit[];
 
-        // 1. Search Filter (Global)
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            result = result.filter(visit => {
-                const clientMatch = visit.clientName.toLowerCase().includes(q);
-                const customTagMatch = visit.customTags?.some(tag => tag.toLowerCase().includes(q));
-                const serviceMatch = visit.serviceIds?.some(id => {
-                    const service = services.find(s => s.id === id);
-                    return service?.name.toLowerCase().includes(q);
-                });
-                return clientMatch || customTagMatch || serviceMatch;
+        // 1. Search Filter — uses pre-built text index for fast matching
+        if (debouncedQuery) {
+            const q = debouncedQuery.toLowerCase();
+            result = visits.filter(visit => {
+                const text = searchTextIndex.get(visit.id);
+                return text ? text.includes(q) : false;
             });
         }
-        // 2. Date Filter (Only for Schedule Mode when NOT searching)
+        // 2. Schedule Filter: Use date-range lookup (fetches only relevant days)
         else if (viewMode === 'schedule') {
-            result = result.filter(visit => isSameDay(new Date(visit.startTime), selectedDate));
+            const start = startOfDay(selectedDate);
+            const end = addDays(start, 14);
+            result = getVisitsForRange(start, end);
+        }
+        // 3. Calendar view — data handled by CalendarGrid internally
+        else {
+            return [];
         }
 
         // Sort by time
         return result.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
-    }, [visits, searchQuery, viewMode, selectedDate]);
+    }, [visits, debouncedQuery, viewMode, selectedDate, searchTextIndex, getVisitsForRange]);
 
-    // Group by Day for Schedule View
-    const groupedVisits = useMemo(() => {
-        const groups: { [key: string]: Visit[] } = {};
+    const totalResultCount = filteredVisits.length;
+    const displayedVisits = showAllResults ? filteredVisits : filteredVisits.slice(0, SEARCH_RESULT_LIMIT);
+    const hasMoreResults = totalResultCount > SEARCH_RESULT_LIMIT && !showAllResults;
 
-        filteredVisits.forEach(visit => {
-            const dateKey = format(new Date(visit.startTime), 'yyyy-MM-dd');
-            if (!groups[dateKey]) groups[dateKey] = [];
-            groups[dateKey].push(visit);
+    // Determine which specialists to show as columns
+    const visibleSpecialists = useMemo(() => {
+        if (selectedSpecialistId) {
+            return specialists.filter(s => s.id === selectedSpecialistId);
+        }
+        return specialists;
+    }, [specialists, selectedSpecialistId]);
+
+    // Group visits per specialist, then by day
+    const specialistColumns = useMemo(() => {
+        return visibleSpecialists.map(spec => {
+            const specVisits = displayedVisits.filter(v => v.specialistId === spec.id);
+
+            // Group by day
+            const dayGroups: { [key: string]: Visit[] } = {};
+            specVisits.forEach(visit => {
+                const dateKey = format(new Date(visit.startTime), 'yyyy-MM-dd');
+                if (!dayGroups[dateKey]) dayGroups[dateKey] = [];
+                dayGroups[dateKey].push(visit);
+            });
+
+            const days = Object.keys(dayGroups).sort().map(dateKey => ({
+                date: new Date(dateKey),
+                visits: dayGroups[dateKey]
+            }));
+
+            return { specialist: spec, days, totalVisits: specVisits.length };
         });
-
-        // Return sorted array of groups
-        return Object.keys(groups).sort().map(dateKey => ({
-            date: new Date(dateKey),
-            visits: groups[dateKey]
-        }));
-    }, [filteredVisits]);
+    }, [visibleSpecialists, displayedVisits]);
 
     const { width } = useWindowSize();
     const isMobile = width < 768;
     const isTablet = width >= 768 && width < 1024;
 
     return (
-        <div className="h-full flex flex-col bg-bg-color overflow-hidden">
+        <div className={`h-full flex flex-col bg-bg-color overflow-hidden ${isTablet ? 'pb-[76px]' : ''}`}>
             <DashboardHeader
                 selectedDate={selectedDate}
                 onPrev={handlePrev}
@@ -112,30 +161,30 @@ export default function HomePage() {
                 onToday={handleToday}
                 viewMode={viewMode}
                 onViewModeChange={setViewMode}
-                onSearch={handleSearch}
+                searchValue={searchQuery}
+                onSearchChange={handleSearch}
+                searchResultCount={debouncedQuery ? totalResultCount : undefined}
+                isTablet={isTablet}
             />
 
             {viewMode === 'calendar' ? (
                 isMobile ? (
                     <div className="flex-1 flex flex-col overflow-hidden animate-fade-in px-4">
                         <DateScroller selectedDate={selectedDate} onDateChange={setSelectedDate} />
-                        <div className="flex-1 overflow-y-auto custom-scrollbar">
-                            <Timeline
-                                selectedDate={selectedDate}
-                                onSlotClick={handleSlotClick}
-                                onVisitClick={handleVisitClick}
-                                filterSpecialistId={useSpecialists().selectedSpecialistId}
-                            />
-                        </div>
-
+                        <Timeline
+                            selectedDate={selectedDate}
+                            onSlotClick={handleSlotClick}
+                            onVisitClick={handleVisitClick}
+                            filterSpecialistId={selectedSpecialistId}
+                        />
                     </div>
                 ) : isTablet ? (
-                    <div className="flex-1 overflow-hidden animate-fade-in">
+                    <div className="flex-1 overflow-hidden animate-fade-in p-2 flex flex-col">
                         <CalendarGrid
                             selectedDate={selectedDate}
                             onSlotClick={handleSlotClick}
                             onVisitClick={handleVisitClick}
-                            daysToShow={3}
+                            daysToShow={5}
                         />
                     </div>
                 ) : (
@@ -146,104 +195,150 @@ export default function HomePage() {
                     />
                 )
             ) : (
-                <div className="flex-1 overflow-y-auto animate-fade-in custom-scrollbar">
-                    <motion.div
-                        variants={staggerContainer}
-                        initial="hidden"
-                        animate="show"
-                        className="max-w-3xl mx-auto pb-20 px-8"
+                /* ═══════════════════════════════════════════
+                   SCHEDULE VIEW — Specialist Column Layout
+                   ═══════════════════════════════════════════ */
+                <div className="flex-1 overflow-hidden animate-fade-in flex flex-col bg-white rounded-[32px] shadow-sm mx-4 mb-4">
+                    {/* Specialist columns */}
+                    <div
+                        className="flex-1 overflow-x-auto overflow-y-hidden custom-scrollbar"
+                        style={{ display: 'flex', gap: 0 }}
                     >
-                        {groupedVisits.length === 0 ? (
-                            <motion.div variants={listItem} className="text-center py-20 bg-white/50 rounded-[32px] border border-dashed border-gray-200 mt-8">
-                                <p className="font-display uppercase text-xl text-text-secondary">No visits found</p>
-                            </motion.div>
+                        {specialistColumns.every(col => col.totalVisits === 0) ? (
+                            <div className="flex-1 flex items-center justify-center p-8">
+                                <div className="text-center py-20 px-12 bg-gray-50 rounded-3xl border border-dashed border-border-subtle">
+                                    <p className="font-display uppercase text-xl text-text-secondary">
+                                        {debouncedQuery ? `No results for "${debouncedQuery}"` : 'No visits found'}
+                                    </p>
+                                    <p className="font-ui text-sm text-text-muted mt-2">
+                                        {debouncedQuery ? 'Try a different search term' : 'Try adjusting dates or filters'}
+                                    </p>
+                                </div>
+                            </div>
                         ) : (
-                            groupedVisits.map((group) => (
-                                <motion.div
-                                    key={group.date.toISOString()}
-                                    variants={listItem}
-                                    className="pb-12"
-                                >
-                                    {/* Day Header */}
-                                    <div className="sticky top-0 z-10 pt-10 pb-4 bg-bg-color flex items-center justify-between border-b border-black/5 -mx-8 px-8">
-                                        <div className="flex items-center gap-4">
-                                            <h2 className={`font-display uppercase text-3xl tracking-tighter ${isSameDay(group.date, new Date()) ? 'text-accent-red font-black' : 'text-text-primary font-normal'}`}>
-                                                {isSameDay(group.date, new Date()) ? 'Today' : format(group.date, 'EEEE')}
-                                            </h2>
+                            specialistColumns.map((col) => {
+                                const spec = col.specialist;
+                                const isSingle = visibleSpecialists.length === 1;
+                                const specColor = spec.color || '#999';
+
+                                return (
+                                    <motion.div
+                                        key={spec.id}
+                                        variants={listItem}
+                                        initial="hidden"
+                                        animate="show"
+                                        className={`flex flex-col border-r border-gray-100 last:border-r-0 ${isSingle ? 'flex-1 max-w-2xl mx-auto' : 'flex-1 min-w-[300px]'
+                                            }`}
+                                    >
+                                        {/* Specialist Column Header — Sticky */}
+                                        <div
+                                            className="sticky top-0 z-20 px-4 py-4 flex items-center gap-3 border-b border-gray-100 bg-white"
+                                        >
+                                            <div
+                                                className="w-10 h-10 rounded-full flex items-center justify-center font-display text-base text-white shadow-sm ring-4 ring-white/50"
+                                                style={{ backgroundColor: specColor }}
+                                            >
+                                                {spec.name.charAt(0)}
+                                            </div>
+                                            <div className="flex flex-col min-w-0">
+                                                <span className="font-black text-base text-text-primary leading-none truncate tracking-tight">
+                                                    {spec.name}
+                                                </span>
+                                                <span className="font-ui text-[10px] text-text-muted uppercase font-bold tracking-widest leading-none mt-1">
+                                                    {col.totalVisits} visit{col.totalVisits !== 1 ? 's' : ''}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-col items-end">
-                                            <span className="font-ui text-[10px] font-black uppercase text-text-secondary/40 tracking-[0.2em] leading-none mb-1">
-                                                {format(group.date, 'MMMM')}
-                                            </span>
-                                            <span className="font-display text-2xl font-normal text-text-primary leading-none">
-                                                {format(group.date, 'dd')}
-                                            </span>
-                                        </div>
-                                    </div>
 
-                                    {/* Visits Grid */}
-                                    <div className="grid gap-3">
-                                        {group.visits.map(visit => {
-                                            const specialist = specialists.find(s => s.id === visit.specialistId);
-                                            const borderColor = specialist?.color || '#e5e7eb';
-
-                                            return (
-                                                <div key={visit.id} onClick={() => handleVisitClick(visit)} className="bg-white p-5 rounded-[20px] border border-gray-100 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all cursor-pointer flex justify-between items-center group relative overflow-hidden">
-                                                    <div className="flex items-center gap-5 relative z-10">
-                                                        <div className="text-center min-w-[60px]">
-                                                            <div className="font-display text-xl text-text-primary leading-none mb-1">
-                                                                {format(new Date(visit.startTime), 'HH:mm')}
-                                                            </div>
-                                                            <div className="font-ui text-[10px] font-bold uppercase text-text-secondary/60 tracking-wider">
-                                                                {format(new Date(visit.endTime), 'HH:mm')}
-                                                            </div>
-                                                        </div>
-
-                                                        {/* Specialist Color Indicator */}
-                                                        <div
-                                                            className="w-1.5 h-10 rounded-full transition-colors"
-                                                            style={{ backgroundColor: borderColor }}
-                                                        />
-
-                                                        <div>
-                                                            <h3 className="font-display uppercase text-lg text-text-primary mb-0.5">{visit.clientName}</h3>
-                                                            <div className="flex flex-wrap items-center gap-2">
-                                                                {visit.serviceIds?.map(id => {
-                                                                    const service = services.find(s => s.id === id);
-                                                                    return service ? (
-                                                                        <span key={id} className="font-ui text-[10px] uppercase tracking-wider text-text-secondary bg-surface-color px-2 py-0.5 rounded-full border border-gray-100">
-                                                                            {service.name}
-                                                                        </span>
-                                                                    ) : null;
-                                                                })}
-                                                                {visit.customTags?.map((tag, idx) => (
-                                                                    <span key={`${tag}-${idx}`} className="font-ui text-[10px] uppercase tracking-wider text-text-secondary bg-surface-color px-2 py-0.5 rounded-full border border-gray-100 italic">
-                                                                        {tag}
-                                                                    </span>
-                                                                ))}
-                                                                {specialist && (
-                                                                    <span className="font-ui text-[10px] uppercase tracking-wider text-text-secondary/50 px-1.5 py-0.5 bg-gray-50 rounded-md">
-                                                                        {specialist.name}
-                                                                    </span>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="flex items-center gap-4 relative z-10">
-                                                        <div className="px-4 py-2 bg-surface-color rounded-xl font-ui text-[10px] font-bold uppercase tracking-wider text-text-secondary group-hover:bg-black group-hover:text-white transition-colors">
-                                                            Edit
-                                                        </div>
-                                                    </div>
+                                        {/* Column Content */}
+                                        <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-6 custom-scrollbar">
+                                            {col.totalVisits === 0 ? (
+                                                <div className="flex-1 flex items-center justify-center p-6 grayscale opacity-40">
+                                                    <p className="font-ui text-sm text-text-muted text-center font-bold italic">No output today</p>
                                                 </div>
-                                            );
-                                        })}
-                                    </div>
-                                </motion.div>
-                            ))
+                                            ) : (
+                                                <div className="flex flex-col gap-6">
+                                                    {col.days.map((dayGroup) => (
+                                                        <motion.div key={dayGroup.date.toISOString()} variants={listItem}>
+                                                            {/* Day subheader */}
+                                                            <div className="flex items-center gap-2 mb-3">
+                                                                <span className={`font-black uppercase text-xs leading-none tracking-tighter ${isSameDay(dayGroup.date, new Date())
+                                                                    ? 'text-accent-red'
+                                                                    : 'text-text-secondary'
+                                                                    }`}>
+                                                                    {isSameDay(dayGroup.date, new Date())
+                                                                        ? 'Today'
+                                                                        : format(dayGroup.date, 'EEE')}
+                                                                </span>
+                                                                <span className="font-ui text-[10px] text-text-muted uppercase font-bold tracking-widest">
+                                                                    / {format(dayGroup.date, 'MMM d')}
+                                                                </span>
+                                                                <div className="flex-1 h-px bg-gray-100" />
+                                                            </div>
+
+                                                            {/* Visit cards for this day */}
+                                                            <div className="flex flex-col gap-3">
+                                                                {dayGroup.visits.map(visit => (
+                                                                    <div
+                                                                        key={visit.id}
+                                                                        onClick={() => handleVisitClick(visit)}
+                                                                        className="p-4 rounded-xl shadow-sm hover:shadow-md hover:scale-[1.01] transition-all cursor-pointer group relative overflow-hidden flex flex-col"
+                                                                        style={{
+                                                                            backgroundColor: `color-mix(in srgb, ${specColor} 12%, white)`,
+                                                                        }}
+                                                                    >
+                                                                        <div className="flex items-center gap-3">
+                                                                            {/* Visit info */}
+                                                                            <div className="flex-1 min-w-0">
+                                                                                <div className="font-bold text-[11px] leading-none mb-1.5" style={{ color: specColor }}>
+                                                                                    {format(new Date(visit.startTime), 'HH:mm')}
+                                                                                </div>
+                                                                                <h3 className="font-black text-sm text-text-primary leading-tight truncate">
+                                                                                    {visit.clientName}
+                                                                                </h3>
+
+                                                                                <div className="flex flex-wrap items-center gap-1 mt-2">
+                                                                                    {visit.serviceIds?.slice(0, 2).map(id => {
+                                                                                        const service = services.find(s => s.id === id);
+                                                                                        return service ? (
+                                                                                            <span
+                                                                                                key={id}
+                                                                                                className="font-ui text-[8px] uppercase font-black tracking-widest text-text-secondary/70 bg-white/50 px-1.5 py-0.5 rounded-md border border-white/20 whitespace-nowrap"
+                                                                                            >
+                                                                                                {service.name}
+                                                                                            </span>
+                                                                                        ) : null;
+                                                                                    })}
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </motion.div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </motion.div>
+                                );
+                            })
                         )}
-                    </motion.div>
+                    </div>
+                    {/* Show more button */}
+                    {hasMoreResults && (
+                        <div className="px-6 py-4 border-t border-gray-100 flex justify-center bg-white rounded-b-[32px]">
+                            <button
+                                onClick={() => setShowAllResults(true)}
+                                className="font-ui font-black uppercase text-[10px] tracking-widest text-text-secondary hover:text-text-primary bg-gray-50 hover:bg-white px-8 py-3 rounded-xl border border-border-subtle hover:border-black/20 transition-all shadow-sm hover:shadow-md"
+                            >
+                                Show {totalResultCount - SEARCH_RESULT_LIMIT} more results
+                            </button>
+                        </div>
+                    )}
                 </div>
+
             )}
         </div>
     );

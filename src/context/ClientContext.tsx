@@ -21,7 +21,10 @@ const DEFAULT_CLIENTS: Client[] = dummyData.data.clients.map(c => ({
 })) as Client[];
 
 
+import { useToast } from './ToastContext';
+
 export const ClientProvider = ({ children }: { children: ReactNode }) => {
+    const { addToast } = useToast();
     const [clients, setClients] = useState<Client[]>(() => {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
@@ -42,14 +45,17 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
             createdAt: new Date()
         };
         setClients(prev => [...prev, client]);
+        addToast(`Client added: ${client.name}`, 'success');
     };
 
     const updateClient = (id: string, updated: Partial<Client>) => {
         setClients(prev => prev.map(c => c.id === id ? { ...c, ...updated } : c));
+        addToast('Client updated', 'success');
     };
 
     const deleteClient = (id: string) => {
         setClients(prev => prev.filter(c => c.id !== id));
+        addToast('Client removed', 'info');
     };
 
     return (

@@ -21,6 +21,8 @@
   --color-gray-950: #020617;
 
   /* Brand Colors */
+  --color-accent-red: #E11D48;
+  /* Rose-600 - UI Accent (buttons, actions) */
   --color-brand-50: #fff1f2;
   --color-brand-100: #ffe4e6;
   --color-brand-200: #fecdd3;
@@ -41,7 +43,6 @@
 
   /* --- COLORS: SEMANTIC --- */
   /* Backgrounds */
-  /* Backgrounds */
   --color-bg-canvas: #E3E3E3;
   --color-bg-color: var(--color-bg-canvas);
   /* LEGACY SUPPORT */
@@ -56,9 +57,6 @@
 
   --color-bg-surface-hover: var(--color-gray-100);
   --color-bg-surface-active: var(--color-gray-200);
-
-  --color-accent-red: #D71920;
-  /* LEGACY SUPPORT - Keep original value for now to match exactly */
 
   /* Text */
   --color-text-primary: #000000;

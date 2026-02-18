@@ -41,15 +41,55 @@ export default function SettingsPage() {
         resetServiceForm();
     };
 
+    // --- SPECIALIST COLORS ---
+    const SPECIALIST_COLORS = [
+        '#6B2737', // Wine Plum (Anna)
+        '#E08E45', // Toasted Almond (Marta)
+        '#3943B7', // Ocean Twilight (Kate)
+        '#10B981', // Emerald
+        '#EC4899', // Pink
+        '#06B6D4', // Cyan
+        '#84CC16', // Lime
+        '#8B5CF6', // Violet
+    ];
+
     // --- SPECIALIST HANDLERS ---
-    const resetSpecForm = () => { setSpecForm({ name: '', role: 'Stylist', offDays: [], availabilityOverrides: {} }); setIsEditingSpec(null); setIsAddingSpec(false); };
-    const handleEditSpecClick = (spec: Specialist) => { setSpecForm({ name: spec.name, role: spec.role, offDays: spec.offDays || [], availabilityOverrides: spec.availabilityOverrides || {} }); setIsEditingSpec(spec.id); setIsAddingSpec(true); };
+    const getNextColor = () => SPECIALIST_COLORS[specialists.length % SPECIALIST_COLORS.length];
+
+    const resetSpecForm = () => {
+        setSpecForm({
+            name: '',
+            role: 'Stylist',
+            color: getNextColor(), // Auto-assign next color
+            offDays: [],
+            availabilityOverrides: {}
+        });
+        setIsEditingSpec(null);
+        setIsAddingSpec(false);
+    };
+
+    const handleEditSpecClick = (spec: Specialist) => {
+        setSpecForm({
+            name: spec.name,
+            role: spec.role,
+            color: spec.color || getNextColor(), // Preserve or assign if missing
+            offDays: spec.offDays || [],
+            availabilityOverrides: spec.availabilityOverrides || {}
+        });
+        setIsEditingSpec(spec.id);
+        setIsAddingSpec(true);
+    };
+
     const handleSaveSpec = () => {
-        const sanitized = { ...specForm, name: sanitizeName(specForm.name), role: sanitizeName(specForm.role) };
+        const sanitized = {
+            ...specForm,
+            name: sanitizeName(specForm.name),
+            role: sanitizeName(specForm.role),
+            color: specForm.color // Save color
+        };
         if (isEditingSpec) updateSpecialist(isEditingSpec, sanitized); else addSpecialist(sanitized);
         resetSpecForm();
     };
-
 
 
     const handleDelete = (id: string, type: 'service' | 'specialist') => {
@@ -76,17 +116,17 @@ export default function SettingsPage() {
                 {/* Main Header - Matching ClientsPage */}
                 <header className="flex justify-between items-end mb-8 shrink-0">
                     <div>
-                        <span className="font-ui uppercase tracking-[2px] text-[14px] text-text-secondary mb-2 block">Configuration</span>
-                        <h1 className="font-display text-[48px] md:text-[64px] leading-[0.9] uppercase font-normal">Settings</h1>
+                        <span className="font-ui uppercase tracking-[2px] text-[14px] text-text-secondary mb-2 block">{t('configuration')}</span>
+                        <h1 className="font-display text-[48px] md:text-[64px] leading-[0.9] uppercase font-normal">{t('settings')}</h1>
                     </div>
                 </header>
 
                 {/* --- SERVICES SECTION --- */}
                 <section>
                     <SectionHeader
-                        title="Services"
-                        subtitle="Offerings"
-                        action={<Button onClick={() => { resetServiceForm(); setIsAddingService(true); }} size="sm" className="rounded-full px-4" variant="secondary"><Plus size={16} className="mr-2" /> Add Service</Button>}
+                        title={t('services')}
+                        subtitle={t('offerings')}
+                        action={<Button onClick={() => { resetServiceForm(); setIsAddingService(true); }} size="sm" className="rounded-full px-4" variant="secondary"><Plus size={16} className="mr-2" /> {t('add_service')}</Button>}
                     />
 
                     {/* Service Form Inline */}
@@ -95,12 +135,12 @@ export default function SettingsPage() {
                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden mb-6">
                                 <div className="bg-white p-6 rounded-[24px] border border-gray-100 shadow-lg space-y-4">
                                     <div className="flex justify-between items-center mb-2">
-                                        <h3 className="font-display uppercase text-lg text-text-secondary">{isEditingService ? 'Edit Service' : 'New Service'}</h3>
+                                        <h3 className="font-display uppercase text-lg text-text-secondary">{isEditingService ? t('edit_service') : t('new_service')}</h3>
                                         <Button onClick={resetServiceForm} variant="ghost" size="icon"><X size={20} /></Button>
                                     </div>
                                     <input className="w-full bg-surface-color h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
-                                        placeholder="SERVICE NAME..." value={serviceForm.name} onChange={e => setServiceForm({ ...serviceForm, name: e.target.value })} autoFocus />
-                                    <Button onClick={handleSaveService} className="w-full" size="lg">{isEditingService ? 'Update' : 'Save'}</Button>
+                                        placeholder={t('service_name_placeholder')} value={serviceForm.name} onChange={e => setServiceForm({ ...serviceForm, name: e.target.value })} autoFocus />
+                                    <Button onClick={handleSaveService} className="w-full" size="lg">{isEditingService ? t('update') : t('save')}</Button>
                                 </div>
                             </motion.div>
                         )}
@@ -108,7 +148,9 @@ export default function SettingsPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                         {services.map(service => (
-                            <motion.div key={service.id} layout className="group flex items-center justify-between p-4 bg-white hover:bg-white/80 border border-gray-100/50 hover:border-black/10 rounded-2xl transition-all shadow-sm">
+                            <motion.div key={service.id} layout className="group flex items-center justify-between p-4 hover:brightness-95 border border-gray-100/50 hover:border-black/10 rounded-2xl transition-all"
+                                style={{ backgroundColor: `color-mix(in srgb, ${service.color} 8%, white)` }}
+                            >
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 rounded-full flex items-center justify-center font-display text-sm text-white shadow-sm" style={{ backgroundColor: service.color }}>
                                         {service.name.charAt(0)}
@@ -127,9 +169,9 @@ export default function SettingsPage() {
                 {/* --- TEAM SECTION --- */}
                 <section>
                     <SectionHeader
-                        title="Team Members"
-                        subtitle="Staff"
-                        action={<Button onClick={() => { resetSpecForm(); setIsAddingSpec(true); }} size="sm" className="rounded-full px-4" variant="secondary"><Plus size={16} className="mr-2" /> Add Member</Button>}
+                        title={t('team_members')}
+                        subtitle={t('staff')}
+                        action={<Button onClick={() => { resetSpecForm(); setIsAddingSpec(true); }} size="sm" className="rounded-full px-4" variant="secondary"><Plus size={16} className="mr-2" /> {t('add_member')}</Button>}
                     />
 
                     <AnimatePresence>
@@ -137,14 +179,29 @@ export default function SettingsPage() {
                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden mb-6">
                                 <div className="bg-white p-6 rounded-[24px] border border-gray-100 shadow-lg space-y-4">
                                     <div className="flex justify-between items-center mb-2">
-                                        <h3 className="font-display uppercase text-lg text-text-secondary">{isEditingSpec ? 'Edit Member' : 'New Member'}</h3>
+                                        <h3 className="font-display uppercase text-lg text-text-secondary">{isEditingSpec ? t('edit_member') : t('new_member')}</h3>
                                         <Button onClick={resetSpecForm} variant="ghost" size="icon"><X size={20} /></Button>
                                     </div>
-                                    <input className="w-full bg-surface-color h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20 mb-3"
-                                        placeholder="NAME..." value={specForm.name} onChange={e => setSpecForm({ ...specForm, name: e.target.value })} autoFocus />
-                                    <input className="w-full bg-surface-color h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
-                                        placeholder="ROLE..." value={specForm.role} onChange={e => setSpecForm({ ...specForm, role: e.target.value })} />
-                                    <Button onClick={handleSaveSpec} className="w-full mt-4" size="lg">{isEditingSpec ? 'Update' : 'Save'}</Button>
+
+                                    <div className="flex gap-3">
+                                        {/* Color Indicator (Read Only) */}
+                                        <div
+                                            className="w-14 h-14 rounded-2xl shrink-0 flex items-center justify-center font-display text-xl text-white shadow-sm"
+                                            style={{ backgroundColor: specForm.color }}
+                                            title={t('assigned_color')}
+                                        >
+                                            {specForm.name.charAt(0)}
+                                        </div>
+
+                                        <div className="flex-1 space-y-3">
+                                            <input className="w-full bg-surface-color h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
+                                                placeholder={t('name_placeholder')} value={specForm.name} onChange={e => setSpecForm({ ...specForm, name: e.target.value })} autoFocus />
+                                            <input className="w-full bg-surface-color h-14 rounded-2xl px-6 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
+                                                placeholder={t('role_placeholder')} value={specForm.role} onChange={e => setSpecForm({ ...specForm, role: e.target.value })} />
+                                        </div>
+                                    </div>
+
+                                    <Button onClick={handleSaveSpec} className="w-full mt-4" size="lg">{isEditingSpec ? t('update') : t('save')}</Button>
                                 </div>
                             </motion.div>
                         )}
@@ -154,7 +211,10 @@ export default function SettingsPage() {
                         {specialists.map(spec => (
                             <motion.div key={spec.id} layout className="group flex items-center justify-between p-4 bg-white hover:bg-white/80 border border-gray-100/50 hover:border-black/10 rounded-2xl transition-all shadow-sm">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-full flex items-center justify-center font-display text-sm bg-gray-100 text-text-secondary">
+                                    <div
+                                        className="w-10 h-10 rounded-full flex items-center justify-center font-display text-sm text-white shadow-sm"
+                                        style={{ backgroundColor: spec.color || '#999' }}
+                                    >
                                         {spec.name.charAt(0)}
                                     </div>
                                     <div>
@@ -174,7 +234,7 @@ export default function SettingsPage() {
                 {/* --- SCHEDULE SECTION --- */}
                 <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div>
-                        <SectionHeader title="Opening Hours" subtitle="Schedule" />
+                        <SectionHeader title={t('opening_hours')} subtitle={t('schedule')} />
                         <div className="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm space-y-2">
                             {Object.entries(salonSchedule).map(([day, schedule]) => (
                                 <div key={day} className="flex items-center justify-between p-3 bg-surface-color/50 rounded-xl">
@@ -195,7 +255,7 @@ export default function SettingsPage() {
                                                 className="bg-transparent font-display text-lg outline-none w-20" />
                                         </div>
                                     ) : (
-                                        <span className="font-display uppercase text-text-secondary/50 tracking-wider text-sm">Closed</span>
+                                        <span className="font-display uppercase text-text-secondary/50 tracking-wider text-sm">{t('closed')}</span>
                                     )}
                                 </div>
                             ))}
@@ -203,11 +263,11 @@ export default function SettingsPage() {
                     </div>
 
                     <div>
-                        <SectionHeader title="Closures" subtitle="Exceptions" />
+                        <SectionHeader title={t('closures')} subtitle={t('exceptions')} />
                         <div className="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm mb-6">
                             <div className="flex gap-2 mb-4">
                                 <input type="date" id="new-closure-date" className="bg-surface-color px-3 py-2 rounded-xl font-display outline-none" />
-                                <input type="text" id="new-closure-reason" placeholder="REASON..." className="flex-1 bg-surface-color px-3 py-2 rounded-xl font-display uppercase outline-none" />
+                                <input type="text" id="new-closure-reason" placeholder={t('reason_placeholder')} className="flex-1 bg-surface-color px-3 py-2 rounded-xl font-display uppercase outline-none" />
                                 <Button onClick={() => {
                                     const d = (document.getElementById('new-closure-date') as HTMLInputElement);
                                     const r = (document.getElementById('new-closure-reason') as HTMLInputElement);
@@ -215,7 +275,7 @@ export default function SettingsPage() {
                                 }} size="icon" className="rounded-xl"><Plus size={18} /></Button>
                             </div>
                             <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
-                                {specialClosures.length === 0 && <div className="text-center py-4 text-text-secondary font-display uppercase text-sm">No dates</div>}
+                                {specialClosures.length === 0 && <div className="text-center py-4 text-text-secondary font-display uppercase text-sm">{t('no_dates')}</div>}
                                 {specialClosures.map(c => (
                                     <div key={c.date} className="flex justify-between items-center p-3 bg-surface-color/50 rounded-xl">
                                         <div><p className="font-display">{c.date}</p><p className="text-[10px] uppercase text-text-secondary">{c.reason}</p></div>
@@ -229,11 +289,11 @@ export default function SettingsPage() {
 
                 {/* --- PREFERENCES SECTION --- */}
                 <section>
-                    <SectionHeader title="Preferences" subtitle="System" />
+                    <SectionHeader title={t('preferences')} subtitle={t('system')} />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Theme */}
                         <div className="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm">
-                            <h3 className="font-display uppercase text-lg mb-4 flex items-center gap-2"><Sun size={18} /> Theme</h3>
+                            <h3 className="font-display uppercase text-lg mb-4 flex items-center gap-2"><Sun size={18} /> {t('theme')}</h3>
                             <div className="flex gap-2">
                                 {['light', 'dark', 'device'].map((tMode) => (
                                     <button key={tMode} onClick={() => setTheme(tMode as any)}
@@ -246,28 +306,24 @@ export default function SettingsPage() {
 
                         {/* Data */}
                         <div className="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm">
-                            <h3 className="font-display uppercase text-lg mb-4 flex items-center gap-2"><Database size={18} /> Data</h3>
+                            <h3 className="font-display uppercase text-lg mb-4 flex items-center gap-2"><Database size={18} /> {t('data')}</h3>
                             <div className="flex gap-2">
-                                <Button onClick={() => { try { downloadBackup(); alert('✅ Exported!'); } catch { alert('❌ Failed'); } }} className="flex-1" variant="secondary"><Download size={16} className="mr-2" /> Export</Button>
+                                <Button onClick={() => { try { downloadBackup(); alert(t('exported')); } catch { alert(t('export_failed')); } }} className="flex-1" variant="secondary"><Download size={16} className="mr-2" /> {t('export')}</Button>
                                 <label className="flex-1 flex items-center justify-center bg-surface-color hover:bg-gray-200 cursor-pointer rounded-xl font-display uppercase text-sm transition-colors">
-                                    <Upload size={16} className="mr-2" /> Import
+                                    <Upload size={16} className="mr-2" /> {t('import')}
                                     <input type="file" accept=".json" className="hidden" onChange={(e) => {
                                         const f = e.target.files?.[0]; if (!f) return;
-                                        const r = new FileReader(); r.onload = (ev) => { try { const res = importData(JSON.parse(ev.target?.result as string)); if (res.success) window.location.reload(); else alert(res.error); } catch { alert('Invalid file'); } };
+                                        const r = new FileReader(); r.onload = (ev) => { try { const res = importData(JSON.parse(ev.target?.result as string)); if (res.success) window.location.reload(); else alert(res.error); } catch { alert(t('invalid_file')); } };
                                         r.readAsText(f); e.target.value = '';
                                     }} />
                                 </label>
                             </div>
                             <div className="mt-4 pt-4 border-t border-gray-100">
-                                <Button onClick={() => { if (confirm('⚠️ Erase ALL data?')) { clearAllData(); window.location.reload(); } }} variant="ghost" className="w-full text-accent-red hover:bg-accent-red/5"><Trash2 size={16} className="mr-2" /> Reset All Data</Button>
+                                <Button onClick={() => { if (confirm(t('erase_warning'))) { clearAllData(); window.location.reload(); } }} variant="ghost" className="w-full text-accent-red hover:bg-accent-red/5"><Trash2 size={16} className="mr-2" /> {t('reset_data')}</Button>
                             </div>
                         </div>
                     </div>
                 </section>
-
-
-
-                <div className="h-20"></div>
             </div>
         </div>
     );

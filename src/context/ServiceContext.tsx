@@ -21,7 +21,10 @@ const DEFAULT_SERVICES: Service[] = [
     { id: '5', name: 'Consultation', color: '#A0AEC0' },
 ];
 
+import { useToast } from './ToastContext';
+
 export const ServiceProvider = ({ children }: { children: ReactNode }) => {
+    const { addToast } = useToast();
     const [services, setServices] = useState<Service[]>(() => {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
@@ -38,14 +41,17 @@ export const ServiceProvider = ({ children }: { children: ReactNode }) => {
     const addService = (newService: Omit<Service, 'id'>) => {
         const service = { ...newService, id: crypto.randomUUID() };
         setServices(prev => [...prev, service]);
+        addToast(`Service added: ${service.name}`, 'success');
     };
 
     const updateService = (id: string, updated: Partial<Service>) => {
         setServices(prev => prev.map(s => s.id === id ? { ...s, ...updated } : s));
+        addToast('Service updated', 'success');
     };
 
     const deleteService = (id: string) => {
         setServices(prev => prev.filter(s => s.id !== id));
+        addToast('Service removed', 'info');
     };
 
     return (

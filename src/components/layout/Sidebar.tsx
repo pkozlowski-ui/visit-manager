@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Calendar, Users, Settings } from 'lucide-react';
+import { Calendar, Users, Settings, BarChart3 } from 'lucide-react';
 
 import SpecialistFilter from '../specialists/SpecialistFilter';
 
@@ -82,6 +82,7 @@ export function ClockWidget({ size = 'normal' }: ClockWidgetProps) {
 function NavWidget({ isRail = false }: { isRail?: boolean }) {
   const navItems = [
     { label: 'Calendar', path: '/', icon: Calendar },
+    { label: 'Stats', path: '/stats', icon: BarChart3 },
     { label: 'Clients', path: '/clients', icon: Users },
     { label: 'Settings', path: '/settings', icon: Settings },
   ];
