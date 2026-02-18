@@ -14,11 +14,11 @@ const STORAGE_KEY = 'visit-manager-services';
 
 // Dummy Data for immediate testing
 const DEFAULT_SERVICES: Service[] = [
-    { id: '1', name: 'Strzyżenie Męskie', durationMinutes: 30, price: 50, color: '#D6BCFA' }, // Purple-200
-    { id: '2', name: 'Strzyżenie Damskie', durationMinutes: 60, price: 100, color: '#9AE6B4' }, // Green-200
-    { id: '3', name: 'Koloryzacja', durationMinutes: 120, price: 250, color: '#FBD38D' }, // Orange-200
-    { id: '4', name: 'Modelowanie', durationMinutes: 45, price: 80, color: '#E9D8FD' },
-    { id: '5', name: 'Konsultacja', durationMinutes: 15, price: 0, color: '#A0AEC0' },
+    { id: '1', name: "Men's Haircut", color: '#D6BCFA' }, // Purple-200
+    { id: '2', name: "Women's Haircut", color: '#9AE6B4' }, // Green-200
+    { id: '3', name: 'Coloring', color: '#FBD38D' }, // Orange-200
+    { id: '4', name: 'Styling', color: '#E9D8FD' },
+    { id: '5', name: 'Consultation', color: '#A0AEC0' },
 ];
 
 export const ServiceProvider = ({ children }: { children: ReactNode }) => {

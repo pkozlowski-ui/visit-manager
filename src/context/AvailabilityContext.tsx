@@ -14,7 +14,7 @@ interface AvailabilityContextType {
     getSalonHours: (date: Date) => DaySchedule | null;
     isSpecialistAvailable: (specialistId: string, start: Date, end: Date, excludeVisitId?: string) => boolean;
     findNextAvailableSlot: (specialistId: string, after: Date, durationMinutes: number) => Date | null;
-    findAvailableSlots: (params: { specialistId?: string, after: Date, durationMinutes: number, daysToSearch?: number }) => AvailableSlot[];
+    findAvailableSlots: (params: { specialistId?: string, after: Date, durationMinutes: number, daysToSearch?: number, excludeVisitId?: string }) => AvailableSlot[];
     setVisits: (visits: Visit[]) => void;
 }
 
@@ -144,7 +144,7 @@ export function AvailabilityProvider({ children }: { children: ReactNode }) {
         return null;
     };
 
-    const findAvailableSlots = ({ specialistId, after, durationMinutes, daysToSearch = 7 }: { specialistId?: string, after: Date, durationMinutes: number, daysToSearch?: number }): AvailableSlot[] => {
+    const findAvailableSlots = ({ specialistId, after, durationMinutes, daysToSearch = 7, excludeVisitId }: { specialistId?: string, after: Date, durationMinutes: number, daysToSearch?: number, excludeVisitId?: string }): AvailableSlot[] => {
         const slots: AvailableSlot[] = [];
         const specialistsToSearch = specialistId && specialistId !== 'any'
             ? specialists.filter(s => s.id === specialistId)
@@ -159,31 +159,31 @@ export function AvailabilityProvider({ children }: { children: ReactNode }) {
                 const specSchedule = spec.availabilityOverrides?.[format(searchDate, 'eeee').toLowerCase()] || schedule;
                 if (!specSchedule.isOpen) return;
 
-                // Simple gap detection in the specialist's schedule
                 specSchedule.hours.forEach(range => {
                     let current = parse(range.openTime, 'HH:mm', searchDate);
                     const rangeEnd = parse(range.closeTime, 'HH:mm', searchDate);
 
-                    // Adjust start if searching from today
                     if (isSameDay(current, after)) {
                         const nearest = roundToNearest15(after);
-                        if (nearest > current) current = addMinutes(nearest, 15);
+                        if (nearest > current) current = addMinutes(nearest, 0);
                     }
 
                     while (addMinutes(current, durationMinutes) <= rangeEnd) {
-                        slots.push({
-                            specialistId: spec.id,
-                            date: searchDate,
-                            startTime: format(current, 'HH:mm'),
-                            endTime: format(addMinutes(current, durationMinutes), 'HH:mm')
-                        });
-                        // Jump by 30 mins to offer diverse options
-                        current = addMinutes(current, 30);
-                        if (slots.length >= 10) return; // Limit for performance/UI
+                        const slotEnd = addMinutes(current, durationMinutes);
+                        if (isSpecialistAvailable(spec.id, current, slotEnd, excludeVisitId)) {
+                            slots.push({
+                                specialistId: spec.id,
+                                date: searchDate,
+                                startTime: format(current, 'HH:mm'),
+                                endTime: format(slotEnd, 'HH:mm')
+                            });
+                        }
+                        current = addMinutes(current, 15);
+                        if (slots.length >= 12) return;
                     }
                 });
             });
-            if (slots.length >= 10) break;
+            if (slots.length >= 12) break;
         }
         return slots;
     };

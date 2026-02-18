@@ -1,5 +1,4 @@
-import { format, isSameDay } from 'date-fns';
-import { Clock, ChevronRight } from 'lucide-react';
+import { format, parse } from 'date-fns';
 import type { AvailableSlot } from '../../context/AvailabilityContext';
 import { useSpecialists } from '../../context/SpecialistContext';
 
@@ -14,48 +13,59 @@ export default function SlotBrowser({ slots, selectedSlot, onSelect }: SlotBrows
 
     if (slots.length === 0) {
         return (
-            <div className="p-8 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">
-                <p className="text-xs font-bold text-text-muted/60 uppercase tracking-widest leading-loose">
-                    No slots found for selected criteria.<br />Try changing specialist or duration.
+            <div className="p-6 text-center bg-gray-50/50 rounded-2xl border border-dashed border-gray-200">
+                <p className="font-ui text-xs uppercase tracking-wider text-text-secondary">
+                    No slots found.<br />Try adjusting your criteria.
                 </p>
             </div>
         );
     }
 
     return (
-        <div className="space-y-2">
-            <label className="text-[10px] font-black text-text-muted/60 uppercase tracking-widest ml-1">Wolne terminy</label>
-            <div className="grid grid-cols-1 gap-2 max-h-[220px] overflow-y-auto no-scrollbar pr-1">
+        <div className="flex flex-col gap-4 flex-1 min-h-0">
+            <h4 className="font-display uppercase text-xl text-text-secondary shrink-0">Available Slots</h4>
+            <div className="grid grid-cols-2 gap-3 flex-1 overflow-y-auto custom-scrollbar pr-2">
                 {slots.map((slot, idx) => {
                     const specialist = specialists.find(s => s.id === slot.specialistId);
                     const isSelected = selectedSlot?.specialistId === slot.specialistId &&
                         selectedSlot?.startTime === slot.startTime &&
-                        isSameDay(selectedSlot?.date, slot.date);
+                        selectedSlot?.date.getTime() === slot.date.getTime();
+
+                    // Calculate duration
+                    const start = parse(slot.startTime, 'HH:mm', slot.date);
+                    const end = parse(slot.endTime, 'HH:mm', slot.date);
+                    const duration = Math.round((end.getTime() - start.getTime()) / 60000);
 
                     return (
                         <button
                             key={`${slot.specialistId}-${slot.date.getTime()}-${slot.startTime}-${idx}`}
                             type="button"
                             onClick={() => onSelect(slot)}
-                            className={`flex items-center justify-between p-3 rounded-2xl border transition-all text-left ${isSelected ? 'bg-primary border-primary shadow-lg shadow-primary/20' : 'bg-white border-gray-100 hover:border-primary/30 hover:bg-gray-50'}`}
+                            className={`p-4 rounded-xl flex flex-col items-start gap-2 transition-all border-2 text-left ${isSelected
+                                ? 'bg-accent-red text-white border-accent-red shadow-lg shadow-accent-red/20'
+                                : 'bg-surface-color border-transparent hover:border-black/10 hover:bg-white'
+                                }`}
                         >
-                            <div className="flex items-center gap-3">
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black ${isSelected ? 'bg-white text-primary' : 'bg-primary/10 text-primary'}`}>
-                                    {specialist?.name.substring(0, 2).toUpperCase()}
+                            <div className="flex w-full justify-between items-start">
+                                <div className="flex flex-col">
+                                    <span className={`font-display text-lg leading-none ${isSelected ? 'text-white' : 'text-text-primary'}`}>
+                                        {slot.startTime}
+                                    </span>
+                                    <span className={`font-ui text-[10px] font-bold uppercase tracking-wider mt-1 ${isSelected ? 'text-white/60' : 'text-text-secondary/60'}`}>
+                                        {duration >= 60 ? `${duration / 60}h` : `${duration}m`}
+                                    </span>
                                 </div>
-                                <div>
-                                    <div className={`text-[11px] font-black uppercase tracking-tight ${isSelected ? 'text-white' : 'text-text-main'}`}>
-                                        {format(slot.date, 'EEEE, d MMMM')}
-                                    </div>
-                                    <div className={`text-[10px] font-bold flex items-center gap-1.5 ${isSelected ? 'text-white/80' : 'text-text-muted'}`}>
-                                        <Clock size={10} />
-                                        {slot.startTime} – {slot.endTime}
-                                        <span className="mx-1 opacity-30">|</span>
-                                        {specialist?.name}
-                                    </div>
-                                </div>
+                                {isSelected && <div className="w-2 h-2 bg-white rounded-full mt-1" />}
                             </div>
-                            <ChevronRight size={16} className={isSelected ? 'text-white' : 'text-text-muted/40'} />
+
+                            <div className="flex flex-col gap-0.5 mt-auto">
+                                <span className={`font-ui text-[10px] uppercase tracking-wider ${isSelected ? 'text-white/80' : 'text-text-secondary'}`}>
+                                    {format(slot.date, 'EEE, d MMM')}
+                                </span>
+                                <span className={`font-ui text-[10px] uppercase tracking-wider ${isSelected ? 'text-white/80' : 'text-text-secondary'}`}>
+                                    {specialist?.name.split(' ')[0]}
+                                </span>
+                            </div>
                         </button>
                     );
                 })}

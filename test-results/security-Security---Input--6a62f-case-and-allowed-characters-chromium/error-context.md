@@ -1,0 +1,813 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - complementary [ref=e5]:
+    - generic [ref=e24]:
+      - link "Calendar" [ref=e26] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e27]:
+          - img [ref=e28]
+          - generic [ref=e30]: Calendar
+      - link "Clients" [active] [ref=e33] [cursor=pointer]:
+        - /url: /clients
+        - generic [ref=e35]:
+          - img [ref=e36]
+          - generic [ref=e41]: Clients
+      - link "Settings" [ref=e45] [cursor=pointer]:
+        - /url: /settings
+        - generic [ref=e46]:
+          - img [ref=e47]
+          - generic [ref=e50]: Settings
+  - main [ref=e51]:
+    - generic [ref=e54]:
+      - generic [ref=e56]:
+        - generic [ref=e57]: Directory
+        - heading "Clients" [level=1] [ref=e58]
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - img [ref=e61]
+          - textbox "SEARCH CLIENTS..." [ref=e64]
+        - generic [ref=e65]:
+          - generic [ref=e66] [cursor=pointer]:
+            - generic [ref=e67]:
+              - generic [ref=e68]: A
+              - generic [ref=e69]:
+                - heading "Agnieszka Wójcik" [level=3] [ref=e70]
+                - paragraph [ref=e71]: +48 767 119 564
+            - generic [ref=e72]:
+              - link [ref=e73]:
+                - /url: tel:+48 767 119 564
+                - img [ref=e74]
+              - button [ref=e76]:
+                - img [ref=e77]
+          - generic [ref=e80] [cursor=pointer]:
+            - generic [ref=e81]:
+              - generic [ref=e82]: A
+              - generic [ref=e83]:
+                - heading "Anna Nowak" [level=3] [ref=e84]
+                - paragraph [ref=e85]: +48 685 747 548
+            - generic [ref=e86]:
+              - link [ref=e87]:
+                - /url: tel:+48 685 747 548
+                - img [ref=e88]
+              - button [ref=e90]:
+                - img [ref=e91]
+          - generic [ref=e94] [cursor=pointer]:
+            - generic [ref=e95]:
+              - generic [ref=e96]: J
+              - generic [ref=e97]:
+                - heading "Jakub Woźniak" [level=3] [ref=e98]
+                - paragraph [ref=e99]: +48 886 630 459
+            - generic [ref=e100]:
+              - link [ref=e101]:
+                - /url: tel:+48 886 630 459
+                - img [ref=e102]
+              - button [ref=e104]:
+                - img [ref=e105]
+          - generic [ref=e108] [cursor=pointer]:
+            - generic [ref=e109]:
+              - generic [ref=e110]: A
+              - generic [ref=e111]:
+                - heading "Adam Kowalczyk" [level=3] [ref=e112]
+                - paragraph [ref=e113]: +48 793 893 257
+            - generic [ref=e114]:
+              - link [ref=e115]:
+                - /url: tel:+48 793 893 257
+                - img [ref=e116]
+              - button [ref=e118]:
+                - img [ref=e119]
+          - generic [ref=e122] [cursor=pointer]:
+            - generic [ref=e123]:
+              - generic [ref=e124]: M
+              - generic [ref=e125]:
+                - heading "Małgorzata Kowalczyk" [level=3] [ref=e126]
+                - paragraph [ref=e127]: +48 717 369 671
+            - generic [ref=e128]:
+              - link [ref=e129]:
+                - /url: tel:+48 717 369 671
+                - img [ref=e130]
+              - button [ref=e132]:
+                - img [ref=e133]
+          - generic [ref=e136] [cursor=pointer]:
+            - generic [ref=e137]:
+              - generic [ref=e138]: A
+              - generic [ref=e139]:
+                - heading "Adam Lewandowski" [level=3] [ref=e140]
+                - paragraph [ref=e141]: +48 582 199 350
+            - generic [ref=e142]:
+              - link [ref=e143]:
+                - /url: tel:+48 582 199 350
+                - img [ref=e144]
+              - button [ref=e146]:
+                - img [ref=e147]
+          - generic [ref=e150] [cursor=pointer]:
+            - generic [ref=e151]:
+              - generic [ref=e152]: K
+              - generic [ref=e153]:
+                - heading "Katarzyna Wiśniewski" [level=3] [ref=e154]
+                - paragraph [ref=e155]: +48 837 719 171
+            - generic [ref=e156]:
+              - link [ref=e157]:
+                - /url: tel:+48 837 719 171
+                - img [ref=e158]
+              - button [ref=e160]:
+                - img [ref=e161]
+          - generic [ref=e164] [cursor=pointer]:
+            - generic [ref=e165]:
+              - generic [ref=e166]: K
+              - generic [ref=e167]:
+                - heading "Katarzyna Wójcik" [level=3] [ref=e168]
+                - paragraph [ref=e169]: +48 784 802 977
+            - generic [ref=e170]:
+              - link [ref=e171]:
+                - /url: tel:+48 784 802 977
+                - img [ref=e172]
+              - button [ref=e174]:
+                - img [ref=e175]
+          - generic [ref=e178] [cursor=pointer]:
+            - generic [ref=e179]:
+              - generic [ref=e180]: M
+              - generic [ref=e181]:
+                - heading "Marcin Kowalczyk" [level=3] [ref=e182]
+                - paragraph [ref=e183]: +48 793 473 844
+            - generic [ref=e184]:
+              - link [ref=e185]:
+                - /url: tel:+48 793 473 844
+                - img [ref=e186]
+              - button [ref=e188]:
+                - img [ref=e189]
+          - generic [ref=e192] [cursor=pointer]:
+            - generic [ref=e193]:
+              - generic [ref=e194]: K
+              - generic [ref=e195]:
+                - heading "Katarzyna Kowalczyk" [level=3] [ref=e196]
+                - paragraph [ref=e197]: +48 549 958 947
+            - generic [ref=e198]:
+              - link [ref=e199]:
+                - /url: tel:+48 549 958 947
+                - img [ref=e200]
+              - button [ref=e202]:
+                - img [ref=e203]
+          - generic [ref=e206] [cursor=pointer]:
+            - generic [ref=e207]:
+              - generic [ref=e208]: M
+              - generic [ref=e209]:
+                - heading "Marek Wiśniewski" [level=3] [ref=e210]
+                - paragraph [ref=e211]: +48 511 526 547
+            - generic [ref=e212]:
+              - link [ref=e213]:
+                - /url: tel:+48 511 526 547
+                - img [ref=e214]
+              - button [ref=e216]:
+                - img [ref=e217]
+          - generic [ref=e220] [cursor=pointer]:
+            - generic [ref=e221]:
+              - generic [ref=e222]: E
+              - generic [ref=e223]:
+                - heading "Elżbieta Nowak" [level=3] [ref=e224]
+                - paragraph [ref=e225]: +48 505 376 455
+            - generic [ref=e226]:
+              - link [ref=e227]:
+                - /url: tel:+48 505 376 455
+                - img [ref=e228]
+              - button [ref=e230]:
+                - img [ref=e231]
+          - generic [ref=e234] [cursor=pointer]:
+            - generic [ref=e235]:
+              - generic [ref=e236]: J
+              - generic [ref=e237]:
+                - heading "Jan Nowak" [level=3] [ref=e238]
+                - paragraph [ref=e239]: +48 750 277 177
+            - generic [ref=e240]:
+              - link [ref=e241]:
+                - /url: tel:+48 750 277 177
+                - img [ref=e242]
+              - button [ref=e244]:
+                - img [ref=e245]
+          - generic [ref=e248] [cursor=pointer]:
+            - generic [ref=e249]:
+              - generic [ref=e250]: M
+              - generic [ref=e251]:
+                - heading "Marcin Lewandowski" [level=3] [ref=e252]
+                - paragraph [ref=e253]: +48 714 542 217
+            - generic [ref=e254]:
+              - link [ref=e255]:
+                - /url: tel:+48 714 542 217
+                - img [ref=e256]
+              - button [ref=e258]:
+                - img [ref=e259]
+          - generic [ref=e262] [cursor=pointer]:
+            - generic [ref=e263]:
+              - generic [ref=e264]: M
+              - generic [ref=e265]:
+                - heading "Monika Lewandowski" [level=3] [ref=e266]
+                - paragraph [ref=e267]: +48 715 648 902
+            - generic [ref=e268]:
+              - link [ref=e269]:
+                - /url: tel:+48 715 648 902
+                - img [ref=e270]
+              - button [ref=e272]:
+                - img [ref=e273]
+          - generic [ref=e276] [cursor=pointer]:
+            - generic [ref=e277]:
+              - generic [ref=e278]: B
+              - generic [ref=e279]:
+                - heading "Barbara Nowak" [level=3] [ref=e280]
+                - paragraph [ref=e281]: +48 713 497 572
+            - generic [ref=e282]:
+              - link [ref=e283]:
+                - /url: tel:+48 713 497 572
+                - img [ref=e284]
+              - button [ref=e286]:
+                - img [ref=e287]
+          - generic [ref=e290] [cursor=pointer]:
+            - generic [ref=e291]:
+              - generic [ref=e292]: E
+              - generic [ref=e293]:
+                - heading "Ewa Szymański" [level=3] [ref=e294]
+                - paragraph [ref=e295]: +48 526 318 594
+            - generic [ref=e296]:
+              - link [ref=e297]:
+                - /url: tel:+48 526 318 594
+                - img [ref=e298]
+              - button [ref=e300]:
+                - img [ref=e301]
+          - generic [ref=e304] [cursor=pointer]:
+            - generic [ref=e305]:
+              - generic [ref=e306]: A
+              - generic [ref=e307]:
+                - heading "Adam Woźniak" [level=3] [ref=e308]
+                - paragraph [ref=e309]: +48 850 888 614
+            - generic [ref=e310]:
+              - link [ref=e311]:
+                - /url: tel:+48 850 888 614
+                - img [ref=e312]
+              - button [ref=e314]:
+                - img [ref=e315]
+          - generic [ref=e318] [cursor=pointer]:
+            - generic [ref=e319]:
+              - generic [ref=e320]: E
+              - generic [ref=e321]:
+                - heading "Ewa Wójcik" [level=3] [ref=e322]
+                - paragraph [ref=e323]: +48 856 546 173
+            - generic [ref=e324]:
+              - link [ref=e325]:
+                - /url: tel:+48 856 546 173
+                - img [ref=e326]
+              - button [ref=e328]:
+                - img [ref=e329]
+          - generic [ref=e332] [cursor=pointer]:
+            - generic [ref=e333]:
+              - generic [ref=e334]: E
+              - generic [ref=e335]:
+                - heading "Ewa Szymański" [level=3] [ref=e336]
+                - paragraph [ref=e337]: +48 770 988 175
+            - generic [ref=e338]:
+              - link [ref=e339]:
+                - /url: tel:+48 770 988 175
+                - img [ref=e340]
+              - button [ref=e342]:
+                - img [ref=e343]
+          - generic [ref=e346] [cursor=pointer]:
+            - generic [ref=e347]:
+              - generic [ref=e348]: E
+              - generic [ref=e349]:
+                - heading "Ewa Kowalczyk" [level=3] [ref=e350]
+                - paragraph [ref=e351]: +48 630 684 264
+            - generic [ref=e352]:
+              - link [ref=e353]:
+                - /url: tel:+48 630 684 264
+                - img [ref=e354]
+              - button [ref=e356]:
+                - img [ref=e357]
+          - generic [ref=e360] [cursor=pointer]:
+            - generic [ref=e361]:
+              - generic [ref=e362]: M
+              - generic [ref=e363]:
+                - heading "Marek Kowalczyk" [level=3] [ref=e364]
+                - paragraph [ref=e365]: +48 606 156 737
+            - generic [ref=e366]:
+              - link [ref=e367]:
+                - /url: tel:+48 606 156 737
+                - img [ref=e368]
+              - button [ref=e370]:
+                - img [ref=e371]
+          - generic [ref=e374] [cursor=pointer]:
+            - generic [ref=e375]:
+              - generic [ref=e376]: M
+              - generic [ref=e377]:
+                - heading "Maria Wiśniewski" [level=3] [ref=e378]
+                - paragraph [ref=e379]: +48 644 456 595
+            - generic [ref=e380]:
+              - link [ref=e381]:
+                - /url: tel:+48 644 456 595
+                - img [ref=e382]
+              - button [ref=e384]:
+                - img [ref=e385]
+          - generic [ref=e388] [cursor=pointer]:
+            - generic [ref=e389]:
+              - generic [ref=e390]: P
+              - generic [ref=e391]:
+                - heading "Piotr Lewandowski" [level=3] [ref=e392]
+                - paragraph [ref=e393]: +48 600 474 287
+            - generic [ref=e394]:
+              - link [ref=e395]:
+                - /url: tel:+48 600 474 287
+                - img [ref=e396]
+              - button [ref=e398]:
+                - img [ref=e399]
+          - generic [ref=e402] [cursor=pointer]:
+            - generic [ref=e403]:
+              - generic [ref=e404]: A
+              - generic [ref=e405]:
+                - heading "Adam Kamiński" [level=3] [ref=e406]
+                - paragraph [ref=e407]: +48 856 458 861
+            - generic [ref=e408]:
+              - link [ref=e409]:
+                - /url: tel:+48 856 458 861
+                - img [ref=e410]
+              - button [ref=e412]:
+                - img [ref=e413]
+          - generic [ref=e416] [cursor=pointer]:
+            - generic [ref=e417]:
+              - generic [ref=e418]: P
+              - generic [ref=e419]:
+                - heading "Paweł Szymański" [level=3] [ref=e420]
+                - paragraph [ref=e421]: +48 577 705 935
+            - generic [ref=e422]:
+              - link [ref=e423]:
+                - /url: tel:+48 577 705 935
+                - img [ref=e424]
+              - button [ref=e426]:
+                - img [ref=e427]
+          - generic [ref=e430] [cursor=pointer]:
+            - generic [ref=e431]:
+              - generic [ref=e432]: B
+              - generic [ref=e433]:
+                - heading "Barbara Wójcik" [level=3] [ref=e434]
+                - paragraph [ref=e435]: +48 751 927 357
+            - generic [ref=e436]:
+              - link [ref=e437]:
+                - /url: tel:+48 751 927 357
+                - img [ref=e438]
+              - button [ref=e440]:
+                - img [ref=e441]
+          - generic [ref=e444] [cursor=pointer]:
+            - generic [ref=e445]:
+              - generic [ref=e446]: A
+              - generic [ref=e447]:
+                - heading "Anna Nowak" [level=3] [ref=e448]
+                - paragraph [ref=e449]: +48 833 234 139
+            - generic [ref=e450]:
+              - link [ref=e451]:
+                - /url: tel:+48 833 234 139
+                - img [ref=e452]
+              - button [ref=e454]:
+                - img [ref=e455]
+          - generic [ref=e458] [cursor=pointer]:
+            - generic [ref=e459]:
+              - generic [ref=e460]: B
+              - generic [ref=e461]:
+                - heading "Barbara Zieliński" [level=3] [ref=e462]
+                - paragraph [ref=e463]: +48 700 260 820
+            - generic [ref=e464]:
+              - link [ref=e465]:
+                - /url: tel:+48 700 260 820
+                - img [ref=e466]
+              - button [ref=e468]:
+                - img [ref=e469]
+          - generic [ref=e472] [cursor=pointer]:
+            - generic [ref=e473]:
+              - generic [ref=e474]: M
+              - generic [ref=e475]:
+                - heading "Maria Wójcik" [level=3] [ref=e476]
+                - paragraph [ref=e477]: +48 695 616 834
+            - generic [ref=e478]:
+              - link [ref=e479]:
+                - /url: tel:+48 695 616 834
+                - img [ref=e480]
+              - button [ref=e482]:
+                - img [ref=e483]
+          - generic [ref=e486] [cursor=pointer]:
+            - generic [ref=e487]:
+              - generic [ref=e488]: J
+              - generic [ref=e489]:
+                - heading "Jan Kowalski" [level=3] [ref=e490]
+                - paragraph [ref=e491]: +48 891 496 947
+            - generic [ref=e492]:
+              - link [ref=e493]:
+                - /url: tel:+48 891 496 947
+                - img [ref=e494]
+              - button [ref=e496]:
+                - img [ref=e497]
+          - generic [ref=e500] [cursor=pointer]:
+            - generic [ref=e501]:
+              - generic [ref=e502]: M
+              - generic [ref=e503]:
+                - heading "Marek Kowalczyk" [level=3] [ref=e504]
+                - paragraph [ref=e505]: +48 721 270 954
+            - generic [ref=e506]:
+              - link [ref=e507]:
+                - /url: tel:+48 721 270 954
+                - img [ref=e508]
+              - button [ref=e510]:
+                - img [ref=e511]
+          - generic [ref=e514] [cursor=pointer]:
+            - generic [ref=e515]:
+              - generic [ref=e516]: M
+              - generic [ref=e517]:
+                - heading "Marcin Wójcik" [level=3] [ref=e518]
+                - paragraph [ref=e519]: +48 802 456 666
+            - generic [ref=e520]:
+              - link [ref=e521]:
+                - /url: tel:+48 802 456 666
+                - img [ref=e522]
+              - button [ref=e524]:
+                - img [ref=e525]
+          - generic [ref=e528] [cursor=pointer]:
+            - generic [ref=e529]:
+              - generic [ref=e530]: P
+              - generic [ref=e531]:
+                - heading "Piotr Kamiński" [level=3] [ref=e532]
+                - paragraph [ref=e533]: +48 786 499 811
+            - generic [ref=e534]:
+              - link [ref=e535]:
+                - /url: tel:+48 786 499 811
+                - img [ref=e536]
+              - button [ref=e538]:
+                - img [ref=e539]
+          - generic [ref=e542] [cursor=pointer]:
+            - generic [ref=e543]:
+              - generic [ref=e544]: A
+              - generic [ref=e545]:
+                - heading "Adam Nowak" [level=3] [ref=e546]
+                - paragraph [ref=e547]: +48 810 644 890
+            - generic [ref=e548]:
+              - link [ref=e549]:
+                - /url: tel:+48 810 644 890
+                - img [ref=e550]
+              - button [ref=e552]:
+                - img [ref=e553]
+          - generic [ref=e556] [cursor=pointer]:
+            - generic [ref=e557]:
+              - generic [ref=e558]: P
+              - generic [ref=e559]:
+                - heading "Piotr Woźniak" [level=3] [ref=e560]
+                - paragraph [ref=e561]: +48 703 787 319
+            - generic [ref=e562]:
+              - link [ref=e563]:
+                - /url: tel:+48 703 787 319
+                - img [ref=e564]
+              - button [ref=e566]:
+                - img [ref=e567]
+          - generic [ref=e570] [cursor=pointer]:
+            - generic [ref=e571]:
+              - generic [ref=e572]: A
+              - generic [ref=e573]:
+                - heading "Adam Wójcik" [level=3] [ref=e574]
+                - paragraph [ref=e575]: +48 788 848 617
+            - generic [ref=e576]:
+              - link [ref=e577]:
+                - /url: tel:+48 788 848 617
+                - img [ref=e578]
+              - button [ref=e580]:
+                - img [ref=e581]
+          - generic [ref=e584] [cursor=pointer]:
+            - generic [ref=e585]:
+              - generic [ref=e586]: M
+              - generic [ref=e587]:
+                - heading "Michał Woźniak" [level=3] [ref=e588]
+                - paragraph [ref=e589]: +48 724 326 994
+            - generic [ref=e590]:
+              - link [ref=e591]:
+                - /url: tel:+48 724 326 994
+                - img [ref=e592]
+              - button [ref=e594]:
+                - img [ref=e595]
+          - generic [ref=e598] [cursor=pointer]:
+            - generic [ref=e599]:
+              - generic [ref=e600]: A
+              - generic [ref=e601]:
+                - heading "Anna Nowak" [level=3] [ref=e602]
+                - paragraph [ref=e603]: +48 633 624 546
+            - generic [ref=e604]:
+              - link [ref=e605]:
+                - /url: tel:+48 633 624 546
+                - img [ref=e606]
+              - button [ref=e608]:
+                - img [ref=e609]
+          - generic [ref=e612] [cursor=pointer]:
+            - generic [ref=e613]:
+              - generic [ref=e614]: A
+              - generic [ref=e615]:
+                - heading "Anna Zieliński" [level=3] [ref=e616]
+                - paragraph [ref=e617]: +48 647 760 661
+            - generic [ref=e618]:
+              - link [ref=e619]:
+                - /url: tel:+48 647 760 661
+                - img [ref=e620]
+              - button [ref=e622]:
+                - img [ref=e623]
+          - generic [ref=e626] [cursor=pointer]:
+            - generic [ref=e627]:
+              - generic [ref=e628]: M
+              - generic [ref=e629]:
+                - heading "Monika Szymański" [level=3] [ref=e630]
+                - paragraph [ref=e631]: +48 706 985 956
+            - generic [ref=e632]:
+              - link [ref=e633]:
+                - /url: tel:+48 706 985 956
+                - img [ref=e634]
+              - button [ref=e636]:
+                - img [ref=e637]
+          - generic [ref=e640] [cursor=pointer]:
+            - generic [ref=e641]:
+              - generic [ref=e642]: E
+              - generic [ref=e643]:
+                - heading "Ewa Kowalczyk" [level=3] [ref=e644]
+                - paragraph [ref=e645]: +48 589 232 912
+            - generic [ref=e646]:
+              - link [ref=e647]:
+                - /url: tel:+48 589 232 912
+                - img [ref=e648]
+              - button [ref=e650]:
+                - img [ref=e651]
+          - generic [ref=e654] [cursor=pointer]:
+            - generic [ref=e655]:
+              - generic [ref=e656]: K
+              - generic [ref=e657]:
+                - heading "Krzysztof Wójcik" [level=3] [ref=e658]
+                - paragraph [ref=e659]: +48 733 761 209
+            - generic [ref=e660]:
+              - link [ref=e661]:
+                - /url: tel:+48 733 761 209
+                - img [ref=e662]
+              - button [ref=e664]:
+                - img [ref=e665]
+          - generic [ref=e668] [cursor=pointer]:
+            - generic [ref=e669]:
+              - generic [ref=e670]: M
+              - generic [ref=e671]:
+                - heading "Monika Kowalski" [level=3] [ref=e672]
+                - paragraph [ref=e673]: +48 651 393 254
+            - generic [ref=e674]:
+              - link [ref=e675]:
+                - /url: tel:+48 651 393 254
+                - img [ref=e676]
+              - button [ref=e678]:
+                - img [ref=e679]
+          - generic [ref=e682] [cursor=pointer]:
+            - generic [ref=e683]:
+              - generic [ref=e684]: M
+              - generic [ref=e685]:
+                - heading "Maria Wiśniewski" [level=3] [ref=e686]
+                - paragraph [ref=e687]: +48 607 506 731
+            - generic [ref=e688]:
+              - link [ref=e689]:
+                - /url: tel:+48 607 506 731
+                - img [ref=e690]
+              - button [ref=e692]:
+                - img [ref=e693]
+          - generic [ref=e696] [cursor=pointer]:
+            - generic [ref=e697]:
+              - generic [ref=e698]: M
+              - generic [ref=e699]:
+                - heading "Monika Wójcik" [level=3] [ref=e700]
+                - paragraph [ref=e701]: +48 717 687 680
+            - generic [ref=e702]:
+              - link [ref=e703]:
+                - /url: tel:+48 717 687 680
+                - img [ref=e704]
+              - button [ref=e706]:
+                - img [ref=e707]
+          - generic [ref=e710] [cursor=pointer]:
+            - generic [ref=e711]:
+              - generic [ref=e712]: M
+              - generic [ref=e713]:
+                - heading "Michał Woźniak" [level=3] [ref=e714]
+                - paragraph [ref=e715]: +48 744 579 838
+            - generic [ref=e716]:
+              - link [ref=e717]:
+                - /url: tel:+48 744 579 838
+                - img [ref=e718]
+              - button [ref=e720]:
+                - img [ref=e721]
+          - generic [ref=e724] [cursor=pointer]:
+            - generic [ref=e725]:
+              - generic [ref=e726]: J
+              - generic [ref=e727]:
+                - heading "Jakub Kowalczyk" [level=3] [ref=e728]
+                - paragraph [ref=e729]: +48 883 232 506
+            - generic [ref=e730]:
+              - link [ref=e731]:
+                - /url: tel:+48 883 232 506
+                - img [ref=e732]
+              - button [ref=e734]:
+                - img [ref=e735]
+          - generic [ref=e738] [cursor=pointer]:
+            - generic [ref=e739]:
+              - generic [ref=e740]: A
+              - generic [ref=e741]:
+                - heading "Adam Woźniak" [level=3] [ref=e742]
+                - paragraph [ref=e743]: +48 830 558 545
+            - generic [ref=e744]:
+              - link [ref=e745]:
+                - /url: tel:+48 830 558 545
+                - img [ref=e746]
+              - button [ref=e748]:
+                - img [ref=e749]
+          - generic [ref=e752] [cursor=pointer]:
+            - generic [ref=e753]:
+              - generic [ref=e754]: P
+              - generic [ref=e755]:
+                - heading "Piotr Kamiński" [level=3] [ref=e756]
+                - paragraph [ref=e757]: +48 792 424 866
+            - generic [ref=e758]:
+              - link [ref=e759]:
+                - /url: tel:+48 792 424 866
+                - img [ref=e760]
+              - button [ref=e762]:
+                - img [ref=e763]
+          - generic [ref=e766] [cursor=pointer]:
+            - generic [ref=e767]:
+              - generic [ref=e768]: P
+              - generic [ref=e769]:
+                - heading "Piotr Wiśniewski" [level=3] [ref=e770]
+                - paragraph [ref=e771]: +48 685 899 917
+            - generic [ref=e772]:
+              - link [ref=e773]:
+                - /url: tel:+48 685 899 917
+                - img [ref=e774]
+              - button [ref=e776]:
+                - img [ref=e777]
+          - generic [ref=e780] [cursor=pointer]:
+            - generic [ref=e781]:
+              - generic [ref=e782]: P
+              - generic [ref=e783]:
+                - heading "Paweł Szymański" [level=3] [ref=e784]
+                - paragraph [ref=e785]: +48 778 703 842
+            - generic [ref=e786]:
+              - link [ref=e787]:
+                - /url: tel:+48 778 703 842
+                - img [ref=e788]
+              - button [ref=e790]:
+                - img [ref=e791]
+          - generic [ref=e794] [cursor=pointer]:
+            - generic [ref=e795]:
+              - generic [ref=e796]: M
+              - generic [ref=e797]:
+                - heading "Maria Wójcik" [level=3] [ref=e798]
+                - paragraph [ref=e799]: +48 644 911 786
+            - generic [ref=e800]:
+              - link [ref=e801]:
+                - /url: tel:+48 644 911 786
+                - img [ref=e802]
+              - button [ref=e804]:
+                - img [ref=e805]
+          - generic [ref=e808] [cursor=pointer]:
+            - generic [ref=e809]:
+              - generic [ref=e810]: K
+              - generic [ref=e811]:
+                - heading "Katarzyna Zieliński" [level=3] [ref=e812]
+                - paragraph [ref=e813]: +48 797 869 605
+            - generic [ref=e814]:
+              - link [ref=e815]:
+                - /url: tel:+48 797 869 605
+                - img [ref=e816]
+              - button [ref=e818]:
+                - img [ref=e819]
+          - generic [ref=e822] [cursor=pointer]:
+            - generic [ref=e823]:
+              - generic [ref=e824]: M
+              - generic [ref=e825]:
+                - heading "Monika Kowalczyk" [level=3] [ref=e826]
+                - paragraph [ref=e827]: +48 763 564 897
+            - generic [ref=e828]:
+              - link [ref=e829]:
+                - /url: tel:+48 763 564 897
+                - img [ref=e830]
+              - button [ref=e832]:
+                - img [ref=e833]
+          - generic [ref=e836] [cursor=pointer]:
+            - generic [ref=e837]:
+              - generic [ref=e838]: M
+              - generic [ref=e839]:
+                - heading "Michał Szymański" [level=3] [ref=e840]
+                - paragraph [ref=e841]: +48 562 183 383
+            - generic [ref=e842]:
+              - link [ref=e843]:
+                - /url: tel:+48 562 183 383
+                - img [ref=e844]
+              - button [ref=e846]:
+                - img [ref=e847]
+          - generic [ref=e850] [cursor=pointer]:
+            - generic [ref=e851]:
+              - generic [ref=e852]: P
+              - generic [ref=e853]:
+                - heading "Piotr Woźniak" [level=3] [ref=e854]
+                - paragraph [ref=e855]: +48 887 658 872
+            - generic [ref=e856]:
+              - link [ref=e857]:
+                - /url: tel:+48 887 658 872
+                - img [ref=e858]
+              - button [ref=e860]:
+                - img [ref=e861]
+          - generic [ref=e864] [cursor=pointer]:
+            - generic [ref=e865]:
+              - generic [ref=e866]: E
+              - generic [ref=e867]:
+                - heading "Elżbieta Lewandowski" [level=3] [ref=e868]
+                - paragraph [ref=e869]: +48 798 430 651
+            - generic [ref=e870]:
+              - link [ref=e871]:
+                - /url: tel:+48 798 430 651
+                - img [ref=e872]
+              - button [ref=e874]:
+                - img [ref=e875]
+          - generic [ref=e878] [cursor=pointer]:
+            - generic [ref=e879]:
+              - generic [ref=e880]: E
+              - generic [ref=e881]:
+                - heading "Ewa Wiśniewski" [level=3] [ref=e882]
+                - paragraph [ref=e883]: +48 893 685 322
+            - generic [ref=e884]:
+              - link [ref=e885]:
+                - /url: tel:+48 893 685 322
+                - img [ref=e886]
+              - button [ref=e888]:
+                - img [ref=e889]
+          - generic [ref=e892] [cursor=pointer]:
+            - generic [ref=e893]:
+              - generic [ref=e894]: K
+              - generic [ref=e895]:
+                - heading "Krystyna Nowak" [level=3] [ref=e896]
+                - paragraph [ref=e897]: +48 757 517 932
+            - generic [ref=e898]:
+              - link [ref=e899]:
+                - /url: tel:+48 757 517 932
+                - img [ref=e900]
+              - button [ref=e902]:
+                - img [ref=e903]
+          - generic [ref=e906] [cursor=pointer]:
+            - generic [ref=e907]:
+              - generic [ref=e908]: J
+              - generic [ref=e909]:
+                - heading "Jakub Kowalski" [level=3] [ref=e910]
+                - paragraph [ref=e911]: +48 573 588 762
+            - generic [ref=e912]:
+              - link [ref=e913]:
+                - /url: tel:+48 573 588 762
+                - img [ref=e914]
+              - button [ref=e916]:
+                - img [ref=e917]
+          - generic [ref=e920] [cursor=pointer]:
+            - generic [ref=e921]:
+              - generic [ref=e922]: E
+              - generic [ref=e923]:
+                - heading "Elżbieta Nowak" [level=3] [ref=e924]
+                - paragraph [ref=e925]: +48 572 145 293
+            - generic [ref=e926]:
+              - link [ref=e927]:
+                - /url: tel:+48 572 145 293
+                - img [ref=e928]
+              - button [ref=e930]:
+                - img [ref=e931]
+          - generic [ref=e934] [cursor=pointer]:
+            - generic [ref=e935]:
+              - generic [ref=e936]: P
+              - generic [ref=e937]:
+                - heading "Piotr Szymański" [level=3] [ref=e938]
+                - paragraph [ref=e939]: +48 516 700 681
+            - generic [ref=e940]:
+              - link [ref=e941]:
+                - /url: tel:+48 516 700 681
+                - img [ref=e942]
+              - button [ref=e944]:
+                - img [ref=e945]
+          - generic [ref=e948] [cursor=pointer]:
+            - generic [ref=e949]:
+              - generic [ref=e950]: P
+              - generic [ref=e951]:
+                - heading "Paweł Wójcik" [level=3] [ref=e952]
+                - paragraph [ref=e953]: +48 642 114 866
+            - generic [ref=e954]:
+              - link [ref=e955]:
+                - /url: tel:+48 642 114 866
+                - img [ref=e956]
+              - button [ref=e958]:
+                - img [ref=e959]
+          - generic [ref=e962] [cursor=pointer]:
+            - generic [ref=e963]:
+              - generic [ref=e964]: K
+              - generic [ref=e965]:
+                - heading "Katarzyna Nowak" [level=3] [ref=e966]
+                - paragraph [ref=e967]: +48 510 342 662
+            - generic [ref=e968]:
+              - link [ref=e969]:
+                - /url: tel:+48 510 342 662
+                - img [ref=e970]
+              - button [ref=e972]:
+                - img [ref=e973]
+      - button "Add New Client" [ref=e976]
+```

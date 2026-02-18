@@ -78,27 +78,8 @@ export default function Timeline({ selectedDate, onSlotClick, onVisitClick, filt
 
     return (
         <div className="relative pb-24 px-4 lg:px-10 min-h-full">
-            {/* Specialist Hero Header - Only in Team Mode */}
-            {isTeamMode && (
-                <div className="sticky top-[68px] z-20 bg-white/95 backdrop-blur-md mb-2 -mx-4 px-4 pt-4 pb-2 border-b border-gray-100 flex shadow-sm">
-                    <div className="w-14 flex-shrink-0"></div> {/* Match time column width */}
-                    <div className="flex-1 grid" style={{ gridTemplateColumns: `repeat(${teamSpecialists.length}, 1fr)` }}>
-                        {teamSpecialists.map(spec => (
-                            <div key={spec.id} className="flex flex-col items-center justify-center py-2 border-r border-gray-50 last:border-r-0">
-                                <div
-                                    className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black text-white mb-1 shadow-sm ring-2 ring-white"
-                                    style={{ backgroundColor: spec.color }}
-                                >
-                                    {spec.name.substring(0, 2).toUpperCase()}
-                                </div>
-                                <span className="text-[10px] font-black text-text-main uppercase tracking-tighter opacity-70">
-                                    {spec.name.split(' ')[0]}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
+
+
 
             {/* Time Slots - 30 minute intervals */}
             <div className="space-y-0 pt-4">
@@ -213,7 +194,7 @@ export default function Timeline({ selectedDate, onSlotClick, onVisitClick, filt
                                                 <Clock size={12} className="flex-shrink-0" />
                                                 <span>{formatTime(new Date(visit.startTime))}</span>
                                                 <span className="opacity-50">·</span>
-                                                <span className="truncate">{visit.serviceDescription}</span>
+                                                <span className="truncate">{visit.customTags?.join(', ') || 'No service'}</span>
                                             </div>
                                         </div>
                                     );

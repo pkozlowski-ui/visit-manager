@@ -1,101 +1,170 @@
 import { useState } from 'react';
 import { useClients } from '../context/ClientContext';
-import { Search, Phone, UserPlus, Trash2 } from 'lucide-react';
-import { sanitizeName } from '../utils/sanitize';
+import { Search, Phone, Trash2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { staggerContainer, listItem } from '../constants/motion';
+import FAB from '../components/ui/FAB';
+import Button from '../components/ui/Button';
 
 export default function ClientsPage() {
     const { clients, addClient, deleteClient } = useClients();
     const [searchTerm, setSearchTerm] = useState('');
-
-    // Create New Client State (Simple inline or modal? Let's use simple inline for MVP or just a button that might open a modal later. 
-    // For now let's just list with a "Add" placeholder that does nothing or simple prompt)
+    const [isAdding, setIsAdding] = useState(false);
+    const [newClientName, setNewClientName] = useState('');
+    const [newClientPhone, setNewClientPhone] = useState('');
 
     const filteredClients = clients.filter(c =>
         c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         c.phone?.includes(searchTerm)
     );
 
-    return (
-        <div className="pb-24 pt- safe-top">
-            {/* Header */}
-            <div className="px-6 py-6 bg-white sticky top-0 z-20 border-b border-gray-100 shadow-sm backdrop-blur-md bg-white/80">
-                <div className="flex justify-between items-center mb-4">
-                    <h1 className="text-2xl font-black text-text-main tracking-tightest">Clients</h1>
-                </div>
+    const handleAddClient = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (newClientName.trim()) {
+            addClient({
+                name: newClientName,
+                phone: newClientPhone
+            });
+            setNewClientName('');
+            setNewClientPhone('');
+            setIsAdding(false);
+        }
+    };
 
-                {/* Search */}
-                <div className="relative mt-2">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted transition-colors group-focus-within:text-primary" size={20} />
+    return (
+        <div className="h-full flex flex-col p-8">
+            {/* Header */}
+            <header className="flex justify-between items-end mb-8">
+                <div>
+                    <span className="font-ui uppercase tracking-[2px] text-[14px] text-text-secondary mb-2 block">Directory</span>
+                    <h1 className="font-display text-[64px] leading-[0.9] uppercase font-normal">Clients</h1>
+                </div>
+            </header>
+
+            {/* Content Container */}
+            <div className="bg-card-color rounded-[32px] p-6 flex-1 flex flex-col overflow-hidden shadow-sm relative">
+
+                {/* Search Bar */}
+                <div className="relative mb-6">
+                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-text-secondary" size={20} />
                     <input
                         type="text"
-                        placeholder="Search clients..."
+                        placeholder="SEARCH CLIENTS..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-gray-50/80 border border-gray-200 rounded-2xl pl-12 pr-4 py-3.5 text-base font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-text-muted/70"
+                        className="w-full bg-surface-color h-14 rounded-2xl pl-14 pr-6 font-display uppercase text-lg placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-red/20 transition-all"
                     />
                 </div>
-            </div>
 
-            {/* List */}
-            <div className="px-4 py-2 space-y-3">
-                {filteredClients.length === 0 ? (
-                    <div className="text-center py-10 text-text-muted">
-                        <p>No clients found.</p>
+                {/* Add Client Form Overlay */}
+                {isAdding && (
+                    <div className="absolute inset-x-6 top-24 z-10">
+                        <form
+                            onSubmit={handleAddClient}
+                            className="bg-white p-6 rounded-[24px] shadow-xl border border-gray-100 animate-scale-in flex flex-col gap-4"
+                        >
+                            <h3 className="font-display uppercase text-xl text-text-secondary">New Client</h3>
+                            <input
+                                autoFocus
+                                type="text"
+                                placeholder="FULL NAME..."
+                                value={newClientName}
+                                onChange={e => setNewClientName(e.target.value)}
+                                className="w-full bg-surface-color h-14 rounded-xl px-4 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
+                            />
+                            <input
+                                type="tel"
+                                placeholder="PHONE (OPTIONAL)..."
+                                value={newClientPhone}
+                                onChange={e => setNewClientPhone(e.target.value)}
+                                className="w-full bg-surface-color h-14 rounded-xl px-4 font-display uppercase text-lg focus:outline-none focus:ring-2 focus:ring-accent-red/20"
+                            />
+                            <div className="flex gap-2 justify-end">
+                                <Button
+                                    type="button"
+                                    onClick={() => setIsAdding(false)}
+                                    variant="ghost"
+                                    size="sm"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    disabled={!newClientName.trim()}
+                                    size="sm"
+                                >
+                                    Add Client
+                                </Button>
+                            </div>
+                        </form>
+                        {/* Backdrop to close */}
+                        <div className="fixed inset-0 z-[-1]" onClick={() => setIsAdding(false)} />
                     </div>
-                ) : (
-                    filteredClients.map(client => (
-                        <div key={client.id} className="group flex items-center justify-between p-5 bg-white border border-gray-100 rounded-[32px] shadow-soft hover:shadow-float hover:scale-[1.01] transition-all duration-300">
-                            <div className="flex justify-between items-start">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-secondary to-secondary/60 flex items-center justify-center text-white font-bold shadow-sm">
-                                        {client.name.substring(0, 2).toUpperCase()}
+                )}
+
+                {/* Client List */}
+                <motion.div
+                    className="flex-1 overflow-y-auto no-scrollbar space-y-3 pr-2"
+                    variants={staggerContainer}
+                    initial="hidden"
+                    animate="show"
+                >
+                    {filteredClients.length === 0 ? (
+                        <motion.div variants={listItem} className="text-center py-20 text-text-secondary font-ui uppercase tracking-widest">
+                            No clients found
+                        </motion.div>
+                    ) : (
+                        filteredClients.map(client => (
+                            <motion.div
+                                key={client.id}
+                                variants={listItem}
+                                className="group flex items-center justify-between p-5 bg-surface-color hover:bg-white border border-transparent hover:border-black/5 rounded-2xl transition-all cursor-pointer"
+                            >
+
+                                {/* Client Info */}
+                                <div className="flex items-center gap-5">
+                                    <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center font-display text-lg text-text-secondary border-2 border-white shadow-sm">
+                                        {client.name.substring(0, 1).toUpperCase()}
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-text-main leading-tight">{client.name}</h3>
-                                        {(client.phone || client.email) && (
-                                            <p className="text-xs text-text-muted mt-0.5 flex flex-col">
-                                                {client.phone && <span>{client.phone}</span>}
-                                            </p>
-                                        )}
+                                        <h3 className="font-display text-2xl leading-none mb-1 uppercase">{client.name}</h3>
+                                        <p className="font-ui text-xs text-text-secondary uppercase tracking-wider">{client.phone || 'No Phone'}</p>
                                     </div>
                                 </div>
 
                                 {/* Actions */}
-                                <div className="flex gap-3">
+                                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                     {client.phone && (
-                                        <a href={`tel:${client.phone}`} className="w-11 h-11 rounded-full bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-100 transition-colors active:scale-95">
-                                            <Phone size={20} strokeWidth={2.5} />
+                                        <a href={`tel:${client.phone}`} className="w-10 h-10 rounded-full bg-white text-text-primary hover:bg-black hover:text-white flex items-center justify-center transition-colors shadow-sm">
+                                            <Phone size={16} />
                                         </a>
                                     )}
-                                    <button
-                                        onClick={() => deleteClient(client.id)}
-                                        className="w-11 h-11 rounded-full bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-100 transition-colors active:scale-95"
+                                    <Button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            if (confirm('Delete client?')) deleteClient(client.id);
+                                        }}
+                                        size="icon"
+                                        variant="secondary"
+                                        className="bg-white shadow-sm hover:bg-accent-red hover:text-white"
                                     >
-                                        <Trash2 size={20} strokeWidth={2.5} />
-                                    </button>
+                                        <Trash2 size={16} />
+                                    </Button>
                                 </div>
-                            </div>
-                        </div>
-                    ))
-                )}
+                            </motion.div>
+                        ))
+                    )}
+                </motion.div>
             </div>
 
-            {/* Floating Action Button */}
-            <button
-                onClick={() => {
-                    const name = prompt('Client Name:');
-                    if (name) {
-                        const sanitizedName = sanitizeName(name);
-                        if (sanitizedName) {
-                            addClient({ name: sanitizedName });
-                        }
-                    }
-                }}
-                className="fixed bottom-24 right-6 bg-primary text-white px-6 py-4 rounded-full shadow-xl shadow-primary/40 flex items-center gap-2 animate-bounce-subtle z-30 hover:scale-105 transition-transform"
-            >
-                <UserPlus size={22} strokeWidth={3} />
-                <span className="font-black text-sm uppercase tracking-wider">New Client</span>
-            </button>
+            {/* FAB */}
+            <div className={`absolute bottom-10 right-10 transition-transform duration-300 ${isAdding ? 'rotate-45' : ''}`}>
+                <FAB
+                    color="red"
+                    ariaLabel="Add New Client"
+                    onClick={() => setIsAdding(!isAdding)}
+                />
+            </div>
         </div>
     );
 }

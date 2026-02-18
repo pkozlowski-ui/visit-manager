@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { format, addDays, isSameDay } from 'date-fns';
 import { pl, enUS } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 
 interface DateScrollerProps {
     selectedDate: Date;
@@ -31,16 +31,8 @@ export default function DateScroller({ selectedDate, onDateChange }: DateScrolle
     }, [selectedDate]);
 
     return (
-        <div className="flex items-center justify-between py-2 px-1">
-            <button
-                onClick={() => onDateChange(addDays(selectedDate, -1))}
-                className="p-2 text-text-muted hover:text-primary transition-colors"
-                aria-label="Previous Day"
-            >
-                <ChevronLeft size={20} />
-            </button>
-
-            <div className="flex-1 flex justify-center gap-2 overflow-x-auto no-scrollbar scroll-smooth px-2 py-3 -my-3">
+        <div className="flex items-center bg-bg-color border-b border-gray-100/50">
+            <div className="flex-1 flex px-2 py-4 gap-1 overflow-x-auto no-scrollbar scroll-smooth">
                 {dates.map((date) => {
                     const isSelected = isSameDay(date, selectedDate);
                     const isToday = isSameDay(date, new Date());
@@ -50,35 +42,28 @@ export default function DateScroller({ selectedDate, onDateChange }: DateScrolle
                             key={date.toISOString()}
                             onClick={() => onDateChange(date)}
                             className={`
-                            flex flex-col items-center justify-center min-w-[50px] h-[70px] rounded-2xl transition-all duration-300
+                            flex items-center justify-center px-4 py-2 rounded-full transition-all duration-200 shrink-0
                             ${isSelected
-                                    ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105'
-                                    : 'bg-transparent text-text-muted hover:bg-gray-100'
+                                    ? 'bg-accent-red/10 text-accent-red'
+                                    : 'bg-transparent text-text-secondary hover:bg-black/5'
                                 }
-                            ${isToday && !isSelected ? 'text-primary' : ''}
                         `}
                         >
-                            <span className="text-[10px] font-bold uppercase tracking-wider mb-1">
-                                {format(date, 'EE', { locale })}
+                            <span className="font-display uppercase text-[13px] tracking-wider flex items-center gap-1.5 whitespace-nowrap">
+                                <span className="opacity-70 font-medium">
+                                    {format(date, 'EEE', { locale })}
+                                </span>
+                                <span className="font-bold">
+                                    {format(date, 'd')}
+                                </span>
                             </span>
-                            <span className={`text-xl font-bold ${isSelected ? 'text-white' : 'text-text-main'}`}>
-                                {format(date, 'd')}
-                            </span>
-                            {isToday && (
-                                <div className={`w-1 h-1 rounded-full mt-1 ${isSelected ? 'bg-white' : 'bg-primary'}`}></div>
+                            {isToday && !isSelected && (
+                                <div className="ml-1.5 w-1.5 h-1.5 rounded-full bg-accent-red/40"></div>
                             )}
                         </button>
                     )
                 })}
             </div>
-
-            <button
-                onClick={() => onDateChange(addDays(selectedDate, 1))}
-                className="p-2 text-text-muted hover:text-primary transition-colors"
-                aria-label="Next Day"
-            >
-                <ChevronRight size={20} />
-            </button>
         </div>
     );
 }

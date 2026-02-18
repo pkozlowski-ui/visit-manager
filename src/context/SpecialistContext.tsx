@@ -14,9 +14,9 @@ const SpecialistContext = createContext<SpecialistContextType | undefined>(undef
 
 // Dummy Data
 const DEFAULT_SPECIALISTS: Specialist[] = [
-    { id: '1', name: 'Anna', role: 'Stylist', color: '#0EA5E9' }, // Sky Blue
-    { id: '2', name: 'Marta', role: 'Junior', color: '#FF7D52' }, // Coral/Orange
-    { id: '3', name: 'Kasia', role: 'Manager', color: '#10B981' }, // Emerald/Green
+    { id: '1', name: 'Anna', role: 'Stylist', color: '#E11D48' }, // Brand Red
+    { id: '2', name: 'Marta', role: 'Junior Stylist', color: '#F59E0B' }, // Amber Yellow
+    { id: '3', name: 'Kate', role: 'Manager', color: '#3B82F6' }, // Info Blue
 ];
 
 export function SpecialistProvider({ children }: { children: ReactNode }) {

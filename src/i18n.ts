@@ -252,7 +252,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: "pl", // Default language
+        lng: "en", // Default language
         interpolation: {
             escapeValue: false
         }

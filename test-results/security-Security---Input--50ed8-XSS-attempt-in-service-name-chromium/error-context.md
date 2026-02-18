@@ -1,0 +1,227 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - complementary [ref=e5]:
+    - generic [ref=e24]:
+      - link "Calendar" [ref=e26] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e27]:
+          - img [ref=e28]
+          - generic [ref=e30]: Calendar
+      - link "Clients" [ref=e33] [cursor=pointer]:
+        - /url: /clients
+        - generic [ref=e34]:
+          - img [ref=e35]
+          - generic [ref=e40]: Clients
+      - link "Settings" [ref=e43] [cursor=pointer]:
+        - /url: /settings
+        - generic [ref=e45]:
+          - img [ref=e46]
+          - generic [ref=e49]: Settings
+  - main [ref=e51]:
+    - generic [ref=e55]:
+      - generic [ref=e57]:
+        - generic [ref=e58]: Configuration
+        - heading "Settings" [level=1] [ref=e59]
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - generic [ref=e63]: Offerings
+            - heading "Services" [level=2] [ref=e64]
+          - button "Add Service" [ref=e65]:
+            - img [ref=e66]
+            - text: Add Service
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - heading "New Service" [level=3] [ref=e70]
+            - button [ref=e71]:
+              - img [ref=e72]
+          - textbox "SERVICE NAME..." [active] [ref=e75]
+          - button "Save" [ref=e76]
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]:
+              - generic [ref=e80]: M
+              - generic [ref=e81]: Men's Haircut
+            - generic [ref=e82]:
+              - button [ref=e83]:
+                - img [ref=e84]
+              - button [ref=e86]:
+                - img [ref=e87]
+          - generic [ref=e90]:
+            - generic [ref=e91]:
+              - generic [ref=e92]: W
+              - generic [ref=e93]: Women's Haircut
+            - generic [ref=e94]:
+              - button [ref=e95]:
+                - img [ref=e96]
+              - button [ref=e98]:
+                - img [ref=e99]
+          - generic [ref=e102]:
+            - generic [ref=e103]:
+              - generic [ref=e104]: C
+              - generic [ref=e105]: Coloring
+            - generic [ref=e106]:
+              - button [ref=e107]:
+                - img [ref=e108]
+              - button [ref=e110]:
+                - img [ref=e111]
+          - generic [ref=e114]:
+            - generic [ref=e115]:
+              - generic [ref=e116]: S
+              - generic [ref=e117]: Styling
+            - generic [ref=e118]:
+              - button [ref=e119]:
+                - img [ref=e120]
+              - button [ref=e122]:
+                - img [ref=e123]
+          - generic [ref=e126]:
+            - generic [ref=e127]:
+              - generic [ref=e128]: C
+              - generic [ref=e129]: Consultation
+            - generic [ref=e130]:
+              - button [ref=e131]:
+                - img [ref=e132]
+              - button [ref=e134]:
+                - img [ref=e135]
+      - generic [ref=e138]:
+        - generic [ref=e139]:
+          - generic [ref=e140]:
+            - generic [ref=e141]: Staff
+            - heading "Team Members" [level=2] [ref=e142]
+          - button "Add Member" [ref=e143]:
+            - img [ref=e144]
+            - text: Add Member
+        - generic [ref=e145]:
+          - generic [ref=e146]:
+            - generic [ref=e147]:
+              - generic [ref=e148]: A
+              - generic [ref=e149]:
+                - heading "Anna" [level=3] [ref=e150]
+                - paragraph [ref=e151]: Stylist
+            - generic [ref=e152]:
+              - button [ref=e153]:
+                - img [ref=e154]
+              - button [ref=e156]:
+                - img [ref=e157]
+          - generic [ref=e160]:
+            - generic [ref=e161]:
+              - generic [ref=e162]: M
+              - generic [ref=e163]:
+                - heading "Marta" [level=3] [ref=e164]
+                - paragraph [ref=e165]: Junior Stylist
+            - generic [ref=e166]:
+              - button [ref=e167]:
+                - img [ref=e168]
+              - button [ref=e170]:
+                - img [ref=e171]
+          - generic [ref=e174]:
+            - generic [ref=e175]:
+              - generic [ref=e176]: K
+              - generic [ref=e177]:
+                - heading "Kate" [level=3] [ref=e178]
+                - paragraph [ref=e179]: Manager
+            - generic [ref=e180]:
+              - button [ref=e181]:
+                - img [ref=e182]
+              - button [ref=e184]:
+                - img [ref=e185]
+      - generic [ref=e188]:
+        - generic [ref=e189]:
+          - generic [ref=e191]:
+            - generic [ref=e192]: Schedule
+            - heading "Opening Hours" [level=2] [ref=e193]
+          - generic [ref=e194]:
+            - generic [ref=e195]:
+              - generic [ref=e196]:
+                - checkbox [checked] [ref=e197]
+                - generic [ref=e198]: monday
+              - generic [ref=e199]:
+                - textbox [ref=e200]: 09:00
+                - generic [ref=e201]: "-"
+                - textbox [ref=e202]: 19:00
+            - generic [ref=e203]:
+              - generic [ref=e204]:
+                - checkbox [checked] [ref=e205]
+                - generic [ref=e206]: tuesday
+              - generic [ref=e207]:
+                - textbox [ref=e208]: 09:00
+                - generic [ref=e209]: "-"
+                - textbox [ref=e210]: 19:00
+            - generic [ref=e211]:
+              - generic [ref=e212]:
+                - checkbox [checked] [ref=e213]
+                - generic [ref=e214]: wednesday
+              - generic [ref=e215]:
+                - textbox [ref=e216]: 09:00
+                - generic [ref=e217]: "-"
+                - textbox [ref=e218]: 19:00
+            - generic [ref=e219]:
+              - generic [ref=e220]:
+                - checkbox [checked] [ref=e221]
+                - generic [ref=e222]: thursday
+              - generic [ref=e223]:
+                - textbox [ref=e224]: 09:00
+                - generic [ref=e225]: "-"
+                - textbox [ref=e226]: 19:00
+            - generic [ref=e227]:
+              - generic [ref=e228]:
+                - checkbox [checked] [ref=e229]
+                - generic [ref=e230]: friday
+              - generic [ref=e231]:
+                - textbox [ref=e232]: 09:00
+                - generic [ref=e233]: "-"
+                - textbox [ref=e234]: 19:00
+            - generic [ref=e235]:
+              - generic [ref=e236]:
+                - checkbox [checked] [ref=e237]
+                - generic [ref=e238]: saturday
+              - generic [ref=e239]:
+                - textbox [ref=e240]: 10:00
+                - generic [ref=e241]: "-"
+                - textbox [ref=e242]: 14:00
+            - generic [ref=e243]:
+              - generic [ref=e244]:
+                - checkbox [ref=e245]
+                - generic [ref=e246]: sunday
+              - generic [ref=e247]: Closed
+        - generic [ref=e248]:
+          - generic [ref=e250]:
+            - generic [ref=e251]: Exceptions
+            - heading "Closures" [level=2] [ref=e252]
+          - generic [ref=e253]:
+            - generic [ref=e254]:
+              - textbox [ref=e255]
+              - textbox "REASON..." [ref=e256]
+              - button [ref=e257]:
+                - img [ref=e258]
+            - generic [ref=e260]: No dates
+      - generic [ref=e261]:
+        - generic [ref=e263]:
+          - generic [ref=e264]: System
+          - heading "Preferences" [level=2] [ref=e265]
+        - generic [ref=e266]:
+          - generic [ref=e267]:
+            - heading "Theme" [level=3] [ref=e268]:
+              - img [ref=e269]
+              - text: Theme
+            - generic [ref=e275]:
+              - button "light" [ref=e276]
+              - button "dark" [ref=e277]
+              - button "device" [ref=e278]
+          - generic [ref=e279]:
+            - heading "Data" [level=3] [ref=e280]:
+              - img [ref=e281]
+              - text: Data
+            - generic [ref=e285]:
+              - button "Export" [ref=e286]:
+                - img [ref=e287]
+                - text: Export
+              - generic [ref=e290] [cursor=pointer]:
+                - img [ref=e291]
+                - text: Import
+            - button "Reset All Data" [ref=e295]:
+              - img [ref=e296]
+              - text: Reset All Data
+```

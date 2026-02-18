@@ -8,15 +8,32 @@ interface VisitContextType {
     removeVisit: (id: string) => void;
 }
 
+import dummyData from '../data/dummy_data.json';
+
 const VisitContext = createContext<VisitContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'visit-manager-visits';
+const STORAGE_KEY = 'visit-manager-visits-v2';
+
+const DEFAULT_VISITS: Visit[] = dummyData.data.visits.map(v => ({
+    ...v,
+    startTime: new Date(v.startTime),
+    endTime: new Date(v.endTime),
+    // Ensure all required fields from Visit type are present
+    // The dummy data seems to match the Visit type structure roughly
+    isConfirmed: v.isConfirmed ?? true,
+    status: (v.status as 'confirmed' | 'cancelled' | 'completed') ?? 'confirmed',
+    serviceIds: [v.serviceId] // Map single serviceId to array if needed by type, checks needed
+})) as unknown as Visit[];
+
+
+
 
 export const VisitProvider = ({ children }: { children: ReactNode }) => {
     const [visits, setVisits] = useState<Visit[]>(() => {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
-            if (!stored) return [];
+            if (!stored) return DEFAULT_VISITS;
+
             const parsed = JSON.parse(stored);
             // Re-instantiate Date objects
             return parsed.map((v: unknown) => {

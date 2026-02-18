@@ -6,8 +6,8 @@ export interface Visit {
     clientId?: string; // Optional, links to Client
     clientName: string;
     clientPhone?: string;
-    serviceDescription: string;
-    serviceId?: string;
+    serviceIds?: string[]; // Multiple service IDs
+    customTags?: string[]; // Custom service tags/names
     startTime: Date;
     endTime: Date;
     status: Status;
@@ -17,8 +17,6 @@ export interface Visit {
 export interface Service {
     id: string;
     name: string;
-    durationMinutes: number;
-    price: number;
     color?: string; // Hex code for timeline
 }
 

@@ -10,14 +10,16 @@ interface ClientContextType {
 
 const ClientContext = createContext<ClientContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'visit-manager-clients';
+import dummyData from '../data/dummy_data.json';
+
+const STORAGE_KEY = 'visit-manager-clients-v2';
 
 // Dummy Data
-const DEFAULT_CLIENTS: Client[] = [
-    { id: 'c1', name: 'Zofia Kaczmarek', phone: '500-123-456', notes: 'Lubi herbatę', createdAt: new Date() },
-    { id: 'c2', name: 'Marek Nowak', phone: '600-987-654', notes: 'Uczulenie na lateks', createdAt: new Date() },
-    { id: 'c3', name: 'Ewa Wiśniewska', email: 'ewa@example.com', createdAt: new Date() },
-];
+const DEFAULT_CLIENTS: Client[] = dummyData.data.clients.map(c => ({
+    ...c,
+    createdAt: new Date(c.createdAt)
+})) as Client[];
+
 
 export const ClientProvider = ({ children }: { children: ReactNode }) => {
     const [clients, setClients] = useState<Client[]>(() => {

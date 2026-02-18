@@ -1,0 +1,467 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - complementary [ref=e5]:
+    - generic [ref=e24]:
+      - link "Calendar" [ref=e26] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e28]:
+          - img [ref=e29]
+          - generic [ref=e31]: Calendar
+      - link "Clients" [ref=e35] [cursor=pointer]:
+        - /url: /clients
+        - generic [ref=e36]:
+          - img [ref=e37]
+          - generic [ref=e42]: Clients
+      - link "Settings" [ref=e45] [cursor=pointer]:
+        - /url: /settings
+        - generic [ref=e46]:
+          - img [ref=e47]
+          - generic [ref=e50]: Settings
+    - generic [ref=e52]:
+      - generic [ref=e53]: Filter View
+      - generic [ref=e55]:
+        - generic [ref=e56] [cursor=pointer]:
+          - generic [ref=e57]: A
+          - generic [ref=e58]: Anna
+        - generic [ref=e59] [cursor=pointer]:
+          - generic [ref=e60]: M
+          - generic [ref=e61]: Marta
+        - generic [ref=e62] [cursor=pointer]:
+          - generic [ref=e63]: K
+          - generic [ref=e64]: Kate
+        - generic [ref=e65] [cursor=pointer]:
+          - generic [ref=e67]: +
+          - generic [ref=e68]: All
+  - main [ref=e69]:
+    - generic [ref=e72]:
+      - generic [ref=e73]:
+        - generic [ref=e75]:
+          - heading "Feb 16—22" [level=1] [ref=e76]
+          - generic [ref=e77]:
+            - button [ref=e78]:
+              - img [ref=e79]
+            - button "Today" [ref=e81]
+            - button [ref=e82]:
+              - img [ref=e83]
+        - generic [ref=e85]:
+          - generic [ref=e86]:
+            - button [ref=e87]:
+              - img [ref=e88]
+            - button [ref=e90]:
+              - img [ref=e91]
+          - generic [ref=e92]:
+            - generic:
+              - img
+            - textbox "SEARCH..." [ref=e93]
+          - link [ref=e94] [cursor=pointer]:
+            - /url: /visit/new
+            - button [ref=e95]
+      - generic [ref=e103]:
+        - generic [ref=e104]:
+          - generic [ref=e105]: 9:00
+          - generic [ref=e106]: 10:00
+          - generic [ref=e107]: 11:00
+          - generic [ref=e108]: 12:00
+          - generic [ref=e109]: 13:00
+          - generic [ref=e110]: 14:00
+          - generic [ref=e111]: 15:00
+          - generic [ref=e112]: 16:00
+          - generic [ref=e113]: 17:00
+          - generic [ref=e114]: 18:00
+          - generic [ref=e115]: 19:00
+        - generic [ref=e118]: Mon 16
+        - generic [ref=e142]:
+          - generic [ref=e144]: Tue 17
+          - generic:
+            - generic [ref=e169] [cursor=pointer]:
+              - generic [ref=e171]:
+                - generic [ref=e172]: 08:05
+                - generic: Monika
+              - generic "Anna" [ref=e173]: A
+            - generic [ref=e175] [cursor=pointer]:
+              - generic [ref=e177]:
+                - generic [ref=e178]: 08:05
+                - generic: Jan
+              - generic "Marta" [ref=e179]: M
+            - generic [ref=e181] [cursor=pointer]:
+              - generic [ref=e183]:
+                - generic [ref=e184]: 08:10
+                - generic: Monika
+              - generic "Kate" [ref=e185]: K
+            - generic [ref=e187] [cursor=pointer]:
+              - generic [ref=e189]:
+                - generic [ref=e190]: 08:55
+                - generic: Barbara
+              - generic "Marta" [ref=e191]: M
+            - generic [ref=e193] [cursor=pointer]:
+              - generic [ref=e195]:
+                - generic [ref=e196]: 09:25
+                - generic: Anna
+              - generic "Kate" [ref=e197]: K
+            - generic [ref=e199] [cursor=pointer]:
+              - generic [ref=e201]:
+                - generic [ref=e202]: 09:30
+                - generic: Marcin
+              - generic "Marta" [ref=e203]: M
+            - generic [ref=e205] [cursor=pointer]:
+              - generic [ref=e207]:
+                - generic [ref=e208]: 09:40
+                - generic: Monika
+              - generic "Anna" [ref=e209]: A
+            - generic [ref=e211] [cursor=pointer]:
+              - generic [ref=e213]:
+                - generic [ref=e214]: 10:20
+                - generic: Katarzyna
+              - generic "Kate" [ref=e215]: K
+            - generic [ref=e217] [cursor=pointer]:
+              - generic [ref=e219]:
+                - generic [ref=e220]: 10:40
+                - generic: Katarzyna
+              - generic "Marta" [ref=e221]: M
+            - generic [ref=e223] [cursor=pointer]:
+              - generic [ref=e225]:
+                - generic [ref=e226]: 10:45
+                - generic: Piotr
+              - generic "Anna" [ref=e227]: A
+            - generic [ref=e229] [cursor=pointer]:
+              - generic [ref=e231]:
+                - generic [ref=e232]: 11:30
+                - generic: Krystyna
+              - generic "Kate" [ref=e233]: K
+            - generic [ref=e235] [cursor=pointer]:
+              - generic [ref=e237]:
+                - generic [ref=e238]: 13:00
+                - generic: Anna
+              - generic "Kate" [ref=e239]: K
+            - generic [ref=e241] [cursor=pointer]:
+              - generic [ref=e243]:
+                - generic [ref=e244]: 13:15
+                - generic: Michał
+              - generic "Marta" [ref=e245]: M
+            - generic [ref=e247] [cursor=pointer]:
+              - generic [ref=e249]:
+                - generic [ref=e250]: 14:00
+                - generic: Marek
+              - generic "Anna" [ref=e251]: A
+            - generic [ref=e253] [cursor=pointer]:
+              - generic [ref=e255]:
+                - generic [ref=e256]: 14:00
+                - generic: Katarzyna
+              - generic "Marta" [ref=e257]: M
+            - generic [ref=e259] [cursor=pointer]:
+              - generic [ref=e261]:
+                - generic [ref=e262]: 14:10
+                - generic: Maria
+              - generic "Kate" [ref=e263]: K
+            - generic [ref=e265] [cursor=pointer]:
+              - generic [ref=e267]:
+                - generic [ref=e268]: 16:40
+                - generic: Tomasz
+              - generic "Kate" [ref=e269]: K
+            - generic [ref=e271] [cursor=pointer]:
+              - generic [ref=e273]:
+                - generic [ref=e274]: 17:05
+                - generic: Maria
+              - generic "Anna" [ref=e275]: A
+            - generic [ref=e277] [cursor=pointer]:
+              - generic [ref=e279]:
+                - generic [ref=e280]: 17:50
+                - generic: Ewa
+              - generic "Anna" [ref=e281]: A
+        - generic [ref=e282]:
+          - generic [ref=e284]: Wed 18
+          - generic:
+            - generic [ref=e309] [cursor=pointer]:
+              - generic [ref=e311]:
+                - generic [ref=e312]: 08:00
+                - generic: Marcin
+              - generic "Marta" [ref=e313]: M
+            - generic [ref=e315] [cursor=pointer]:
+              - generic [ref=e317]:
+                - generic [ref=e318]: 08:05
+                - generic: Krystyna
+              - generic "Anna" [ref=e319]: A
+            - generic [ref=e321] [cursor=pointer]:
+              - generic [ref=e323]:
+                - generic [ref=e324]: 08:10
+                - generic: Monika
+              - generic "Kate" [ref=e325]: K
+            - generic [ref=e327] [cursor=pointer]:
+              - generic [ref=e329]:
+                - generic [ref=e330]: 09:50
+                - generic: Anna
+              - generic "Anna" [ref=e331]: A
+            - generic [ref=e333] [cursor=pointer]:
+              - generic [ref=e335]:
+                - generic [ref=e336]: 10:45
+                - generic: Jakub
+              - generic "Kate" [ref=e337]: K
+            - generic [ref=e339] [cursor=pointer]:
+              - generic [ref=e341]:
+                - generic [ref=e342]: 10:50
+                - generic: Marek
+              - generic "Anna" [ref=e343]: A
+            - generic [ref=e345] [cursor=pointer]:
+              - generic [ref=e347]:
+                - generic [ref=e348]: 11:55
+                - generic: Anna
+              - generic "Kate" [ref=e349]: K
+            - generic [ref=e351] [cursor=pointer]:
+              - generic [ref=e353]:
+                - generic [ref=e354]: 12:10
+                - generic: Piotr
+              - generic "Marta" [ref=e355]: M
+            - generic [ref=e357] [cursor=pointer]:
+              - generic [ref=e359]:
+                - generic [ref=e360]: 13:50
+                - generic: Adam
+              - generic "Marta" [ref=e361]: M
+            - generic [ref=e363] [cursor=pointer]:
+              - generic [ref=e365]:
+                - generic [ref=e366]: 13:55
+                - generic: Krystyna
+              - generic "Anna" [ref=e367]: A
+            - generic [ref=e369] [cursor=pointer]:
+              - generic [ref=e371]:
+                - generic [ref=e372]: 15:00
+                - generic: Marek
+              - generic "Marta" [ref=e373]: M
+            - generic [ref=e375] [cursor=pointer]:
+              - generic [ref=e377]:
+                - generic [ref=e378]: 15:10
+                - generic: Barbara
+              - generic "Kate" [ref=e379]: K
+            - generic [ref=e381] [cursor=pointer]:
+              - generic [ref=e383]:
+                - generic [ref=e384]: 15:45
+                - generic: Jakub
+              - generic "Marta" [ref=e385]: M
+            - generic [ref=e387] [cursor=pointer]:
+              - generic [ref=e389]:
+                - generic [ref=e390]: 16:20
+                - generic: Adam
+              - generic "Kate" [ref=e391]: K
+            - generic [ref=e393] [cursor=pointer]:
+              - generic [ref=e395]:
+                - generic [ref=e396]: 18:10
+                - generic: Jakub
+              - generic "Anna" [ref=e397]: A
+            - generic [ref=e399] [cursor=pointer]:
+              - generic [ref=e401]:
+                - generic [ref=e402]: 18:50
+                - generic: Adam
+              - generic "Anna" [ref=e403]: A
+            - generic [ref=e405] [cursor=pointer]:
+              - generic [ref=e407]:
+                - generic [ref=e408]: 18:55
+                - generic: Ewa
+              - generic "Marta" [ref=e409]: M
+            - generic [ref=e411] [cursor=pointer]:
+              - generic [ref=e413]:
+                - generic [ref=e414]: 19:20
+                - generic: Piotr
+              - generic "Kate" [ref=e415]: K
+        - generic [ref=e416]:
+          - generic [ref=e418]: Thu 19
+          - generic:
+            - generic [ref=e443] [cursor=pointer]:
+              - generic [ref=e445]:
+                - generic [ref=e446]: 08:00
+                - generic: Michał
+              - generic "Anna" [ref=e447]: A
+            - generic [ref=e449] [cursor=pointer]:
+              - generic [ref=e451]:
+                - generic [ref=e452]: 08:10
+                - generic: Monika
+              - generic "Marta" [ref=e453]: M
+            - generic [ref=e455] [cursor=pointer]:
+              - generic [ref=e457]:
+                - generic [ref=e458]: 08:10
+                - generic: Adam
+              - generic "Kate" [ref=e459]: K
+            - generic [ref=e461] [cursor=pointer]:
+              - generic [ref=e463]:
+                - generic [ref=e464]: 09:10
+                - generic: Paweł
+              - generic "Marta" [ref=e465]: M
+            - generic [ref=e467] [cursor=pointer]:
+              - generic [ref=e469]:
+                - generic [ref=e470]: 09:40
+                - generic: Elżbieta
+              - generic "Kate" [ref=e471]: K
+            - generic [ref=e473] [cursor=pointer]:
+              - generic [ref=e475]:
+                - generic [ref=e476]: 10:55
+                - generic: Jan
+              - generic "Marta" [ref=e477]: M
+            - generic [ref=e479] [cursor=pointer]:
+              - generic [ref=e481]:
+                - generic [ref=e482]: 10:55
+                - generic: Monika
+              - generic "Kate" [ref=e483]: K
+            - generic [ref=e485] [cursor=pointer]:
+              - generic [ref=e487]:
+                - generic [ref=e488]: 11:55
+                - generic: Anna
+              - generic "Marta" [ref=e489]: M
+            - generic [ref=e491] [cursor=pointer]:
+              - generic [ref=e493]:
+                - generic [ref=e494]: 12:05
+                - generic: Piotr
+              - generic "Anna" [ref=e495]: A
+            - generic [ref=e497] [cursor=pointer]:
+              - generic [ref=e499]:
+                - generic [ref=e500]: 12:30
+                - generic: Piotr
+              - generic "Kate" [ref=e501]: K
+            - generic [ref=e503] [cursor=pointer]:
+              - generic [ref=e505]:
+                - generic [ref=e506]: 13:00
+                - generic: Tomasz
+              - generic "Kate" [ref=e507]: K
+            - generic [ref=e509] [cursor=pointer]:
+              - generic [ref=e511]:
+                - generic [ref=e512]: 13:35
+                - generic: Piotr
+              - generic "Marta" [ref=e513]: M
+            - generic [ref=e515] [cursor=pointer]:
+              - generic [ref=e517]:
+                - generic [ref=e518]: 14:30
+                - generic: Ewa
+              - generic "Kate" [ref=e519]: K
+            - generic [ref=e521] [cursor=pointer]:
+              - generic [ref=e523]:
+                - generic [ref=e524]: 14:45
+                - generic: Ewa
+              - generic "Marta" [ref=e525]: M
+            - generic [ref=e527] [cursor=pointer]:
+              - generic [ref=e529]:
+                - generic [ref=e530]: 15:45
+                - generic: Jan
+              - generic "Marta" [ref=e531]: M
+            - generic [ref=e533] [cursor=pointer]:
+              - generic [ref=e535]:
+                - generic [ref=e536]: 16:05
+                - generic: Monika
+              - generic "Anna" [ref=e537]: A
+            - generic [ref=e539] [cursor=pointer]:
+              - generic [ref=e541]:
+                - generic [ref=e542]: 16:25
+                - generic: Barbara
+              - generic "Marta" [ref=e543]: M
+            - generic [ref=e545] [cursor=pointer]:
+              - generic [ref=e547]:
+                - generic [ref=e548]: 17:20
+                - generic: Monika
+              - generic "Marta" [ref=e549]: M
+            - generic [ref=e551] [cursor=pointer]:
+              - generic [ref=e553]:
+                - generic [ref=e554]: 20:05
+                - generic: Maria
+              - generic "Anna" [ref=e555]: A
+            - generic [ref=e557] [cursor=pointer]:
+              - generic [ref=e559]:
+                - generic [ref=e560]: 20:40
+                - generic: Krzysztof
+              - generic "Anna" [ref=e561]: A
+        - generic [ref=e562]:
+          - generic [ref=e564]: Fri 20
+          - generic:
+            - generic [ref=e589] [cursor=pointer]:
+              - generic [ref=e591]:
+                - generic [ref=e592]: 08:00
+                - generic: Michał
+              - generic "Kate" [ref=e593]: K
+            - generic [ref=e595] [cursor=pointer]:
+              - generic [ref=e597]:
+                - generic [ref=e598]: 08:15
+                - generic: Adam
+              - generic "Anna" [ref=e599]: A
+            - generic [ref=e601] [cursor=pointer]:
+              - generic [ref=e603]:
+                - generic [ref=e604]: 08:15
+                - generic: Maria
+              - generic "Marta" [ref=e605]: M
+            - generic [ref=e607] [cursor=pointer]:
+              - generic [ref=e609]:
+                - generic [ref=e610]: 09:30
+                - generic: Agnieszka
+              - generic "Anna" [ref=e611]: A
+            - generic [ref=e613] [cursor=pointer]:
+              - generic [ref=e615]:
+                - generic [ref=e616]: 09:45
+                - generic: Monika
+              - generic "Kate" [ref=e617]: K
+            - generic [ref=e619] [cursor=pointer]:
+              - generic [ref=e621]:
+                - generic [ref=e622]: 10:00
+                - generic: Ewa
+              - generic "Marta" [ref=e623]: M
+            - generic [ref=e625] [cursor=pointer]:
+              - generic [ref=e627]:
+                - generic [ref=e628]: 10:35
+                - generic: Jakub
+              - generic "Anna" [ref=e629]: A
+            - generic [ref=e631] [cursor=pointer]:
+              - generic [ref=e633]:
+                - generic [ref=e634]: 10:50
+                - generic: Maria
+              - generic "Kate" [ref=e635]: K
+            - generic [ref=e637] [cursor=pointer]:
+              - generic [ref=e639]:
+                - generic [ref=e640]: 11:00
+                - generic: Krystyna
+              - generic "Marta" [ref=e641]: M
+            - generic [ref=e643] [cursor=pointer]:
+              - generic [ref=e645]:
+                - generic [ref=e646]: 12:40
+                - generic: Małgorzata
+              - generic "Marta" [ref=e647]: M
+            - generic [ref=e649] [cursor=pointer]:
+              - generic [ref=e651]:
+                - generic [ref=e652]: 13:25
+                - generic: Anna
+              - generic "Marta" [ref=e653]: M
+            - generic [ref=e655] [cursor=pointer]:
+              - generic [ref=e657]:
+                - generic [ref=e658]: 13:25
+                - generic: Anna
+              - generic "Kate" [ref=e659]: K
+            - generic [ref=e661] [cursor=pointer]:
+              - generic [ref=e663]:
+                - generic [ref=e664]: 13:40
+                - generic: Anna
+              - generic "Anna" [ref=e665]: A
+            - generic [ref=e667] [cursor=pointer]:
+              - generic [ref=e669]:
+                - generic [ref=e670]: 13:55
+                - generic: Marcin
+              - generic "Kate" [ref=e671]: K
+            - generic [ref=e673] [cursor=pointer]:
+              - generic [ref=e675]:
+                - generic [ref=e676]: 14:35
+                - generic: Barbara
+              - generic "Anna" [ref=e677]: A
+            - generic [ref=e679] [cursor=pointer]:
+              - generic [ref=e681]:
+                - generic [ref=e682]: 15:00
+                - generic: Katarzyna
+              - generic "Marta" [ref=e683]: M
+            - generic [ref=e685] [cursor=pointer]:
+              - generic [ref=e687]:
+                - generic [ref=e688]: 15:50
+                - generic: Elżbieta
+              - generic "Marta" [ref=e689]: M
+            - generic [ref=e691] [cursor=pointer]:
+              - generic [ref=e693]:
+                - generic [ref=e694]: 17:45
+                - generic: Jan
+              - generic "Anna" [ref=e695]: A
+            - generic [ref=e697] [cursor=pointer]:
+              - generic [ref=e699]:
+                - generic [ref=e700]: 17:55
+                - generic: Maria
+              - generic "Kate" [ref=e701]: K
+```
